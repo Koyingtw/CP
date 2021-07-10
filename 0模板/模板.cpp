@@ -13,6 +13,7 @@
 #define MEM(x, n) memset(x, n, sizeof(x));
 const int INF = 0x3f3f3f3f;
 using namespace std;
+/******************************************************************************/
 
 void sol()
 {
