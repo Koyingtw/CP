@@ -17,27 +17,12 @@ using namespace std;
 
 void sol()
 {
-    int n;
-    cin >> n;
-    int x[n];
-    vector<int> ans;
-    ans.push_back(0);
-    cin >> x[0];
-    fr(i, 1, n)
-    {
-        int a;
-        cin >> a;
-        x[i] = a | x[i - 1];
-        ans.push_back(x[i] ^ a);
-    }
-    for (int i : ans)
-        cout << i << " ";
-    cout << endl;
 }
 
 signed main()
 {
-    Koying int t = 1;
+    Koying;
+    int t = 1;
     while (cin >> t)
         while (t--)
             sol();

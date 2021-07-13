@@ -17,6 +17,39 @@ using namespace std;
 
 void sol()
 {
+    int n, m;
+    cin >> n >> m;
+    string s[n];
+    map<char, int> mp[m];
+    fr(i, 0, n)
+    {
+        string a;
+        cin >> a;
+        fr(j, 0, m)
+        {
+            mp[j][a[j]]++;
+        }
+    }
+    fr(i, 0, n - 1)
+    {
+        string a;
+        cin >> a;
+        fr(j, 0, m)
+        {
+            mp[j][a[j]]--;
+        }
+    }
+    fr(i, 0, m)
+    {
+        fr(j, 0, 26)
+        {
+            if (mp[i]['a' + j] == 1)
+            {
+                cout << char('a' + j);
+            }
+        }
+    }
+    cout << endl;
 }
 
 signed main()

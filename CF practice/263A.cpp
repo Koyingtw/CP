@@ -17,13 +17,29 @@ using namespace std;
 
 void sol()
 {
+    bool x[5][5];
+    pr a;
+    fr(i, 0, 5)
+    {
+        fr(j, 0, 5)
+        {
+            cin >> x[i][j];
+            if (x[i][j])
+            {
+                a.F = i;
+                a.S = j;
+            }
+        }
+    }
+    cout << abs(a.F - 2) + abs(a.S - 2) << endl;
 }
 
 signed main()
 {
-    Koying int t = 1;
-    while (cin >> t)
-        while (t--)
-            sol();
+    Koying;
+    int t = 1;
+    //while (cin >> t)
+    while (t--)
+        sol();
     return 0;
 }

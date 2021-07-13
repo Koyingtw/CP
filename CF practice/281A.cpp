@@ -17,14 +17,21 @@ using namespace std;
 
 void sol()
 {
+    string s;
+    cin >> s;
+    if (s[0] >= 'a' && s[0] <= 'z')
+    {
+        s[0] = 'A' + s[0] - 'a';
+    }
+    DB(s);
 }
 
 signed main()
 {
     Koying;
     int t = 1;
-    while (cin >> t)
-        while (t--)
-            sol();
+    //while (cin >> t)
+    while (t--)
+        sol();
     return 0;
 }

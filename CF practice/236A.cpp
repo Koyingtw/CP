@@ -17,14 +17,27 @@ using namespace std;
 
 void sol()
 {
+    string s;
+    cin >> s;
+    set<char> st;
+    fr(i, 0, s.size())
+    {
+        st.insert(s[i]);
+    }
+    if (st.size() % 2 == 1)
+    {
+        cout << "IGNORE HIM!" << endl;
+    }
+    else
+        cout << "CHAT WITH HER!" << endl;
 }
 
 signed main()
 {
     Koying;
     int t = 1;
-    while (cin >> t)
-        while (t--)
-            sol();
+    //while (cin >> t)
+    while (t--)
+        sol();
     return 0;
 }

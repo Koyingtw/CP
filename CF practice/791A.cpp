@@ -17,14 +17,25 @@ using namespace std;
 
 void sol()
 {
+    int a, b;
+    cin >> a >> b;
+    int i = 0;
+    while (a <= b)
+    {
+        a *= 3;
+        b *= 2;
+        i++;
+    }
+    cout << i << endl;
+    //stop
 }
 
 signed main()
 {
     Koying;
     int t = 1;
-    while (cin >> t)
-        while (t--)
-            sol();
+    //while (cin >> t)
+    while (t--)
+        sol();
     return 0;
 }

@@ -17,14 +17,30 @@ using namespace std;
 
 void sol()
 {
+    string s;
+    vector<int> ans;
+    cin >> s;
+    fr(i, 0, s.size())
+    {
+        if (isdigit(s[i]))
+        {
+            ans.push_back(s[i] - '0');
+        }
+    }
+    sort(ans.begin(), ans.end());
+    fr(i, 0, ans.size() - 1)
+    {
+        cout << ans[i] << "+";
+    }
+    cout << ans[ans.size() - 1] << endl;
 }
 
 signed main()
 {
     Koying;
     int t = 1;
-    while (cin >> t)
-        while (t--)
-            sol();
+    //while (cin >> t)
+    while (t--)
+        sol();
     return 0;
 }

@@ -17,14 +17,43 @@ using namespace std;
 
 void sol()
 {
+    int t;
+    string s;
+    cin >> s >> t;
+    rf(i, s.size() - 1, 0)
+    {
+        if (t - (s[i] - '0' + 1) < 0)
+        {
+            s[i] -= t;
+            fr(j, 0, i + 1)
+            {
+                cout << s[j];
+            }
+            cout << endl;
+            break;
+        }
+        else if (t - (s[i] - '0' + 1) == 0)
+        {
+            fr(j, 0, i)
+            {
+                cout << s[j];
+            }
+            cout << endl;
+            break;
+        }
+        else
+        {
+            t -= (s[i] - '0' + 1);
+        }
+    }
 }
 
 signed main()
 {
     Koying;
     int t = 1;
-    while (cin >> t)
-        while (t--)
-            sol();
+    //while (cin >> t)
+    while (t--)
+        sol();
     return 0;
 }

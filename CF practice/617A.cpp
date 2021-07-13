@@ -17,14 +17,17 @@ using namespace std;
 
 void sol()
 {
+    int n;
+    cin >> n;
+    cout << n / 5 + (n % 5 != 0) << endl;
 }
 
 signed main()
 {
     Koying;
     int t = 1;
-    while (cin >> t)
-        while (t--)
-            sol();
+    //while (cin >> t)
+    while (t--)
+        sol();
     return 0;
 }

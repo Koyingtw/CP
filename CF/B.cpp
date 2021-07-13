@@ -13,43 +13,16 @@
 #define MEM(x, n) memset(x, n, sizeof(x));
 const int INF = 0x3f3f3f3f;
 using namespace std;
+/******************************************************************************/
 
 void sol()
 {
-    string s;
-    cin >> s;
-    int l = 0, r = s.size() - 1;
-    int tmp = s.size();
-    bool yes = 1;
-
-    while (l <= r)
-    {
-        if (s[l] - 'a' == tmp - 1)
-        {
-            tmp--;
-            l++;
-        }
-        else if (s[r] - 'a' == tmp - 1)
-        {
-            tmp--;
-            r--;
-        }
-        else
-        {
-            yes = 0;
-            break;
-        }
-    }
-
-    if (yes)
-        cout << "YES" << endl;
-    else
-        cout << "NO" << endl;
 }
 
 signed main()
 {
-    Koying int t = 1;
+    Koying;
+    int t = 1;
     while (cin >> t)
         while (t--)
             sol();
