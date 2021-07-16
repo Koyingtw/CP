@@ -35,37 +35,36 @@ void sol()
     while (cin >> n)
     {
         int x[n];
-        int sum=0;
-        int ans=0;
-        fr(i,0,n)
+        int sum = 0;
+        int ans = 0;
+        fr(i, 0, n)
         {
-            cin>>x[i];
-            sum+=x[i];
+            cin >> x[i];
+            sum += x[i];
         }
-        sort(x,x+n);
-        bool dp[n+1][sum+1];
-        fr(i,0,n+1) 
-            MEM(dp[i],0);
-        dp[0][0]=1;
-        fr(i,1,n+1)
+        sort(x, x + n);
+        bool dp[n + 1][sum + 1];
+        fr(i, 0, n + 1)
+            MEM(dp[i], 0);
+        dp[0][0] = 1;
+        fr(i, 1, n + 1)
         {
-            fr(j,0,sum+1)
+            fr(j, 0, sum + 1)
             {
-                dp[i][j]=dp[i-1][j];
-                if(j-x[i-1]>=0 && dp[i-1][j-x[i-1]])
-                    dp[i][j]=1;
-                if(i==n && dp[i][j])
+                dp[i][j] = dp[i - 1][j];
+                if (j - x[i - 1] >= 0 && dp[i - 1][j - x[i - 1]])
+                    dp[i][j] = 1;
+                if (i == n && dp[i][j])
                     ans++;
             }
-            
         }
-        DB(ans-1)
-        fr(i,1,sum+1) 
+        DB(ans - 1)
+        fr(i, 1, sum + 1)
         {
-            if(dp[n][i])
-                cout<<i<<" ";    
+            if (dp[n][i])
+                cout << i << " ";
         }
-        cout<<endl;
+        cout << endl;
     }
 }
 
