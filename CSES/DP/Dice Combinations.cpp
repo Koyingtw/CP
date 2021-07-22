@@ -9,7 +9,7 @@
 */
 
 #include <bits/stdc++.h>
-#define int long long
+//#define int long long
 #define pr pair<int, int>
 #define fr(i, a, b) for (int i = a; i < b; i++)
 #define rf(i, a, b) for (int i = a; i >= b; i--)
@@ -25,7 +25,6 @@ void OUT(string s)
     return;
 }
 
-signed dp[1000005] = {0, 1, 2, 4, 8, 16, 32, 63};
 const int p = 1000000007;
 
 void sol()
@@ -33,12 +32,18 @@ void sol()
     int n;
     while (cin >> n)
     {
+        signed dp[2000005] = {0, 1, 2, 4, 8, 16, 32, 63};
+        memset(dp, 0, sizeof(dp));
         if (n <= 6)
         {
-            cout << dp[n] << endl;
+            cout << (1 << (n - 1)) << endl;
         }
         else
         {
+            fr(i, 1, 7)
+            {
+                dp[i] = (1 << (i - 1));
+            }
             fr(i, 7, n + 1)
             {
                 fr(j, 1, 7)
@@ -47,14 +52,14 @@ void sol()
                     dp[i] %= p;
                 }
             }
-            cout << dp[n] % p << endl;
+            cout << (dp[n] % p) << "\n";
         }
     }
 }
 
 signed main()
 {
-    Koying
+    //Koying
     sol();
     return 0;
 }
