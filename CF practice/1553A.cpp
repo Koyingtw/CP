@@ -19,6 +19,9 @@ using namespace std;
 
 void sol()
 {
+    int n;
+    cin >> n;
+    cout << (n + 1) / 10 << endl;
 }
 
 signed main()

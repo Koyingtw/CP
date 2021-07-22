@@ -17,24 +17,24 @@ void sol()
         fr(i, 0, n)
         {
             cin >> x[i];
+            memset(dp[i + 1], 0, sizeof(dp[i]));
         }
         sort(x, x + n);
         dp[0][0] = 1;
-
         fr(i, 0, m + 1)
         {
             fr(j, 0, n)
             {
-                int a = i - x[i];
                 dp[j + 1][i] = dp[j][i];
+                int a = i - x[j];
                 if (a >= 0)
                 {
-                    dp[j + 1][i] += dp[j + 1][a];
+                    (dp[j + 1][i] += dp[j + 1][a]) %= p;
                 }
-                else
-                    break;
             }
         }
+        int ans = 0;
+
         cout << dp[n][m] << endl;
     }
 }
