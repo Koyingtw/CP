@@ -8,39 +8,20 @@
              `._.'          `._.'
 */
 
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 #define int long long
-#define pr pair<int,int>
-#define fr(i,a,b) for(int i=a;i<b;i++)
-#define rf(i,a,b) for(int i=a;i>=b;i--)
-#define Koying ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+#define pr pair<int, int>
+#define fr(i, a, b) for (int i = a; i < b; i++)
+#define rf(i, a, b) for (int i = a; i >= b; i--)
+#define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 
 using namespace std;
 
-
-
-
-
-
-
-
-
-
 void sol()
 {
-    Codeforces Round #728 (Div. 2)
+
+    Codeforces Round #731(Div.3)
 }
-
-
-
-
-
-
-
-
-
-
-
 
 signed main()
 {

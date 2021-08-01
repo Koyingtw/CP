@@ -12,15 +12,6 @@
 #define DB(a) cout << a << endl;
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
-#define END cout.flush();
-#if ONLINE_JUDGE
-#define endl "\n"
-#define stop return 0;
-#else
-#define stop         \
-    system("pause"); \
-    return 0;
-#endif
 const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
@@ -28,17 +19,34 @@ using namespace std;
 
 void sol()
 {
+    int n, m, k;
+    while (cin >> n >> m >> k)
+    {
+        int x[n];
+        vector<int> v;
+        fr(i, 0, n)
+        {
+            cin >> x[i];
+            if (i)
+                v.push_back(x[i] - x[i - 1]);
+        }
+        int ans = x[n - 1] - x[0] + 1;
+        //cout << ans << endl;
+        sort(v.begin(), v.end(), greater<int>());
+        fr(i, 0, k - 1)
+        {
+            ans -= v[i] - 1;
+        }
+        cout << ans << endl;
+    }
 }
 
 signed main()
 {
     Koying;
     int t = 1;
-    while (cin >> t)
-        while (t--)
-        {
-            sol();
-            END
-        }
+    //while (cin >> t)
+    while (t--)
+        sol();
     return 0;
 }

@@ -28,6 +28,35 @@ using namespace std;
 
 void sol()
 {
+    int m;
+    cin >> m;
+    int x[2][m], dp[2][m];
+    MEM(dp[0], 0);
+    MEM(dp[1], 0);
+    fr(i, 0, 2)
+    {
+        fr(j, 0, m)
+        {
+            cin >> x[i][j];
+            if (j && i == 0)
+            {
+                dp[i][j] = dp[i][j - 1] + x[i][j];
+            }
+            if (i == 1)
+            {
+                if (j == 0)
+                    dp[i][j] = x[i][j];
+                else if (j != m - 1)
+                    dp[i][j] = dp[i][j - 1] + x[i][j];
+            }
+        }
+    }
+    int ans = dp[0][m - 1] - dp[0][0];
+    fr(i, 1, m)
+    {
+        ans = min(ans, max(dp[0][m - 1] - dp[0][i], dp[1][i - 1]));
+    }
+    cout << ans << endl;
 }
 
 signed main()

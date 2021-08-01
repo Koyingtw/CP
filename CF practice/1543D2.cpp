@@ -12,33 +12,50 @@
 #define DB(a) cout << a << endl;
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
-#define END cout.flush();
-#if ONLINE_JUDGE
-#define endl "\n"
-#define stop return 0;
-#else
-#define stop         \
-    system("pause"); \
-    return 0;
-#endif
 const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
 
+int XOR(int a, int b, int k)
+{
+    int tmp = 1;
+    int sum = 0;
+    while (a || b)
+    {
+        sum += tmp * ((a % k + b % k) % k);
+        a /= k;
+        b /= k;
+        tmp *= k;
+    }
+    return sum;
+}
+
 void sol()
 {
+    int n, k, a = 0;
+    cin >> n >> k;
+    int tmp = 0;
+    //cout << XOR(0, 7, 3) << endl;
+    fr(i, 0, n)
+    {
+        int a;
+        int out = XOR(tmp, i, k);
+        cout << out << endl;
+        cin >> a;
+        tmp = XOR(tmp, out, k);
+        if (a)
+            break;
+    }
 }
 
 signed main()
 {
-    Koying;
+    //Koying;
     int t = 1;
-    while (cin >> t)
-        while (t--)
-        {
-            sol();
-            END
-        }
+    cin >> t;
+    //while (cin >> t)
+    while (t--)
+        sol();
     return 0;
 }

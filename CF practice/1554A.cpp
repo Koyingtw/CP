@@ -28,6 +28,15 @@ using namespace std;
 
 void sol()
 {
+    int n;
+    cin >> n;
+    if (n <= 6)
+        cout << 15 << endl;
+    else
+    {
+        int ans = (n + (n % 2)) * 5 / 2;
+        cout << ans << endl;
+    }
 }
 
 signed main()
@@ -38,7 +47,6 @@ signed main()
         while (t--)
         {
             sol();
-            END
         }
     return 0;
 }

@@ -1,72 +1,50 @@
-/*
-.-..-.             _             
-: :' ;            :_;            
-:   '  .--. .-..-..-.,-.,-. .--. 
-: :.`.' .; :: :; :: :: ,. :' .; :
-:_;:_;`.__.'`._. ;:_;:_;:_;`._. ;
-             .-. :          .-. :
-             `._.'          `._.'
-*/
-
-#include<bits/stdc++.h>
-//#define int long long
-#define pr pair<int,int>
-#define fr(i,a,b) for(int i=a;i<b;i++)
-#define rf(i,a,b) for(int i=a;i>=b;i--)
-#define Koying ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+#include <bits/stdc++.h>
+#define int long long
+#define pr pair<int, int>
+#define fr(i, a, b) for (int i = a; i < b; i++)
+#define rf(i, a, b) for (int i = a; i >= b; i--)
+#define F first
+#define S second
+#define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 
 using namespace std;
-int ans=-1;
-int DQ(int x[],int l,int r,int n)
-{
-    if(r-l==1) 
-    {
-        if(x[l]<n)
-        {
-            return ans=max(ans,l);
-        }
-    }
-    else if(r-l==2)
-    {
-        if(x[r-1]<n)
-        {
-            return ans=max(ans,r-1);
-        }
-        if(x[l]<n)
-        {
-            return ans=max(ans,l);
-        }
-    }
-    else
-    {
-        int mid=(l+r)/2;
-        return DQ(x,l,mid,n);
-        DQ(x,mid,r,n);
-    }
-}
+
 void sol()
 {
-    cout<<log2(1000)<<endl;
     int n;
-    while(cin>>n)
+    while (cin >> n)
     {
-        int x[n];
-        cin>>x[0];
-        cout<<0<<" ";
-        fr(i,1,n)
+        pr x[n];
+        stack<pr> s;
+        vector<int> ans;
+        cin >> x[0].F;
+        x[0].S = 1;
+        ans.emplace_back(0);
+        s.push(x[0]);
+        for (int i = 1; i < n; i++)
         {
-            cin>>x[i];
+            cin >> x[i].F;
+            x[i].S = i + 1;
+            bool yes = 1;
+            while (s.top().F >= x[i].F)
+            {
+                s.pop();
+                if (s.size() == 0)
+                {
+                    ans.emplace_back(0);
+                    yes = 0;
+                    break;
+                }
+            }
+            if (yes)
+                ans.emplace_back(s.top().S);
+            s.push(x[i]);
         }
-        fr(i,1,n)
-        {
-            ans=-1;
-            DQ(x,0,i,x[i]);
-            cout<<ans+1<<" ";
-        }
-        cout<<endl;
+        for (int i : ans)
+            cout << i << ' ';
+        cout << endl;
     }
 }
-
 
 signed main()
 {

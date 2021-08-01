@@ -28,17 +28,43 @@ using namespace std;
 
 void sol()
 {
+    int m, n;
+    while (cin >> m >> n)
+    {
+        string x[n];
+        int cnt = 0;
+        for (int i = 0; i < n; i++)
+        {
+            cin >> x[i];
+        }
+        map<string, int> tmp;
+        vector<int> ans;
+        for (int i = 0; i < m; i++)
+            tmp[x[i]]++;
+        if (tmp.size() == m)
+            cnt++;
+        for (int i = 1; i < n - m + 1; i++)
+        {
+            tmp[x[i - 1]]--;
+            if (tmp[x[i - 1]] == 0)
+                tmp.erase(x[i - 1]);
+            tmp[x[i + m - 1]]++;
+            if (tmp.size() == m)
+                cnt++;
+        }
+        cout << cnt << endl;
+    }
 }
 
 signed main()
 {
     Koying;
     int t = 1;
-    while (cin >> t)
-        while (t--)
-        {
-            sol();
-            END
-        }
+    //while (cin >> t)
+    while (t--)
+    {
+        sol();
+        END
+    }
     return 0;
 }

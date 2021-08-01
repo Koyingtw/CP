@@ -28,17 +28,32 @@ using namespace std;
 
 void sol()
 {
+    int n, k;
+    while (cin >> n >> k)
+    {
+        pr x[n];
+        for (int i = 0; i < n; i++)
+        {
+            cin >> x[i].F;
+            x[i].S = i + 1;
+        }
+        sort(x, x + n);
+        for (int i = 0; i < n; i++)
+        {
+            cout << x[i].F << " ";
+        }
+    }
 }
 
 signed main()
 {
     Koying;
     int t = 1;
-    while (cin >> t)
-        while (t--)
-        {
-            sol();
-            END
-        }
-    return 0;
+    //while (cin >> t)
+    while (t--)
+    {
+        sol();
+        END
+    }
+    stop;
 }

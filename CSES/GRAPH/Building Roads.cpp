@@ -25,20 +25,56 @@ const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
+bool vis[100005];
+vector<int> v[100005];
+
+void dfs(int i)
+{
+    vis[i] = 1;
+    for (int j : v[i])
+    {
+        if (vis[j] == 0)
+            dfs(j);
+    }
+}
 
 void sol()
 {
+    int n, m;
+    while (cin >> n >> m)
+    {
+        while (m--)
+        {
+            int a, b;
+            cin >> a >> b;
+            v[a].emplace_back(b);
+            v[b].emplace_back(a);
+        }
+        vector<pr> ans;
+        dfs(1);
+        for (int i = 2; i <= n; i++)
+        {
+            if (vis[i] == 0)
+            {
+                dfs(i);
+                ans.push_back({i - 1, i});
+            }
+        }
+        cout << ans.size() << endl;
+        for (pr i : ans)
+            cout << i.F << " " << i.S << endl;
+    }
 }
 
 signed main()
 {
     Koying;
     int t = 1;
-    while (cin >> t)
-        while (t--)
-        {
-            sol();
-            END
-        }
+    //while (cin >> t)
+    while (t--)
+    {
+        sol();
+        END
+    }
     return 0;
 }

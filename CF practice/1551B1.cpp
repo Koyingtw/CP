@@ -12,15 +12,6 @@
 #define DB(a) cout << a << endl;
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
-#define END cout.flush();
-#if ONLINE_JUDGE
-#define endl "\n"
-#define stop return 0;
-#else
-#define stop         \
-    system("pause"); \
-    return 0;
-#endif
 const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
@@ -28,6 +19,22 @@ using namespace std;
 
 void sol()
 {
+    string s;
+    cin >> s;
+    map<char, int> m;
+    int ans = 0;
+    fr(i, 0, s.size())
+    {
+        m[s[i]]++;
+    }
+    for (auto i : m)
+    {
+        if (i.second >= 2)
+            ans += 2;
+        else
+            ans++;
+    }
+    cout << ans / 2 << endl;
 }
 
 signed main()
@@ -36,9 +43,6 @@ signed main()
     int t = 1;
     while (cin >> t)
         while (t--)
-        {
             sol();
-            END
-        }
     return 0;
 }

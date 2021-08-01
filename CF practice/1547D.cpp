@@ -37,7 +37,8 @@ void sol()
 
 signed main()
 {
-    Koying int t = 1;
+    Koying;
+    int t = 1;
     while (cin >> t)
         while (t--)
             sol();

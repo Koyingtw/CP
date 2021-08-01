@@ -13,14 +13,6 @@
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
 #define END cout.flush();
-#if ONLINE_JUDGE
-#define endl "\n"
-#define stop return 0;
-#else
-#define stop         \
-    system("pause"); \
-    return 0;
-#endif
 const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
@@ -28,6 +20,14 @@ using namespace std;
 
 void sol()
 {
+    int n, k;
+    cin >> n >> k;
+    if (k % (n - 1) == 0)
+    {
+        cout << (k / (n - 1)) * n - 1 << endl;
+        }
+    else
+        cout << (k / (n - 1)) * n + k % (n - 1) << endl;
 }
 
 signed main()

@@ -13,32 +13,49 @@
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
 #define END cout.flush();
-#if ONLINE_JUDGE
-#define endl "\n"
-#define stop return 0;
-#else
-#define stop         \
-    system("pause"); \
-    return 0;
-#endif
 const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
+int p = 1000000007;
+
+int f(int x, int n)
+{
+    if (n == 0)
+        return 1;
+    if (n == 1)
+        return x;
+    if (n % 2)
+        return (int)(x * f(x, n - 1)) % p;
+    int a = f(x, n / 2) % p;
+    return (int)(a * a) % p;
+}
 
 void sol()
 {
+    int x, n;
+
+    while (cin >> x >> n && x * n)
+    {
+        if (x == 1)
+        {
+            cout << 1 << endl;
+            continue;
+        }
+        int ans = (int)((f(x, n + 1) + p - x) % p) / (x - 1) + 1;
+        cout << ans % p << endl;
+    }
 }
 
 signed main()
 {
     Koying;
     int t = 1;
-    while (cin >> t)
-        while (t--)
-        {
-            sol();
-            END
-        }
+    //while (cin >> t)
+    while (t--)
+    {
+        sol();
+        END
+    }
     return 0;
 }

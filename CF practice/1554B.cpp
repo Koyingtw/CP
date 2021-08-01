@@ -28,6 +28,32 @@ using namespace std;
 
 void sol()
 {
+    int n, m;
+    cin >> n >> m;
+    int a, b, c, d;
+    cin >> a >> b >> c >> d;
+    int x, y;
+    cin >> x >> y;
+    int ans = INF;
+    if (x + (c - a) <= n)
+    {
+        ans = min(ans, x - (n - c));
+        ans = min(ans, x - a);
+    }
+    if (y + (d - b) <= m)
+    {
+        ans = min(ans, y - b);
+        ans = min(ans, y - (m - d));
+    }
+    if (x + (c - a) > n && y + (d - b) > m)
+    {
+        cout << -1 << endl;
+        return;
+    }
+    if (ans <= 0)
+        cout << 0 << endl;
+    else
+        cout << ans << endl;
 }
 
 signed main()
