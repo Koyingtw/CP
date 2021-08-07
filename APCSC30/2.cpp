@@ -1,3 +1,4 @@
+#pragma region
 #include <bits/stdc++.h>
 #define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
@@ -11,33 +12,33 @@
 #define DB(a) cout << a << endl;
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
+#define END cout.flush();
+#if ONLINE_JUDGE
+#define endl "\n"
+#define stop return 0;
+#else
+#define stop         \
+    system("pause"); \
+    return 0;
+#endif
 const int INF = 0x3f3f3f3f;
 using namespace std;
+#pragma endregion
 /******************************************************************************/
 
 void sol()
 {
-    int n, m;
-    while (cin >> n >> m)
+    int n;
+    while (cin >> n)
     {
-        int x[n];
-        int y[m], sum[n + 1];
-        sum[0] = 0;
-        fr(i, 0, n)
+        if (n > 100)
         {
-            cin >> x[i];
-            sum[i + 1] = sum[i] + x[i];
+            cout << n - 100 << " " << 100 << endl;
         }
-        cin >> y[0];
-        int find = lower_bound(sum, sum + n + 1, y[0]) - sum;
-        int tmp = find % n;
-        fr(i, 1, m)
+        else
         {
-            cin >> y[i];
-            find = lower_bound(sum, sum + n + 1, (y[i] + sum[tmp]) % sum[n]) - sum;
-            tmp = find % n;
+            cout << 1 << " " << n - 1 << endl;
         }
-        DB(tmp);
     }
 }
 
@@ -47,6 +48,9 @@ signed main()
     int t = 1;
     //while (cin >> t)
     while (t--)
+    {
         sol();
+        END
+    }
     return 0;
 }

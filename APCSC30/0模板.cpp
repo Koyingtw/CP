@@ -24,11 +24,11 @@ signed main()
 {
     Koying;
     int t = 1;
-    while (cin >> t)
-        while (t--)
-        {
-            sol();
-            END
-        }
+    //while (cin >> t)
+    while (t--)
+    {
+        sol();
+        END
+    }
     return 0;
 }

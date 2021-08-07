@@ -1,9 +1,8 @@
+#pragma region
 #include <bits/stdc++.h>
 #define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
 #define pr pair<int, int>
-#define fr(i, a, b) for (int i = a; i < b; i++)
-#define rf(i, a, b) for (int i = a; i >= b; i--)
 #define F first
 #define S second
 #define max(a, b) (a > b ? a : b)
@@ -11,8 +10,10 @@
 #define DB(a) cout << a << endl;
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
+#define END cout.flush();
 const int INF = 0x3f3f3f3f;
 using namespace std;
+#pragma endregion
 /******************************************************************************/
 
 void sol()
@@ -21,23 +22,34 @@ void sol()
     while (cin >> n >> m)
     {
         int x[n];
-        int y[m], sum[n + 1];
-        sum[0] = 0;
-        fr(i, 0, n)
+        map<int, int> mp;
+        vector<int> v[m + 1];
+        for (int i = 0; i < n; i++)
         {
             cin >> x[i];
-            sum[i + 1] = sum[i] + x[i];
         }
-        cin >> y[0];
-        int find = lower_bound(sum, sum + n + 1, y[0]) - sum;
-        int tmp = find % n;
-        fr(i, 1, m)
+        for (int i = 0; i < m; i++)
         {
-            cin >> y[i];
-            find = lower_bound(sum, sum + n + 1, (y[i] + sum[tmp]) % sum[n]) - sum;
-            tmp = find % n;
+            int a;
+            cin >> a;
+            mp[a] = i + 1;
         }
-        DB(tmp);
+        for (int i = 0; i < n; i++)
+        {
+            if (mp[x[i]])
+            {
+                v[mp[x[i]]].push_back(i + 1);
+            }
+        }
+        for (int i = 1; i <= m; i++)
+        {
+            if (v[i].size())
+            {
+                cout << v[i][0] << " " << v[i].size() << endl;
+            }
+            else
+                cout << -1 << " 0" << endl;
+        }
     }
 }
 
@@ -47,6 +59,9 @@ signed main()
     int t = 1;
     //while (cin >> t)
     while (t--)
+    {
         sol();
+        END
+    }
     return 0;
 }
