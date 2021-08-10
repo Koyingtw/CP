@@ -16,57 +16,61 @@ using namespace std;
 #pragma endregion
 /******************************************************************************/
 
+struct cmp
+{
+    bool operator()(pr a, pr b)
+    {
+        return a.F > b.F;
+    }
+};
+
 void sol()
 {
     int n, m;
     while (cin >> n >> m)
     {
         int x[n], cnt = 0, ans = 0;
-        queue<pr> q;
-        set<int> s;
+        int last = -1;
         for (int i = 0; i < n; i++)
-        {
             cin >> x[i];
-        }
-        pr pos{INF, -1};
         for (int i = 0; i < n; i++)
         {
             if (x[i] > x[m])
             {
                 cnt++;
-                if (x[i] - x[m] < pos.F)
-                {
-                    pos.F = x[i] - x[m];
-                    pos.S = i;
-                }
-                else if (x[i] - x[m] == pos.F)
-                {
-                    pos.S = i;
-                }
+                last = i;
             }
         }
-        if (pos.S == -1)
+        if (last == -1)
         {
-            for (int i = 0; i < m; i++)
+            for (int i = 0; i <= m; i++)
+            {
                 if (x[i] == x[m])
                     cnt++;
+            }
         }
-        else if (pos.S < m && pos.S != m - 1)
+        else if (last < m)
         {
-            for (int i = pos.S + 1; i < n; i++)
+            for (int i = last; i <= m; i++)
+            {
                 if (x[i] == x[m])
                     cnt++;
+            }
         }
-        else if (pos.S > m)
+        else
         {
-            for (int i = 0; i < m; i++)
+            for (int i = last; i < n; i++)
+            {
                 if (x[i] == x[m])
                     cnt++;
-            for (int i = pos.S; i < n; i++)
+            }
+            for (int i = 0; i <= m; i++)
+            {
                 if (x[i] == x[m])
                     cnt++;
+            }
         }
-        cout << cnt + 1 << endl;
+        cout << cnt << endl;
     }
 }
 

@@ -18,31 +18,22 @@ using namespace std;
 
 void sol()
 {
-    int n, m;
-    while (cin >> n >> m)
+    int n, m, k;
+    while (cin >> n >> m >> k)
     {
-        set<int> s{0, m};
-        int x[n];
+        int cnt[n];
+        //MEM(ans, 0);
+        MEM(cnt, 0);
+        for (int i = 0; i < k; i++)
+        {
+            int a;
+            cin >> a;
+            cnt[a - 1]++;
+        }
         for (int i = 0; i < n; i++)
         {
-            int a, b;
-            cin >> a >> b;
-            x[b - 1] = a;
-            //assert(a > 0 && a < m);
+            cout << ((m - k + cnt[i] > 0) ? "Yes" : "No") << endl;
         }
-        int ans = 0;
-        for (int i = 0; i < n; i++)
-        {
-            if (x[i] == m)
-            {
-                auto find = s.end();
-                ans += *(prev(find)) - *(prev(find, 2));
-                continue;
-            }
-            auto find = s.insert(x[i]).F;
-            ans += *(next(find)) - *(prev(find));
-        }
-        cout << ans << endl;
     }
 }
 
@@ -58,10 +49,3 @@ signed main()
     }
     return 0;
 }
-/*
-100 + 4 + 3 + 2 + 96
-
-1 2 3 4 5
-
-
-*/
