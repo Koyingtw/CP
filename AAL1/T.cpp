@@ -24,22 +24,22 @@ bool six(int n)
         return false;
 }
 vector<int> prime;
-vector<bool> x(5000, true);
 void pre()
 {
+    vector<bool> x(40000005, true);
     prime.push_back(2);
     prime.push_back(3);
     x[0] = 0;
     x[1] = 0;
-    for (int i = 5; i <= 5000; i += 2)
+    for (int i = 5; i <= 40000005; i += 2)
     {
         if (six(i) == false)
             i += 2;
         if (x[i])
         {
-            if (i < 150)
+            if (i < 6500)
             {
-                for (int j = i * i; j < 5000; j += i)
+                for (int j = i * i; j < 40000005; j += i)
                 {
                     x[j] = false;
                 }
@@ -51,24 +51,16 @@ void pre()
 
 void sol()
 {
-    int n;
-    while (cin >> n)
+    int a, d, n;
+    while (cin >> a >> d >> n)
     {
-        int x[n], ans = 0;
-        for (int i = 0; i < n; i++)
-            cin >> x[i];
-        sort(x, x + n, greater<int>());
-        for (int i = 0; i < n; i++)
+        int last = a + (n - 1) * d, ans = 0;
+        auto find = lower_bound(prime.begin(), prime.end(), a);
+        for (auto i = find; i != prime.end() && *i <= last; i++)
         {
-            if (ans > x[i])
-                break;
-            else
+            if ((*i - a) % d == 0)
             {
-                int find = upper_bound(x + i, x + n, x[i] - ans, greater<int>()) - x;
-                for (int j = find; j < n; j++)
-                {
-                    ans = max(ans, __gcd(x[i], x[j]));
-                }
+                ans++;
             }
         }
         cout << ans << endl;
@@ -78,6 +70,7 @@ void sol()
 signed main()
 {
     Koying;
+    pre();
     int t = 1;
     //while (cin >> t)
     while (t--)

@@ -16,8 +16,8 @@
 #define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 
 using namespace std;
-int dp[21][10];
-
+int dp[100005][10];
+const int p = 1e9 + 7;
 void pre()
 {
     fr(j, 0, 10)
@@ -25,7 +25,7 @@ void pre()
         dp[1][j] = 1;
     }
     dp[1][0] = 0;
-    fr(i, 2, 21)
+    fr(i, 2, 100005)
     {
         rf(j, 9, 0)
         {
@@ -33,6 +33,7 @@ void pre()
                 dp[i][j] = dp[i - 1][j] + dp[i][j + 1];
             else
                 dp[i][j] = dp[i - 1][j];
+            dp[i][j] %= p;
         }
     }
 }
@@ -57,7 +58,8 @@ void sol()
             if (i == s.size() - 1)
                 ans++;
         }
-        cout << ans << endl;
+        ans += (s.size() == 1);
+        cout << ans % p << endl;
     }
 }
 

@@ -16,10 +16,40 @@ using namespace std;
 #pragma endregion
 /******************************************************************************/
 
+bool cmp(pr a, pr b) { return a.S < b.S; }
+
 void sol()
 {
+    int n, m;
+    cin >> n >> m;
+    pr x[n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> x[i].F;
+        x[i].S = i;
+    }
+    sort(x, x + n);
+    for (int i = 0; i < n; i++)
+        x[i].F = i + 1;
+    sort(x, x + n, cmp);
+    int cnt = 0;
+    for (int i = 1; i < n; i++)
+    {
+        if (x[i].F != x[i - 1].F + 1)
+        {
+            cnt++;
+            m--;
+        }
+    }
+    m--;
+    if (m >= 0)
+        cout
+            << "yes" << endl;
+    else
+        cout << "no" << endl;
+    //cout << cnt << endl;
 }
-
+// -1 4 0 2 -> 1 4 2 3
 signed main()
 {
     Koying;

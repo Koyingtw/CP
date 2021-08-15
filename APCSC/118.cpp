@@ -2,7 +2,6 @@
 #include <bits/stdc++.h>
 #define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
-#define uint long long
 #define pr pair<int, int>
 #define F first
 #define S second
@@ -17,43 +16,28 @@ using namespace std;
 #pragma endregion
 /******************************************************************************/
 
+signed dp[5000005] = {0, 1, 2};
+const int p = 1e9 + 7;
 void pre()
 {
-    int tmp = 0;
-    for (int i = 1; i < 100; i++)
+    for (int i = 3; i < 5000005; i++)
     {
-        tmp ^= i;
-        cout << i << ": " << tmp << endl;
+        dp[i] = dp[i - 1] + dp[i - 2];
+        dp[i] %= p;
     }
-}
-
-int f(int n)
-{
-    if (n % 4 == 1)
-        return 1;
-    if (n % 4 == 2)
-        return n + 1;
-    if (n % 4 == 3)
-        return 0;
-    return n;
 }
 
 void sol()
 {
-    int n, m;
-    while (cin >> n >> m)
-    {
-        uint cnt = 1;
-        uint tmp = 1;
-        uint ans = 0;
-        cout << (f(m) ^ f(n - 1)) << endl;
-    }
+    int n;
+    while (cin >> n)
+        cout << dp[n] % p << endl;
 }
 
 signed main()
 {
     Koying;
-    //pre();
+    pre();
     int t = 1;
     //while (cin >> t)
     while (t--)
