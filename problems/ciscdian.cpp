@@ -10,46 +10,37 @@
 #define DB(a) cout << a << endl;
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
-#define END cout.flush();
 const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-int f(int x)
-{
-    int ouo = 0;
-    while (x)
-    {
-        ouo += x % 10;
-        x /= 10;
-    }
-    return ouo;
-}
-int cnt[63];
-int l, r, v1, v2;
-void pre()
-{
-    for (int i = l; i <= r; i++)
-    {
-        cnt[f(i)]++;
-    }
-    for (int i = 1; i < 63; i++)
-        cnt[i] = cnt[i - 1] + cnt[i];
-}
 
 void sol()
 {
-    while (cin >> l >> r >> v1 >> v2)
+    int n;
+    while (cin >> n)
     {
-        pre();
-        int a = 1, b = 1, tmp = cnt[1];
-        for(int i = 1; i < v1; i++)
+        int ans[n] = {0}, pre[n];
+        pr x[n];
+        for (int i = 0; i < n; i++)
         {
-            
+            cin >> x[i].F;
+            x[i].S = i;
         }
-        else if (tmp > v2)
+        sort(x, x + n);
+        pre[0] = x[0].F;
+        for (int i = 1; i < n; i++)
         {
+            ans[x[i].S] = x[i].F * i - pre[i - 1];
+            pre[i] = pre[i - 1] + x[i].F;
         }
+        for (int i = 0; i < n; i++)
+        {
+            ans[x[i].S] -= (pre[n - 1] - pre[i]) - x[i].F * (n - i - 1);
+        }
+        for (int i = 0; i < n; i++)
+            cout << ans[i] << " ";
+        cout << endl;
     }
 }
 
@@ -57,12 +48,10 @@ signed main()
 {
     Koying;
     int t = 1;
-    pre();
     //while (cin >> t)
     while (t--)
     {
         sol();
-        END
     }
     return 0;
 }

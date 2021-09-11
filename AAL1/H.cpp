@@ -15,32 +15,45 @@ const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
+int n, v;
+int x[20];
+vector<string> ans;
+bool vis[20];
+void dfs(queue<int> q, int i, int j, int cnt)
+{
+    q.push(j * x[i]);
+    if (i == n - 1 && cnt == v)
+    {
+        string owo;
+        owo += to_string(q.front());
+        q.pop();
+        while (q.size())
+        {
+            owo += '^' + to_string(q.front());
+            q.pop();
+        }
+        owo += "=" + to_string(v);
+        ans.push_back(owo);
+        return;
+    }
+    if (i == n - 1)
+        return;
+    dfs(q, i + 1, 1, cnt ^ x[i + 1]);
+    dfs(q, i + 1, 1, cnt);
+}
+
 void sol()
 {
-    int n;
-    while (cin >> n)
+    while (cin >> n >> v)
     {
-        int x[n], ans = INF, sum = 0;
+        queue<int> q;
         for (int i = 0; i < n; i++)
-        {
             cin >> x[i];
-            sum += x[i];
-        }
-        for (int i = 1; i < (1 << n); i++)
-        {
-            int cnt = 0, a = i, tmp = 0;
-            while (a)
-            {
-                if (a & 1)
-                {
-                    tmp += x[cnt];
-                }
-                cnt++;
-                a >>= 1;
-            }
-            ans = min(ans, abs(tmp - (sum - tmp)));
-        }
-        cout << ans << endl;
+        dfs(q, 0, 0, 0);
+        dfs(q, 0, 1, x[0]);
+        cout << ans.size() << endl;
+        for (string i : ans)
+            cout << i << endl;
     }
 }
 

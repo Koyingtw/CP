@@ -15,31 +15,53 @@ const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
+int n, ans = 0;
+vector<int> v[100005];
+
+int dfs(int i)
+{
+    if (v[i].size() == 0)
+        return 0;
+    int mx = 0;
+    for (int j : v[i])
+    {
+        int tmp = dfs(j);
+        mx = max(mx, tmp);
+    }
+    ans += mx + 1;
+    return mx + 1;
+}
+
 void sol()
 {
-    int n;
     while (cin >> n)
     {
-        int x[n], ans = INF, sum = 0;
-        for (int i = 0; i < n; i++)
+        set<int> s;
+        ans = 0;
+        for (int i = 1; i <= n; i++)
         {
-            cin >> x[i];
-            sum += x[i];
-        }
-        for (int i = 1; i < (1 << n); i++)
-        {
-            int cnt = 0, a = i, tmp = 0;
-            while (a)
+            int t;
+            cin >> t;
+            int in;
+            v[i].clear();
+            while (t--)
             {
-                if (a & 1)
-                {
-                    tmp += x[cnt];
-                }
-                cnt++;
-                a >>= 1;
+                cin >> in;
+                v[i].push_back(in);
+                s.insert(in);
             }
-            ans = min(ans, abs(tmp - (sum - tmp)));
         }
+        int tmp = 1;
+        for (int i : s)
+        {
+            if (i != tmp)
+            {
+                break;
+            }
+            tmp++;
+        }
+        cout << tmp << endl;
+        dfs(tmp);
         cout << ans << endl;
     }
 }

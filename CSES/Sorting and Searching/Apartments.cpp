@@ -31,30 +31,29 @@ void sol()
     int n, m, k;
     while (cin >> n >> m >> k)
     {
-        int ans = 0, tmp = -1;
-        fr(i, 0, n) cin >> x[i];
-        fr(i, 0, m) cin >> y[i];
+        int ans = 0, tmp = 0;
+        int x[n], y[m];
+        for (int i = 0; i < n; i++)
+            cin >> x[i];
+        for (int i = 0; i < m; i++)
+            cin >> y[i];
         sort(x, x + n);
         sort(y, y + m);
-        fr(i, 0, m)
+        for (int i = 0; i < n; i++)
         {
-            if (tmp >= n)
+            if (tmp == m)
                 break;
-            if (x[tmp + 1] > y[i] + k)
-                continue;
-            fr(j, tmp + 1, n)
+            if (y[tmp] <= x[i] + k && y[tmp] >= x[i] - k)
             {
-                tmp = j;
-                if (x[j] > y[i] + k)
-                {
-                    tmp--;
-                    break;
-                }
-                if (x[j] >= y[i] - k && x[j] <= y[i] + k)
-                {
-                    ans++;
-                    break;
-                }
+                ans++;
+                tmp++;
+            }
+            else if (y[tmp] > x[i] + k)
+                continue;
+            else
+            {
+                i--;
+                tmp++;
             }
         }
         cout << ans << endl;

@@ -3,44 +3,43 @@
 #define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
 #define pr pair<int, int>
-#define F first
 #define S second
 #define max(a, b) (a > b ? a : b)
 #define min(a, b) (a < b ? a : b)
 #define DB(a) cout << a << endl;
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
-#define END cout.flush();
 const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
+
 void sol()
 {
-    int n;
-    while (cin >> n)
+    int n, k;
+    while (cin >> n >> k)
     {
-        int x[n], ans = INF, sum = 0;
-        for (int i = 0; i < n; i++)
+        int a, b;
+        cin >> a >> b;
+        int ans = n;
+        pr tmp = {0, 0};
+        for (int i = 0; i <= 10; i++)
         {
-            cin >> x[i];
-            sum += x[i];
-        }
-        for (int i = 1; i < (1 << n); i++)
-        {
-            int cnt = 0, a = i, tmp = 0;
-            while (a)
+            for (int j = 0; j <= 10; j++)
             {
-                if (a & 1)
+                if (n - a * j - b * i >= k && n - a * j - b * i < ans)
                 {
-                    tmp += x[cnt];
+                    tmp = {j, i};
+                    ans = n - a * j - b * i;
                 }
-                cnt++;
-                a >>= 1;
+                if (n - a * j - b * i >= k && n - a * j - b * i == ans && tmp.first < j)
+                {
+                    tmp = {j, i};
+                    ans = n - a * j - b * i;
+                }
             }
-            ans = min(ans, abs(tmp - (sum - tmp)));
         }
-        cout << ans << endl;
+        cout << tmp.first << " " << tmp.second << " " << ans - k << endl;
     }
 }
 
@@ -52,7 +51,6 @@ signed main()
     while (t--)
     {
         sol();
-        END
     }
     return 0;
 }

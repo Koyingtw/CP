@@ -3,6 +3,8 @@
 #define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
 #define pr pair<int, int>
+#define fr(i, a, b) for (int i = a; i < b; i++)
+#define rf(i, a, b) for (int i = a; i >= b; i--)
 #define F first
 #define S second
 #define max(a, b) (a > b ? a : b)
@@ -15,41 +17,31 @@ const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-int f(int x)
-{
-    int ouo = 0;
-    while (x)
-    {
-        ouo += x % 10;
-        x /= 10;
-    }
-    return ouo;
-}
-int cnt[63];
-int l, r, v1, v2;
-void pre()
-{
-    for (int i = l; i <= r; i++)
-    {
-        cnt[f(i)]++;
-    }
-    for (int i = 1; i < 63; i++)
-        cnt[i] = cnt[i - 1] + cnt[i];
-}
 
 void sol()
 {
-    while (cin >> l >> r >> v1 >> v2)
+    string n, m;
+    while (cin >> n >> m)
     {
-        pre();
-        int a = 1, b = 1, tmp = cnt[1];
-        for(int i = 1; i < v1; i++)
+        set<char> s;
+        for (int i = 0; i < m.size(); i++)
         {
-            
+            s.insert(m[i]);
         }
-        else if (tmp > v2)
+        int a = 0, b = 0;
+        for (int i = 0; i < n.size(); i++)
         {
+            if (m[i] == n[i])
+            {
+                a++;
+                continue;
+            }
+            else if (s.count(n[i]))
+            {
+                b++;
+            }
         }
+        cout << a << " " << b << endl;
     }
 }
 
@@ -57,7 +49,6 @@ signed main()
 {
     Koying;
     int t = 1;
-    pre();
     //while (cin >> t)
     while (t--)
     {

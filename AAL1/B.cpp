@@ -15,55 +15,20 @@ const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-int n, k, t;
-
-bool cmp(pr a, pr b)
-{
-    if (a.S >= k && b.S >= k)
-        return a.F > b.F;
-    else
-        return a.S >= k;
-}
 
 void sol()
 {
-    while (cin >> n >> k >> t)
-    {
-        pr x[n];
-        for (int i = 0; i < n; i++)
-            x[i] = {i + 1, 0};
-        while (t--)
-        {
-            int a;
-            cin >> a;
-            x[a - 1].S++;
-        }
-        sort(x, x + n, cmp);
-        int cnt = 0;
-        for (int i = 0; i < n; i++)
-        {
-            if (x[i].S < k)
-                break;
-            cnt++;
-        }
-        cout << cnt << endl;
-        for (int i = 0; i < cnt; i++)
-        {
-            cout << x[i].F << " ";
-        }
-        cout << endl;
-    }
 }
 
 signed main()
 {
     Koying;
     int t = 1;
-    //while (cin >> t)
-    while (t--)
-    {
-        sol();
-        END
-    }
+    while (cin >> t)
+        while (t--)
+        {
+            sol();
+            END
+        }
     return 0;
 }

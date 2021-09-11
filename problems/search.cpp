@@ -3,52 +3,39 @@
 #define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
 #define pr pair<int, int>
-#define F first
 #define S second
 #define max(a, b) (a > b ? a : b)
 #define min(a, b) (a < b ? a : b)
 #define DB(a) cout << a << endl;
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
-#define END cout.flush();
 const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-int f(int x)
-{
-    int ouo = 0;
-    while (x)
-    {
-        ouo += x % 10;
-        x /= 10;
-    }
-    return ouo;
-}
-int cnt[63];
-int l, r, v1, v2;
-void pre()
-{
-    for (int i = l; i <= r; i++)
-    {
-        cnt[f(i)]++;
-    }
-    for (int i = 1; i < 63; i++)
-        cnt[i] = cnt[i - 1] + cnt[i];
-}
 
 void sol()
 {
-    while (cin >> l >> r >> v1 >> v2)
+    int n, q;
+    while (cin >> n >> q)
     {
-        pre();
-        int a = 1, b = 1, tmp = cnt[1];
-        for(int i = 1; i < v1; i++)
+        int x[n];
+        map<int, int> m;
+
+        for (int i = 0; i < n; i++)
         {
-            
+            cin >> x[i];
+            m[x[i]]++;
         }
-        else if (tmp > v2)
+        while (q--)
         {
+            int in;
+            cin >> in;
+            int a, b, c;
+            a = lower_bound(x, x + n, in) - x;
+            b = (m[in] > 0 ? m[in] - 1 : 0);
+            c = n - (upper_bound(x, x + n, in) - x);
+            cout << a << " " << b << " " << c << endl;
         }
     }
 }
@@ -57,12 +44,10 @@ signed main()
 {
     Koying;
     int t = 1;
-    pre();
     //while (cin >> t)
     while (t--)
     {
         sol();
-        END
     }
     return 0;
 }

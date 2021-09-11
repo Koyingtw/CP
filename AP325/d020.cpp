@@ -15,41 +15,35 @@ const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-int f(int x)
-{
-    int ouo = 0;
-    while (x)
-    {
-        ouo += x % 10;
-        x /= 10;
-    }
-    return ouo;
-}
-int cnt[63];
-int l, r, v1, v2;
-void pre()
-{
-    for (int i = l; i <= r; i++)
-    {
-        cnt[f(i)]++;
-    }
-    for (int i = 1; i < 63; i++)
-        cnt[i] = cnt[i - 1] + cnt[i];
-}
 
 void sol()
 {
-    while (cin >> l >> r >> v1 >> v2)
+    int n, k;
+    while (cin >> n >> k)
     {
-        pre();
-        int a = 1, b = 1, tmp = cnt[1];
-        for(int i = 1; i < v1; i++)
+        int x[n];
+        int ans = -INF;
+        for (int i = 0; i < n; i++)
         {
-            
+            cin >> x[i];
+            if (i)
+                x[i] += x[i - 1];
+            if (x[i] <= k)
+                ans = max(ans, x[i]);
         }
-        else if (tmp > v2)
+        set<int> s{0};
+        for (int i = 0; i < n; i++)
         {
+            auto find = s.lower_bound(x[i] - k); //x[i] - x[j] == k  x[j] = x[i] - k
+            if (x[i] - *find <= k)
+                ans = max(ans, x[i] - *find);
+            if (find != s.begin())
+                find--;
+            if (x[i] - *find <= k)
+                ans = max(ans, x[i] - *find);
+            s.insert(x[i]);
         }
+        cout << ans << endl;
     }
 }
 
@@ -57,7 +51,6 @@ signed main()
 {
     Koying;
     int t = 1;
-    pre();
     //while (cin >> t)
     while (t--)
     {

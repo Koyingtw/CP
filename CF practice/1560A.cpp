@@ -15,54 +15,53 @@ const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-int f(int x)
+int ans[1005];
+short dp[102];
+void pree()
 {
-    int ouo = 0;
-    while (x)
+    int tmp = 1, i = 1;
+    while (tmp <= 1000)
     {
-        ouo += x % 10;
-        x /= 10;
+        if (i % 3 != 0 && i % 10 != 3)
+        {
+            dp[tmp++] = i;
+        }
+        i++;
     }
-    return ouo;
 }
-int cnt[63];
-int l, r, v1, v2;
 void pre()
 {
-    for (int i = l; i <= r; i++)
+    int cnt = 1;
+    for (int i = 0; i < 1005; i++)
     {
-        cnt[f(i)]++;
+        while (cnt % 10 == 3 || cnt % 3 == 0)
+            cnt++;
+        ans[i] = cnt;
+        cnt++;
     }
-    for (int i = 1; i < 63; i++)
-        cnt[i] = cnt[i - 1] + cnt[i];
+    for (int i = 0; i < 1005; i++)
+    {
+        cout << i + 1 << ": " << dp[i + 1] << endl;
+    }
 }
-
 void sol()
 {
-    while (cin >> l >> r >> v1 >> v2)
-    {
-        pre();
-        int a = 1, b = 1, tmp = cnt[1];
-        for(int i = 1; i < v1; i++)
-        {
-            
-        }
-        else if (tmp > v2)
-        {
-        }
-    }
+    int n;
+    cin >> n;
+    cout << ans[n - 1] << endl;
 }
 
 signed main()
 {
     Koying;
     int t = 1;
+    pree();
     pre();
-    //while (cin >> t)
-    while (t--)
-    {
-        sol();
-        END
-    }
+    while (cin >> t)
+        while (t--)
+        {
+            sol();
+            END
+        }
     return 0;
 }

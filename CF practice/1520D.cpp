@@ -14,23 +14,30 @@
 const int INF = 0x3f3f3f3f;
 using namespace std;
 /******************************************************************************/
-
 void sol()
 {
     int n;
     cin >> n;
     int x[n], ans = 0;
-    map<int, int> m;
-    fr(i, 0, n)
+    for (int i = 0; i < n; i++)
     {
         cin >> x[i];
-        if (i)
-        {
-            ans += m[x[i] - i];
-        }
-        m[x[i] - i]++;
+        x[i] -= i;
     }
-    DB(ans);
+    sort(x, x + n);
+    int cnt = 1;
+    for (int i = 1; i < n; i++)
+    {
+        if (x[i] == x[i - 1])
+            cnt++;
+        else
+        {
+            ans += cnt * (cnt - 1);
+            cnt = 1;
+        }
+    }
+    ans += cnt * (cnt - 1);
+    cout << ans / 2 << endl;
 }
 
 signed main()

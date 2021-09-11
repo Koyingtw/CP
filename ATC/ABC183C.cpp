@@ -15,49 +15,44 @@ const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-int f(int x)
-{
-    int ouo = 0;
-    while (x)
-    {
-        ouo += x % 10;
-        x /= 10;
-    }
-    return ouo;
-}
-int cnt[63];
-int l, r, v1, v2;
-void pre()
-{
-    for (int i = l; i <= r; i++)
-    {
-        cnt[f(i)]++;
-    }
-    for (int i = 1; i < 63; i++)
-        cnt[i] = cnt[i - 1] + cnt[i];
-}
 
 void sol()
 {
-    while (cin >> l >> r >> v1 >> v2)
+    int n, k;
+    while (cin >> n >> k)
     {
-        pre();
-        int a = 1, b = 1, tmp = cnt[1];
-        for(int i = 1; i < v1; i++)
+        int x[n][n], ans = 0;
+        for (int i = 0; i < n; i++)
         {
-            
+            for (int j = 0; j < n; j++)
+            {
+                cin >> x[i][j];
+            }
         }
-        else if (tmp > v2)
+        vector<int> v;
+        for (int i = 1; i < n; i++)
+            v.push_back(i);
+        do
         {
-        }
+            int tmp = 0;
+            int sum = 0;
+            for (int i : v)
+            {
+                sum += x[tmp][i];
+                tmp = i;
+            }
+            sum += x[tmp][0];
+            if (sum == k)
+                ans++;
+
+        } while (next_permutation(v.begin(), v.end()));
+        cout << ans << endl;
     }
 }
-
 signed main()
 {
     Koying;
     int t = 1;
-    pre();
     //while (cin >> t)
     while (t--)
     {
