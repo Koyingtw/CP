@@ -58,7 +58,7 @@ void makestring()
 void make()
 {
 
-    long long n = 10000, q = 200000, maxN = 100000000, maxQ = q;
+    long long n = 100000, q = 100000, maxN = n, maxQ = q;
     string s = argv;
     stringstream ss;
     int num;
@@ -74,21 +74,21 @@ void make()
     {
         q = randfun() % 100000 + 1;
     }
-    cout << n << endl;
-    file << n << endl;
+    cout << n << " " << q << endl;
+    file << n << " " << q << endl;
     vector<ll> arr;
     vector<ll> arr1;
     ll mul = randfun();
 
     for (int i = 0; i < n; ++i)
     {
-        file << randfun() % 1000 + 1 << " " << randfun() % 1000 + 1 << " " << randfun() % 1000 + 1 << endl;
+        file << randfun() % maxN + 1 << " ";
     }
-    return;
+    file << endl;
 
     for (int i = 0; i < q; ++i)
     {
-        file << randfun() % 1000000000 + 1 << endl;
+        file << randfun() % n + 1 << endl;
         //arr1.push_back(mul * tmp % maxQ);
     }
     return;

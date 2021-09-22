@@ -10,58 +10,34 @@
 #define DB(a) cout << a << endl;
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
-#define END cout.flush();
+#if ONLINE_JUDGE
+#define endl "\n"
+#endif
 const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
 vector<int> v[100005];
-int col[100005];
-bool vis[100005];
-bool dfs(int i, int colar)
-{
-    vis[i] = 1;
-    col[i] = colar;
-    bool yes = 1;
-    for (int e : v[i])
-    {
-        if (!vis[e])
-        {
-            yes &= dfs(e, 1 ^ colar);
-        }
-        else if (col[i] == col[e])
-            yes = 0;
-    }
-    return yes;
-}
-
 void sol()
 {
     int n, m;
     while (cin >> n >> m)
     {
+        ans = 0;
         MEM(vis, 0);
-        for (int i = 0; i < m; i++)
+        while (m--)
         {
             int a, b;
             cin >> a >> b;
             v[a].push_back(b);
-            v[b].push_back(a);
         }
-        bool ans = 1;
-        for (int i = 1; i <= n; i++)
+        queue<pr> q;
+        q.push(1, 0);
+        while (q.size())
         {
-            if (!vis[i])
-                ans &= dfs(i, 1);
+            for (int e :)
         }
-        if (!ans)
-            cout << "IMPOSSIBLE" << endl;
-        else
-        {
-            for (int i = 1; i <= n; i++)
-                cout << col[i] + 1 << " ";
-            cout << endl;
-        }
+        cout << ans << endl;
     }
 }
 
@@ -73,7 +49,6 @@ signed main()
     while (t--)
     {
         sol();
-        END
     }
     return 0;
 }

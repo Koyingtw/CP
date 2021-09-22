@@ -23,72 +23,63 @@ int n, m;
 int vis[200005];
 bool out = 0;
 
-void dfs(int i, stack<int> s)
-{
-    if (out)
-        return;
-    s.push(i);
-    if (i == 1)
-    {
-        out = 1;
-        while (s.size())
-        {
-            cout << s.top() << " ";
-            s.pop();
-        }
-        cout << endl;
-        return;
-    }
-    for (int j : v[i])
-    {
-        if (vis[j] == vis[i] - 1)
-        {
-            dfs(j, s);
-            break;
-        }
-    }
-    return;
-}
-
 void sol()
 {
     while (cin >> n >> m)
     {
-        while (m--)
+        vector<int> v[n + 1];
+        int dis[n + 1];
+        bool vis[n + 1];
+        MEM(dis, 63);
+        MEM(vis, 0);
+        for (int i = 0; i < m; i++)
         {
             int a, b;
             cin >> a >> b;
             v[a].push_back(b);
             v[b].push_back(a);
         }
-        vis[1] = 1;
-        queue<pr> q;
-        q.push({1, 1});
+        queue<int> q;
+        q.push(1);
+        dis[1] = 0;
         while (q.size())
         {
-            pr now = q.front();
+            int u = q.front();
             q.pop();
-            for (int i : v[now.F])
+            for (int e : v[u])
             {
-                if (!vis[i])
+                if (dis[e] > dis[u] + 1)
                 {
-                    q.push({i, now.S + 1});
+                    dis[e] = dis[u] + 1;
+                    q.push(e);
                 }
-                if (vis[i])
-                    vis[i] = min(vis[i], now.S + 1);
-                else
-                    vis[i] = now.S + 1;
             }
         }
-        if (vis[n] == 0)
-        {
+        if (dis[n] > m)
             cout << "IMPOSSIBLE" << endl;
-        }
         else
         {
-            stack<int> ans;
-            cout << vis[n] << endl;
-            dfs(n, ans);
+            vector<int> ans;
+            ans.push_back(n);
+            int now = n;
+            while (dis[n]--)
+            {
+                //cout << dis[n] << endl;
+                for (int e : v[now])
+                {
+                    if (dis[e] == dis[n] && e != n)
+                    {
+                        ans.push_back(e);
+                        now = e;
+                        break;
+                    }
+                }
+            }
+            //ans.push_back(1);
+            cout << ans.size() << endl;
+            for (int i = ans.size() - 1; i >= 0; i--)
+                cout << ans[i] << " ";
+            cout << endl;
         }
     }
 }

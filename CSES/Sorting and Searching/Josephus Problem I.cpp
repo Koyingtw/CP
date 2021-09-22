@@ -10,32 +10,31 @@
 #define DB(a) cout << a << endl;
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
-#define END cout.flush();
+#if ONLINE_JUDGE
+#define endl "\n"
+#endif
 const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
+int a[200005];
+
+int jos(int n, int k)
+{
+    int p = 0;
+    for (int i = 2; i <= n; i++)
+        p = (p + k) % i;
+    return p + 1;
+}
 
 void sol()
 {
-    int n;
+    int n, k = 2;
     while (cin >> n)
     {
-        multiset<int> s;
-        for (int i = 0; i < n; i++)
-        {
-            int a;
-            cin >> a;
-            auto it = s.upper_bound(a);
-            if (it == s.end())
-                s.insert(a);
-            else
-            {
-                s.erase(it);
-                s.insert(a);
-            }
-        }
-        cout << s.size() << endl;
+        for (int i = 1; i <= n; i++)
+            cin >> a[i];
+        int p = 0
     }
 }
 
@@ -47,7 +46,6 @@ signed main()
     while (t--)
     {
         sol();
-        END
     }
     return 0;
 }

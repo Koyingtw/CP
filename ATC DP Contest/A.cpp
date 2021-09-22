@@ -21,21 +21,16 @@ void sol()
     int n;
     while (cin >> n)
     {
-        multiset<int> s;
+        int x[n], dp[n];
         for (int i = 0; i < n; i++)
+            cin >> x[i];
+        dp[0] = 0;
+        dp[1] = abs(x[1] - x[0]);
+        for (int i = 2; i < n; i++)
         {
-            int a;
-            cin >> a;
-            auto it = s.upper_bound(a);
-            if (it == s.end())
-                s.insert(a);
-            else
-            {
-                s.erase(it);
-                s.insert(a);
-            }
+            dp[i] = min(dp[i - 2] + abs(x[i - 2] - x[i]), dp[i - 1] + abs(x[i] - x[i - 1]));
         }
-        cout << s.size() << endl;
+        cout << dp[n - 1] << endl;
     }
 }
 

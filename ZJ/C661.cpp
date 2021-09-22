@@ -18,36 +18,36 @@ using namespace std;
 
 void sol()
 {
-    int n;
-    while (cin >> n)
+    int n, m;
+    cin >> n >> m;
+    int ans = 0;
+    int tmp = 5;
+    n -= 5, m -= 5;
+    while (m > 0)
     {
-        multiset<int> s;
-        for (int i = 0; i < n; i++)
-        {
-            int a;
-            cin >> a;
-            auto it = s.upper_bound(a);
-            if (it == s.end())
-                s.insert(a);
-            else
-            {
-                s.erase(it);
-                s.insert(a);
-            }
-        }
-        cout << s.size() << endl;
+        ans += m;
+        tmp *= 5;
+        m -= tmp;
     }
+    tmp = 5;
+    while (n > 0)
+    {
+        ans += n;
+        tmp *= 5;
+        n -= tmp;
+    }
+    cout << ans << endl;
 }
 
 signed main()
 {
     Koying;
     int t = 1;
-    //while (cin >> t)
-    while (t--)
-    {
-        sol();
-        END
-    }
+    while (cin >> t)
+        while (t--)
+        {
+            sol();
+            END
+        }
     return 0;
 }

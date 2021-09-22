@@ -21,21 +21,30 @@ void sol()
     int n;
     while (cin >> n)
     {
-        multiset<int> s;
+        int x[n][3];
+        int dp[n][3];
         for (int i = 0; i < n; i++)
+            for (int j = 0; j < 3; j++)
+                cin >> x[i][j];
+        for (int i = 0; i < n; i++)
+            MEM(dp[i], 0);
+        for (int i = 0; i < 3; i++)
+            dp[0][i] = x[0][i];
+        for (int i = 1; i < n; i++)
         {
-            int a;
-            cin >> a;
-            auto it = s.upper_bound(a);
-            if (it == s.end())
-                s.insert(a);
-            else
+            for (int j = 0; j < 3; j++)
             {
-                s.erase(it);
-                s.insert(a);
+                int mx = 0;
+                for (int k = 0; k < 3; k++)
+                {
+                    if (k == j)
+                        continue;
+                    mx = max(mx, dp[i - 1][k] + x[i][j]);
+                }
+                dp[i][j] = mx;
             }
         }
-        cout << s.size() << endl;
+        cout << max(dp[n - 1][0], max(dp[n - 1][1], dp[n - 1][2])) << endl;
     }
 }
 

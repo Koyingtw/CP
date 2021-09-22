@@ -18,24 +18,25 @@ using namespace std;
 
 void sol()
 {
-    int n;
-    while (cin >> n)
+    int n, w;
+    while (cin >> n >> w)
     {
-        multiset<int> s;
+        pr x[n];
+        int dp[w + 1], ans = 0;
+        for (int i = 0; i < n; i++)
+            cin >> x[i].F >> x[i].S;
+        MEM(dp, 0);
         for (int i = 0; i < n; i++)
         {
-            int a;
-            cin >> a;
-            auto it = s.upper_bound(a);
-            if (it == s.end())
-                s.insert(a);
-            else
+            for (int j = w; j >= x[i].F; j--)
             {
-                s.erase(it);
-                s.insert(a);
+                dp[j] = max(dp[j], dp[j - x[i].F] + x[i].S);
             }
         }
-        cout << s.size() << endl;
+        for (int i = 0; i <= w; i++)
+            ans = max(ans, dp[i]);
+
+        cout << ans << endl;
     }
 }
 

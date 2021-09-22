@@ -10,44 +10,46 @@
 #define DB(a) cout << a << endl;
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
-#define END cout.flush();
+#if ONLINE_JUDGE
+#define endl "\n"
+#endif
 const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
 
+void f(int n)
+{
+    int cnt = 1;
+    int tmp = 9;
+    int sum = 0;
+    while (n > cnt * tmp)
+    {
+        n -= cnt * tmp;
+        sum += tmp;
+        cnt++;
+        tmp *= 10;
+    }
+    string ans = to_string(sum + (n + cnt - 1) / cnt);
+    //cout << ans << endl;
+    cout << ans[((n - 1) % cnt)] << endl;
+}
+
 void sol()
 {
     int n;
-    while (cin >> n)
-    {
-        multiset<int> s;
-        for (int i = 0; i < n; i++)
-        {
-            int a;
-            cin >> a;
-            auto it = s.upper_bound(a);
-            if (it == s.end())
-                s.insert(a);
-            else
-            {
-                s.erase(it);
-                s.insert(a);
-            }
-        }
-        cout << s.size() << endl;
-    }
+    cin >> n;
+    f(n);
 }
 
 signed main()
 {
     Koying;
     int t = 1;
-    //while (cin >> t)
-    while (t--)
-    {
-        sol();
-        END
-    }
+    while (cin >> t)
+        while (t--)
+        {
+            sol();
+        }
     return 0;
 }
