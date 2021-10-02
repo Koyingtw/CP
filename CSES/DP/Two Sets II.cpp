@@ -17,28 +17,35 @@ const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-int a[200005];
-
-int g(int n, int k)
-{
-    if (n == 1)
-        return 1;
-    else
-    {
-        int a = (g(n - 1, k) + k) % n;
-        cout << a << endl;
-        return a;
-    }
-}
+const int P = 1e9 + 7;
 void sol()
 {
-    int n, k = 2;
+    int n;
     while (cin >> n)
     {
+        int sum = n * (n + 1) / 2;
+        if (sum % 2)
+        {
+            cout << 0 << endl;
+            continue;
+        }
+        int dp[sum / 2 + 1];
+        MEM(dp, 0);
+        dp[0] = 1;
+        int x[n];
         for (int i = 1; i <= n; i++)
-            a[i] = i;
-        int now = k;
-        cout << g(n, k) << endl;
+        {
+            for (int j = sum / 2; j >= i; j--)
+            {
+                dp[j] += dp[j - i];
+                dp[j] %= P;
+            }
+        }
+
+        int ans = dp[sum / 2];
+        ans *= 500000004;
+        ans %= P;
+        cout << ans << endl;
     }
 }
 

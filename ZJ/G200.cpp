@@ -17,28 +17,32 @@ const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-int a[200005];
 
-int g(int n, int k)
-{
-    if (n == 1)
-        return 1;
-    else
-    {
-        int a = (g(n - 1, k) + k) % n;
-        cout << a << endl;
-        return a;
-    }
-}
 void sol()
 {
-    int n, k = 2;
-    while (cin >> n)
+    string root;
+    int n, q;
+    while (cin >> root >> n >> q)
     {
-        for (int i = 1; i <= n; i++)
-            a[i] = i;
-        int now = k;
-        cout << g(n, k) << endl;
+        map<string, int> m;
+        vector<string> v[10005];
+        v[1].push_back(root);
+        m[root] = 1;
+        for (int i = 0; i < n; i++)
+        {
+            string a, b;
+            cin >> a >> b;
+            m[b] = m[a] + 1;
+            v[m[b]].push_back(b);
+        }
+        for (int i = 0; i < q; i++)
+        {
+            int a;
+            cin >> a;
+            for (string it : v[a])
+                cout << it << " ";
+            cout << endl;
+        }
     }
 }
 

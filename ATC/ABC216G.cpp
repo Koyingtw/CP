@@ -17,28 +17,19 @@ const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-int a[200005];
-
-int g(int n, int k)
+struct in
 {
-    if (n == 1)
-        return 1;
-    else
-    {
-        int a = (g(n - 1, k) + k) % n;
-        cout << a << endl;
-        return a;
-    }
-}
+    int a, b, cnt;
+};
+
 void sol()
 {
-    int n, k = 2;
-    while (cin >> n)
+    int n, m;
+    while (cin >> n >> m)
     {
-        for (int i = 1; i <= n; i++)
-            a[i] = i;
-        int now = k;
-        cout << g(n, k) << endl;
+        int x[n] = {0};
+        int pre[n];
+        in
     }
 }
 
