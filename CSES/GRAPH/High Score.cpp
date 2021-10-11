@@ -8,54 +8,77 @@
              `._.'          `._.'
 */
 
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 #define int long long
-#define pr pair<int,int>
-#define fr(i,a,b) for(int i=a;i<b;i++)
-#define rf(i,a,b) for(int i=a;i>=b;i--)
-#define Koying ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
-#define INFINITY 9223372036854775807
-#define INF -INFINITY
+#define pr pair<int, int>
+#define fr(i, a, b) for (int i = a; i < b; i++)
+#define rf(i, a, b) for (int i = a; i >= b; i--)
+#define F first
+#define S second
+#define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+#define INF 0x3f3f3f3f
+#define MEM(x, n) memset(x, n, sizeof(x))
 
 using namespace std;
+int n, m;
+int dist[2505];
+int cnt[2505];
+vector<pr> v[2505];
+bitset<2505> inque;
+bool SFPA()
+{
+    MEM(cnt, 0);
+    queue<int> q;
+    q.push(1);
+    inque[1] = 1;
 
+    while (q.size())
+    {
+        int now = q.front();
+        q.pop();
+        inque[now] = 0;
+        for (pr e : v[now])
+            if (dist[e.F] < dist[now] + e.S)
+            {
+                if (++cnt[e.F] > n)
+                    return false;
+                dist[e.F] = dist[now] + e.S;
+                if (inque[e.F] == 0)
+                {
+                    q.push(e.F);
+                    inque[e.F] = 1;
+                }
+            }
+    }
+    return true;
+}
 void sol()
 {
-    int n,m;
-    while(cin>>n>>m)
+    while (cin >> n >> m)
     {
-        int x[3][m],ans[n+1];
-        bool can=0;
-        //can.insert(1);
-        memset(ans,128,sizeof(ans));
-        ans[1]=0;
-        //for(int i:ans) cout<<i<<endl;
-        fr(i,0,m)
+        for (int i = 0; i < 2505; i++)
+            dist[i] = -INF;
+        dist[1] = 0;
+        for (int i = 0; i < m; i++)
         {
-            fr(j,0,3) 
-            {
-                cin>>x[j][i];
-            }
-            if(x[0][i]==n && x[1][i]==1) can=1;
-            //if(can.count(x[0][i])) can.insert(x[1][i]);
-            ans[x[1][i]]=max(ans[x[0][i]]+x[2][i],ans[x[1][i]]);
+            int a, b, dis;
+            cin >> a >> b >> dis;
+            v[a].push_back({b, dis});
         }
-        fr(k,0,n/2)
+        if (SFPA())
+            cout << dist[n] << endl;
+        else
         {
-            fr(i,0,m)
-            
-            {
-                ans[x[1][i]]=max(ans[x[0][i]]+x[2][i],ans[x[1][i]]);
-                //if(can.count(x[0][i])) can.insert(x[1][i]);
-            }   
+            int tmp = dist[n];
+            //cout << tmp << endl;
+            SFPA();
+            if (dist[n] != tmp)
+                cout << -1 << endl;
+            else
+                cout << dist[n] << endl;
         }
-        int mx=INF;
-        if(can==0)
-            cout<<ans[n]<<endl;
-        else cout<<-1<<endl;
     }
-}   
-
+}
 
 signed main()
 {

@@ -10,7 +10,9 @@
 #define DB(a) cout << a << endl;
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
-#define END cout.flush();
+#if ONLINE_JUDGE
+#define endl "\n"
+#endif
 const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
@@ -20,23 +22,27 @@ void sol()
 {
     int n;
     cin >> n;
-    int sq = sqrt(n);
-    if (sq * sq == n)
+    int x[n], sum = 0, ans = 0;
+    double k = 0.0;
+    for (int i = 0; i < n; i++)
     {
-        cout << sq << " " << 1 << endl;
+        cin >> x[i];
+        sum += x[i];
+    }
+    if ((sum * 2) % n != 0)
+    {
+        cout << 0 << endl;
         return;
     }
-    if ((sq + 1) * (sq + 1) - sq == n)
+    int find = ((sum * 2) / n);
+    k = (double)(sum / n);
+    map<int, int> m;
+    for (int i = 0; i < n; i++)
     {
-        cout << sq + 1 << " " << sq + 1 << endl;
-        return;
+        ans += m[find - x[i]];
+        m[x[i]]++;
     }
-    if (n > (sq + 1) * (sq + 1) - sq)
-    {
-        cout << sq + 1 << " " << (sq + 1) * (sq + 1) - n + 1 << endl;
-        return;
-    }
-    cout << n - sq * sq << " " << sq + 1 << endl;
+    cout << ans << endl;
 }
 
 signed main()
@@ -47,7 +53,6 @@ signed main()
         while (t--)
         {
             sol();
-            END
         }
     return 0;
 }

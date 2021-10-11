@@ -18,18 +18,54 @@ using namespace std;
 
 void sol()
 {
-    int n, m;
-    while (cin >> n >> m)
+    int n, k;
+    while (cin >> n >> k)
     {
-        int x[n + 1] = {0}, ans = 0, sum = 0;
+        int x[n];
+        int l = 1, r = 0;
         for (int i = 0; i < n; i++)
         {
-            cin >> x[i + 1];
-            x[i + 1] += x[i];
+            cin >> x[i];
+            r += x[i];
         }
-        int find = 0;
-        sum = x[n];
-        
+
+        int m = (l + r) >> 1;
+        int ans = r;
+        while (l < r)
+        {
+            int tmp = 0;
+            int ouo = 0;
+            m = (l + r) >> 1;
+            for (int i = 0; i < n; i++)
+            {
+                if (x[i] > m)
+                {
+                    tmp = INF;
+                    break;
+                }
+                if (ouo + x[i] > m)
+                {
+                    tmp++;
+                    ouo = x[i];
+                }
+                else if (ouo + x[i] == m)
+                {
+                    tmp++;
+                    ouo = 0;
+                }
+                else
+                    ouo += x[i];
+            }
+            if (ouo)
+                tmp++;
+            if (tmp <= k)
+            {
+                r = m;
+            }
+            else
+                l = m + 1;
+        }
+        cout << l << endl;
     }
 }
 
