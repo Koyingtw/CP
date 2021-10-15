@@ -1,6 +1,7 @@
 #pragma region
 #include <bits/stdc++.h>
 #define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+
 #define int long long
 #define pr pair<int, int>
 #define F first
@@ -10,7 +11,9 @@
 #define DB(a) cout << a << endl;
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
-#define END cout.flush();
+#if ONLINE_JUDGE
+#define endl "\n"
+#endif
 const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
@@ -20,20 +23,36 @@ void sol()
 {
     int n;
     cin >> n;
-    vector<int> v(n);
     int x[n];
     for (int i = 0; i < n; i++)
+        cin >> x[i];
+    int mn = *min_element(x, x + n);
+    int mx = *max_element(x, x + n);
+    //sort(x, x + n);
+    // for (int i = 0; i < n; i++)
+    //     cout << x[i] << " ";
+    // cout << endl;
+
+    if (mx - mn == 0)
     {
-        cin >> v[i];
-        x[i] = v[i];
+        cout << -1 << endl;
+        return;
     }
-    sort(v.begin(), v.end());
-    v.erase(unique(v.begin(), v.end()), v.end());
-    for (int i = 0; i < n; i++)
+    int ans = 1;
+    for (int i = mx - mn; i > 0; i--)
     {
-        cout << lower_bound(v.begin(), v.end(), x[i]) - v.begin() + 1 << " ";
+        bool yes = 1;
+        for (int j = 0; j < n; j++)
+        {
+            if ((x[j] - mn) % i != 0)
+                yes = 0;
+        }
+        if (yes)
+        {
+            cout << i << endl;
+            break;
+        }
     }
-    cout << endl;
 }
 
 signed main()
@@ -44,7 +63,6 @@ signed main()
         while (t--)
         {
             sol();
-            END
         }
     return 0;
 }

@@ -10,7 +10,10 @@
 #define DB(a) cout << a << endl;
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
-#define END cout.flush();
+#if ONLINE_JUDGE
+#define endl "\n"
+#endif
+#define lowbit(x) x &(-x)
 const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
@@ -18,18 +21,27 @@ using namespace std;
 
 void sol()
 {
-    int n, m;
-    while (cin >> n >> m)
+    int n;
+    while (cin >> n)
     {
-        stack<int> s;
-        s.push({1, n});
-        int tmp = n, a;
-        while (m--)
+        int high = n * n;
+        int l = 0, r = high, m = (l + r) >> 1;
+        while (l < r)
         {
-            cin >> a;
-            pr now = s.top();
+            int cnt = 0;
+            m = (l + r) >> 1;
+            for (int i = 1; i <= n; i++)
+            {
+                cnt += min(m / i, n);
+            }
+            if (cnt > high / 2)
+            {
+                r = m;
+            }
+            else
+                l = m + 1;
         }
-        cout << endl;
+        cout << r << endl;
     }
 }
 
@@ -41,7 +53,6 @@ signed main()
     while (t--)
     {
         sol();
-        END
     }
     return 0;
 }

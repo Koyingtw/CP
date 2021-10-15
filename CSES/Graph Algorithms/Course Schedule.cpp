@@ -17,38 +17,47 @@ const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-vector<int> v[100005];
-bool vis[100005];
-int dis[100005];
+
 void sol()
 {
     int n, m;
     while (cin >> n >> m)
     {
-
-        MEM(vis, 0);
-        MEM(dis, 0);
+        vector<int> v[n + 1];
+        int deg[n + 1] = {0};
         while (m--)
         {
             int a, b;
             cin >> a >> b;
             v[a].push_back(b);
+            deg[b]++;
         }
-        queue<pr> q;
-        q.push({1, 0});
+        queue<int> q;
+        for (int i = 1; i <= n; i++)
+            if (deg[i] == 0)
+                q.push(i);
+        vector<int> ans;
         while (q.size())
         {
-            pr now = q.front();
+            int now = q.front();
             q.pop();
-            vis[now.F] = 1;
-            dis[now.F] = now.S;
-            for (int e : v[now.F])
+            ans.push_back(now);
+
+            for (int e : v[now])
             {
-                if (!vis[e] && dis[e] < now.S + 1)
-                    q.push({e, now.S + 1});
+                deg[e]--;
+                if (deg[e] == 0)
+                    q.push(e);
             }
         }
-        cout << dis[n] << endl;
+        if (ans.size() != n)
+            cout << "IMPOSSIBLE" << endl;
+        else
+        {
+            for (int i = 0; i < ans.size(); i++)
+                cout << ans[i] << " ";
+            cout << endl;
+        }
     }
 }
 

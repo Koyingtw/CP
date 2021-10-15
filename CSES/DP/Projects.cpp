@@ -1,6 +1,8 @@
+
 #pragma region
 #include <bits/stdc++.h>
 #define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+#define ll long long
 #define int long long
 #define pr pair<int, int>
 #define F first
@@ -13,22 +15,22 @@
 #if ONLINE_JUDGE
 #define endl "\n"
 #endif
+#define lowbit(x) x &(-x)
 const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-struct in
+int dp[1000005];
+struct Node
 {
-    int a, b, p;
-} x[200005];
-int dp[400005];
-
-bool cmp(in q, in e)
+    int a, b, w;
+} x[1000005];
+bool cmp(Node A, Node B)
 {
-    if (q.b != e.b)
-        return q.a < e.a;
+    if (A.a != B.a)
+        return A.a < B.a;
     else
-        return q.b < e.b;
+        return A.b < B.b;
 }
 
 void sol()
@@ -36,34 +38,26 @@ void sol()
     int n;
     while (cin >> n)
     {
-        set<int> s;
-        map<int, int> m;
-        for (int i = 0; i < n; i++)
-        {
-            cin >> x[i].a >> x[i].b >> x[i].p;
-            s.insert(x[i].a);
-            s.insert(x[i].b);
-        }
+        vector<int> v;
         int cnt = 1;
-        for (int it : s)
-        {
-            m[it] = cnt;
-            cnt++;
-        }
         for (int i = 0; i < n; i++)
         {
-            x[i].a = m[x[i].a];
-            x[i].b = m[x[i].b];
+            cin >> x[i].a >> x[i].b >> x[i].w;
+            x[i].b++;
+            v.push_back(x[i].a);
         }
+        sort(v.begin(), v.end());
+        v.erase(unique(v.begin(), v.end()), v.end());
         sort(x, x + n, cmp);
-        //MEM(dp, 0);
-        int ans = 0;
+        ll ans = 0, mx = 0;
+        int A, B;
         for (int i = 0; i < n; i++)
         {
-            for (int j = x[i].a; j >= x[i - 1].b && j >= 0; j--)
-                dp[x[i].a] = max(dp[x[i].a], dp[j]);
-            dp[x[i].b] = max(dp[x[i].b], dp[x[i].a - 1] + x[i].p);
-            ans = max(ans, dp[x[i].b]);
+            A = lower_bound(v.begin(), v.end(), x[i].a) - v.begin() + 1;
+            B = lower_bound(v.begin(), v.end(), x[i].b) - v.begin() + 1;
+            dp[A] = max(dp[A], dp[A - 1]);
+            dp[B] = max(dp[B], dp[A] + x[i].w);
+            ans = max(ans, dp[B]);
         }
         cout << ans << endl;
     }
@@ -73,7 +67,7 @@ signed main()
 {
     Koying;
     int t = 1;
-    //while (cin >> t)
+    // while (cin >> t)
     while (t--)
     {
         sol();

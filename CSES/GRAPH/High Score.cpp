@@ -23,8 +23,23 @@ using namespace std;
 int n, m;
 int dist[2505];
 int cnt[2505];
+bool rnd = 0, vis[2505];
+
 vector<pr> v[2505];
 bitset<2505> inque;
+
+void dfs(int i)
+{
+    vis[i] = 1;
+    for (pr e : v[i])
+    {
+        if (e.F != i && vis[e.F])
+            rnd = 1;
+        else if (!vis[e.F])
+            dfs(e.F);
+    }
+    vis[i] = 0;
+}
 bool SFPA()
 {
     MEM(cnt, 0);
@@ -64,6 +79,13 @@ void sol()
             int a, b, dis;
             cin >> a >> b >> dis;
             v[a].push_back({b, dis});
+        }
+        rnd = 0;
+        dfs(1);
+        if (rnd == 1)
+        {
+            cout << -1 << endl;
+            return;
         }
         if (SFPA())
             cout << dist[n] << endl;

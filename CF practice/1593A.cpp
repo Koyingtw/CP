@@ -10,7 +10,9 @@
 #define DB(a) cout << a << endl;
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
-#define END cout.flush();
+#if ONLINE_JUDGE
+#define endl "\n"
+#endif
 const int INF = 0x3f3f3f3f;
 using namespace std;
 #pragma endregion
@@ -18,21 +20,27 @@ using namespace std;
 
 void sol()
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    int x[n];
-    for (int i = 0; i < n; i++)
-    {
-        cin >> v[i];
-        x[i] = v[i];
-    }
-    sort(v.begin(), v.end());
-    v.erase(unique(v.begin(), v.end()), v.end());
-    for (int i = 0; i < n; i++)
-    {
-        cout << lower_bound(v.begin(), v.end(), x[i]) - v.begin() + 1 << " ";
-    }
+    int a, b, c;
+    cin >> a >> b >> c;
+    int mx = max(a, max(b, c));
+    if (a == mx && a != b && a != c)
+        cout << 0 << " ";
+    else if (a == mx)
+        cout << 1 << " ";
+    else
+        cout << mx - a + 1 << " ";
+    if (b == mx && a != b && c != b)
+        cout << 0 << " ";
+    else if (b == mx)
+        cout << 1 << " ";
+    else
+        cout << mx - b + 1 << " ";
+    if (c == mx && a != c && b != c)
+        cout << 0 << " ";
+    else if (c == mx)
+        cout << 1 << " ";
+    else
+        cout << mx - c + 1 << " ";
     cout << endl;
 }
 
@@ -44,7 +52,6 @@ signed main()
         while (t--)
         {
             sol();
-            END
         }
     return 0;
 }
