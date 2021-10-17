@@ -20,35 +20,36 @@ using namespace std;
 vector<int> v[100005];
 bool vis[100005];
 int dis[100005];
+
+int dfs(int x)
+{
+    if (dis[x])
+        return dis[x];
+    for (int e : v[x])
+    {
+        dis[e] = dfs(e);
+        dis[x] = max(dis[x], dis[e] + 1);
+    }
+    return dis[x];
+}
 void sol()
 {
     int n, m;
     while (cin >> n >> m)
     {
-
-        MEM(vis, 0);
-        MEM(dis, 0);
+        int ans = 0;
         while (m--)
         {
             int a, b;
             cin >> a >> b;
             v[a].push_back(b);
         }
-        queue<pr> q;
-        q.push({1, 0});
-        while (q.size())
-        {
-            pr now = q.front();
-            q.pop();
-            vis[now.F] = 1;
-            dis[now.F] = now.S;
-            for (int e : v[now.F])
-            {
-                if (!vis[e] && dis[e] < now.S + 1)
-                    q.push({e, now.S + 1});
-            }
-        }
-        cout << dis[n] << endl;
+        for (int i = 1; i <= n; i++)
+            dfs(i);
+        for (int i = 1; i <= n; i++)
+            ans = max(ans, dis[i]);
+
+        cout << ans << endl;
     }
 }
 

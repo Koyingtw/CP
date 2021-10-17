@@ -3,61 +3,54 @@
 #define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
 #define pr pair<int, int>
+#define F first
 #define S second
 #define max(a, b) (a > b ? a : b)
 #define min(a, b) (a < b ? a : b)
 #define DB(a) cout << a << endl;
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
+#if ONLINE_JUDGE
+#define endl "\n"
+#endif
+#define lowbit(x) x &(-x)
 const int INF = 0x3f3f3f3f;
+const int P = 1e9 + 7;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
 
-int x[105][105];
-int n, m;
-int ans = INF;
-void dfs(int i, int j, int sum)
-{
-    sum += x[i][j];
-    if (j == m - 1)
-    {
-        ans = min(ans, sum);
-        return;
-    }
-    else
-    {
-        for (int k = 0; k < n; k++)
-        {
-            if (k == i)
-            {
-                dfs(k, j + 1, sum);
-            }
-            else
-            {
-                dfs(k, j + 1, sum + 10);
-            }
-        }
-    }
-}
-
 void sol()
 {
+    int n, m;
     while (cin >> n >> m)
     {
-        ans = INF;
+        char c[n][m];
+        int dp[n][m];
+
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                cin >> c[i][j];
+        MEM(dp, 0);
+        dp[0][0] = (c[0][0] == '.');
         for (int i = 0; i < n; i++)
         {
             for (int j = 0; j < m; j++)
             {
-                cin >> x[i][j];
+                if (i + j == 0)
+                    continue;
+                if (c[i][j] == '#')
+                    continue;
+                if (i == 0)
+                    dp[i][j] = dp[i][j - 1];
+                else if (j == 0)
+                    dp[i][j] = dp[i - 1][j];
+                else
+                    dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+                dp[i][j] %= P;
             }
         }
-        for (int i = 0; i < n; i++)
-        {
-            dfs(i, 0, 0);
-        }
-        cout << ans << endl;
+        cout << dp[n - 1][m - 1] << endl;
     }
 }
 
