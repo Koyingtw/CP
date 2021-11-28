@@ -73,21 +73,9 @@ void sol()
             v[b].push_back(a);
         }
         dfs(1, 1);
-        // for (int i = 1; i <= n; i++)
-        //     cout << D[i] << " " << L[i] << endl;
         sort(nodeAP.begin(), nodeAP.end());
         cout << "Case #" << Case << ":";
         bool yes = true;
-        // for (int i = 1; i <= n; i++)
-        // {
-        //     if (!D[i])
-        //         yes = false;
-        // }
-        // if (!yes)
-        // {
-        //     cout << 0 << " " << 0 << endl;
-        //     continue;
-        // }
         cout << nodeAP.size() << " ";
         for (int it : nodeAP)
             cout << it << " ";
@@ -101,7 +89,7 @@ signed main()
 {
     Koying;
     int t = 1;
-    //while (cin >> t)
+    // while (cin >> t)
     while (t--)
     {
         sol();
