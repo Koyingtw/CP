@@ -1,73 +1,79 @@
-/*
-.-..-.             _             
-: :' ;            :_;            
-:   '  .--. .-..-..-.,-.,-. .--. 
-: :.`.' .; :: :; :: :: ,. :' .; :
-:_;:_;`.__.'`._. ;:_;:_;:_;`._. ;
-             .-. :          .-. :
-             `._.'          `._.'
-*/
+// Problem: Sum of Two Values
+// Contest: CSES - CSES Problem Set
+// URL: https://cses.fi/problemset/task/1640
+// Memory Limit: 512 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
 
+#pragma region
+#pragma optimize("O3")
 #include <bits/stdc++.h>
-#define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+#define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
-#define pr pair<int, int>
-#define fr(i, a, b) for (int i = a; i < b; i++)
-#define rf(i, a, b) for (int i = a; i >= b; i--)
+#define pii pair<int, int>
+#define vi vector<int>
+#define vii vector<pair<int, int>>
+#define pqueue priority_queue
+#define pb push_back
 #define F first
 #define S second
 #define max(a, b) (a > b ? a : b)
 #define min(a, b) (a < b ? a : b)
-#define DB(a) cout << a << endl;
+#define cmax(a, b) a = (a > b ? a : b)
+#define cmin(a, b) a = (a < b ? a : b)
+#define put(x) cout << x << endl;
+#define putarr(x) for(int i = 0; i < sizeof(x); i++) cout << x[i] << (" \n")[i == sizeof(x) - 1]; 
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
+#define lowbit(x) x &(-x)
+#if !LOCAL
+#define endl "\n"
+#endif
 const int INF = 0x3f3f3f3f;
+const int P = 1e9+7;
+
 using namespace std;
-
-void OUT(string s)
-{
-    cout << s;
-    return;
-}
-
-bool cmp(pr a, pr b)
-{
-    if (a.second != b.second)
-        return a.second < b.second;
-    else
-        return a.first < b.first;
-}
+#pragma endregion
+/******************************************************************************/
+#define MAXN 200005
+#define MAXM 1000005 
+int n, m;
+pii x[MAXN];
 
 void sol()
 {
-    int n;
-    while (cin >> n)
-    {
-        pr x[n];
-        fr(i, 0, n)
-        {
-            cin >> x[i].first >> x[i].second;
-        }
-        sort(x, x + n, cmp);
-        int tmp = x[0].second;
-        int ans = 1;
-        fr(i, 1, n)
-        {
-            if (x[i].first < tmp)
-                continue;
-            else
-            {
-                ans++;
-                tmp = x[i].second;
-            }
-        }
-        DB(ans);
-    }
+	cin >> n >> m;
+	for(int i = 0; i < n; i++)	
+	{
+		cin >> x[i].F;
+		x[i].S = i + 1;
+	}
+	//sort(x, x + n);
+	map<int, int> mp;
+	for(int i = 0; i < n; i++)
+	{
+		if(mp[m - x[i].F] != 0)
+		{
+			cout << mp[m - x[i].F] << " " << i + 1 << endl;
+			return;
+		}
+		mp[x[i].F] = i + 1;
+	}
+	cout << "IMPOSSIBLE" << endl;
 }
 
 signed main()
 {
-    Koying
-    sol();
+    Weakoying;
+    int t = 1;
+    //while (cin >> t)
+    {
+    	while (t--)
+        {
+            sol();
+        }
+    }
+        
     return 0;
 }

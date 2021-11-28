@@ -1,123 +1,128 @@
 #pragma region
+#pragma optimize("O3")
 #include <bits/stdc++.h>
-#define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+#define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
-#define pr pair<int, int>
+#define pii pair<int, int>
+#define vi vector<int>
+#define vii vector<pair<int, int>>
+#define pqueue priority_queue
+#define pb push_back
 #define F first
 #define S second
 #define max(a, b) (a > b ? a : b)
 #define min(a, b) (a < b ? a : b)
-#define DB(a) cout << a << endl;
+#define cmax(a, b) a = (a > b ? a : b)
+#define cmin(a, b) a = (a < b ? a : b)
+#define put(x) cout << x << endl;
+#define putarr(x) for(int i = 0; i < sizeof(x); i++) cout << x[i] << (" \n")[i == sizeof(x) - 1]; 
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
-#if ONLINE_JUDGE
+#define lowbit(x) x &(-x)
+#if !LOCAL
 #define endl "\n"
 #endif
 const int INF = 0x3f3f3f3f;
+const int P = 1e9+7;
+
 using namespace std;
 #pragma endregion
 /******************************************************************************/
 #define MAXN 500005
-int n, q;
-int x[MAXN], seg[MAXN * 4], tag[MAXN * 4];
-
-void init()
+#define MAXM 1000005 
+int n, m;
+int a[MAXN];
+struct Node
 {
-    MEM(seg, 0);
-    MEM(tag, 0);
-    return;
+	int l, r, tag, sum;
+	void update(int val){sum += val * (r - l + 1), tag += val;}
+}seg[4 * MAXN];
+void pull(int id)
+{
+	seg[id].sum = seg[id * 2].sum + seg[id * 2 + 1].sum;
 }
-
+void push(int id)
+{
+	int tag = seg[id].tag;
+	seg[id * 2].update(tag);
+	seg[id * 2 + 1].update(tag);
+	seg[id].tag = 0;
+}
 void build(int id, int l, int r)
 {
-    if (l == r)
-    {
-        seg[id] = x[l - 1];
-        return;
-    }
-    int m = (l + r) >> 1;
-    build(id * 2, l, m);
-    build(id * 2 + 1, m + 1, r);
-    seg[id] = seg[id * 2] + seg[id * 2 + 1];
+	seg[id].l = l, seg[id].r = r;
+	if(l == r)
+	{
+		seg[id].sum = a[l];
+		return;
+	}
+	int m = (l + r) / 2;
+	build(id * 2, l, m);
+	build(id * 2 + 1, m + 1, r);
+	pull(id);
 }
-void push(int id, int l, int r)
+
+void update(int id, int ql, int qr, int val)
 {
-    seg[id] += tag[id] * (r - l + 1);
-    tag[id * 2] += tag[id];
-    tag[id * 2 + 1] += tag[id];
-    tag[id] = 0;
+	int l = seg[id].l, r = seg[id].r;
+	if(ql <= l && r <= qr)
+	{
+		seg[id].update(val);
+		return;
+	}
+	if(ql > r || qr < l) return;
+	else
+	{
+		push(id);
+		update(id * 2, ql, qr, val);
+		update(id * 2 + 1, ql, qr, val);
+		pull(id);
+	}
 }
-
-int query(int id, int l, int r, int ql, int qr)
+int query(int id, int ql, int qr)
 {
-    push(id, l, r);
-    //cout << seg[id] << endl;
-    if (r < ql || qr < l)
-        return 0;
-    int m = (l + r) >> 1;
-    if (ql <= l && qr >= r)
-        return seg[id];
-    return query(id * 2, l, m, ql, qr) + query(id * 2 + 1, m + 1, r, ql, qr);
+	int l = seg[id].l, r = seg[id].r;
+	if(ql <= l && r <= qr)
+		return seg[id].sum;
+	if(ql > r || qr < l) return 0;
+	push(id);
+	return query(id * 2, ql, qr) + query(id * 2 + 1, ql, qr);
 }
-void update(int id, int l, int r, int ql, int qr, int val)
-{
-    push(id, l, r);
-    if (r < ql || qr < l)
-        return;
-    if (ql <= l && qr >= r)
-    {
-        //seg[id] += val;
-        tag[id] += val;
-        //cout << l << " " << r << " " << seg[id] << " " << tag[id] << endl;
-        return;
-    }
-    int m = (l + r) >> 1;
-
-    update(id * 2, l, m, ql, qr, val);
-    update(id * 2 + 1, m + 1, r, ql, qr, val);
-
-    seg[id] = seg[id * 2] + seg[id * 2 + 1];
-}
-
 void sol()
 {
-    while (cin >> n)
-    {
-        for (int i = 0; i < n; i++)
-            cin >> x[i];
-        init();
-        build(1, 1, n);
-
-        cin >> q;
-        while (q--)
-        {
-            int v, a, b, k;
-            cin >> v;
-            if (v == 1)
-            {
-                cin >> a >> b >> k;
-                update(1, 1, n, a, b, k);
-                cout << seg[1] << endl;
-            }
-            else
-            {
-                cin >> a >> b;
-                cout << query(1, 1, n, a, b) << endl;
-                cout << seg[1] << endl;
-            }
-        }
-        //cout << seg[1] << endl;
-    }
+	cin >> n;
+	for(int i = 1; i <= n; i++)
+		cin >> a[i];
+	build(1, 1, n);
+	int q, v, a, b, k;
+	cin >> q;
+	while(q--)
+	{
+		cin >> v;
+		if(v == 1)
+		{
+			cin >> a >> b >> k;
+			update(1, a, b, k);
+		}
+		else
+		{
+			cin >> a >> b;
+			cout << query(1, a, b) << endl;
+		}
+	}
 }
 
 signed main()
 {
-    Koying;
+    Weakoying;
     int t = 1;
     //while (cin >> t)
-    while (t--)
     {
-        sol();
+    	while (t--)
+        {
+            sol();
+        }
     }
+        
     return 0;
 }

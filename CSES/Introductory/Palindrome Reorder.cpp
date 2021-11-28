@@ -1,87 +1,85 @@
-/*
-.-..-.             _             
-: :' ;            :_;            
-:   '  .--. .-..-..-.,-.,-. .--. 
-: :.`.' .; :: :; :: :: ,. :' .; :
-:_;:_;`.__.'`._. ;:_;:_;:_;`._. ;
-             .-. :          .-. :
-             `._.'          `._.'
-*/
+// Problem: Palindrome Reorder
+// Contest: CSES - CSES Problem Set
+// URL: https://cses.fi/problemset/task/1755
+// Memory Limit: 512 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
 
+#pragma region
+#pragma optimize("O3")
 #include <bits/stdc++.h>
+#define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
-#define pr pair<int, int>
-#define fr(i, a, b) for (int i = a; i < b; i++)
-#define rf(i, a, b) for (int i = a; i >= b; i--)
+#define pii pair<int, int>
+#define vi vector<int>
+#define vii vector<pair<int, int>>
+#define pqueue priority_queue
+#define pb push_back
 #define F first
 #define S second
-#define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-#define DB(a) cout << a << endl;
-using namespace std;
+#define max(a, b) (a > b ? a : b)
+#define min(a, b) (a < b ? a : b)
+#define cmax(a, b) a = (a > b ? a : b)
+#define cmin(a, b) a = (a < b ? a : b)
+#define put(x) cout << x << endl;
+#define putarr(x) for(int i = 0; i < sizeof(x); i++) cout << x[i] << (" \n")[i == sizeof(x) - 1]; 
+#define stop system("pause");
+#define MEM(x, n) memset(x, n, sizeof(x));
+#define lowbit(x) x &(-x)
+#if !LOCAL
+#define endl "\n"
+#endif
+const int INF = 0x3f3f3f3f;
+const int P = 1e9+7;
 
-void OUT(string s)
-{
-    cout << s;
-    return;
-}
+using namespace std;
+#pragma endregion
+/******************************************************************************/
+#define MAXN 100005
+#define MAXM 1000005 
+int n, m;
 
 void sol()
 {
-    string s;
-    while (cin >> s)
-    {
-        map<char, int> m;
-        int yes = 2;
-        fr(i, 0, s.size())
-        {
-            m[s[i]]++;
-        }
-        for (auto i : m)
-        {
-            if (i.second % 2)
-                yes--;
-        }
-        if (yes <= 0)
-            cout << "NO SOLUTION" << endl;
-        else
-        {
-            char ct;
-            string ans;
-            for (auto i : m)
-            {
-                if (i.second % 2)
-                {
-                    fr(j, 0, i.second / 2)
-                        ans += i.first;
-                    ct = i.first;
-                }
-                else
-                {
-                    fr(j, 0, i.second / 2)
-                        ans += i.first;
-                }
-            }
-            if(yes == 1) ans += ct;
-            int sz = ans.size();
-            if (yes == 2)
-            {
-                rf(i, sz - 1, 0)
-                    ans += ans[i];
-                cout << ans << endl;
-            }
-            else
-            {
-                rf(i, sz - 2, 0)
-                    ans += ans[i];
-                cout << ans << endl;
-            }
-        }
-    }
+	string s;
+	cin >> s;
+	map<char, int> m;
+	for(char it: s) m[it]++;
+	char mid = 'a';
+	string ans;
+	for(auto [c, b]: m)
+	{
+		if(b & 1)
+		{
+			if(mid == 'a')
+				mid = c;
+			else
+			{
+				cout << "NO SOLUTION" << endl;
+				return;
+			}
+		}
+		for(int i = 0; i < b / 2; i++)
+			ans += c;
+	}
+	string tmp = ans;
+	reverse(tmp.begin(), tmp.end());
+	if(mid != 'a') ans += mid;
+	cout << ans + tmp << endl;
 }
 
 signed main()
 {
-    Koying
-    sol();
+    Weakoying;
+    int t = 1;
+    //while (cin >> t)
+    {
+    	while (t--)
+        {
+            sol();
+        }
+    }
+        
     return 0;
 }

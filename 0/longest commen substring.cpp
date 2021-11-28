@@ -15,29 +15,33 @@ const int INF = 0x3f3f3f3f;
 using namespace std;
 /******************************************************************************/
 
+int LCS(string a, string b)
+{
+    int dp[a.size() + 1][b.size() + 1];
+    int ans = 0;
+    MEM(dp[0], 0);
+    fr(i, 0, a.size())
+    {
+        MEM(dp[i + 1], 0);
+        fr(j, 0, b.size())
+        {
+            if (a[i] == b[j])
+            {
+                dp[i + 1][j + 1] = dp[i][j] + 1;
+            }
+            else
+                dp[i + 1][j + 1] = 0;
+            ans = max(dp[i + 1][j + 1], ans);
+        }
+    }
+    return ans;
+}
+
 void sol()
 {
     string a, b;
     while (cin >> a >> b)
     {
-        int dp[a.size() + 1][b.size() + 1];
-        int ans = 0;
-        MEM(dp[0], 0);
-        fr(i, 0, a.size())
-        {
-            MEM(dp[i + 1], 0);
-            fr(j, 0, b.size())
-            {
-                if (a[i] == b[j])
-                {
-                    dp[i + 1][j + 1] = dp[i][j] + 1;
-                }
-                else
-                    dp[i + 1][j + 1] = 0;
-                ans = max(dp[i + 1][j + 1], ans);
-            }
-        }
-        cout << ans << endl;
     }
 }
 
@@ -45,7 +49,7 @@ signed main()
 {
     Koying;
     int t = 1;
-    //while (cin >> t)
+    // while (cin >> t)
     while (t--)
         sol();
     return 0;

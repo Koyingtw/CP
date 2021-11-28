@@ -1,80 +1,103 @@
-#include<bits/stdc++.h>
-#define int int
-#define pr pair<int,int>
-#define fr(i,a,b) for(int i=a;i<b;i++)
-#define rf(i,a,b) for(int i=a;i>=b;i--)
-#define Koying ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+#pragma region
+#pragma optimize("O3")
+#include <bits/stdc++.h>
+#define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+#define int long long
+#define pii pair<int, int>
+#define vi vector<int>
+#define vii vector<pair<int, int>>
+#define pqueue priority_queue
+#define pb push_back
+#define F first
+#define S second
+#define max(a, b) (a > b ? a : b)
+#define min(a, b) (a < b ? a : b)
+#define cmax(a, b) a = (a > b ? a : b)
+#define cmin(a, b) a = (a < b ? a : b)
+#define put(x) cout << x << endl;
+#define putarr(x) for(int i = 0; i < sizeof(x); i++) cout << x[i] << (" \n")[i == sizeof(x) - 1]; 
+#define stop system("pause");
+#define MEM(x, n) memset(x, n, sizeof(x));
+#define lowbit(x) x &(-x)
+#if !LOCAL
+#define endl "\n"
+#endif
+const int INF = 0x3f3f3f3f;
+const int P = 1e9+7;
 
 using namespace std;
-int L,R;
-bool cmp(pr a,pr b)
+#pragma endregion
+/******************************************************************************/
+#define MAXN 100005
+#define MAXM 1000005 
+int n, m;
+pii x[MAXN], y[MAXN];
+
+bool cmp(pii a, pii b)
 {
-    if(a.first!=b.first) return a.first<b.first;
-    else return a.second<b.second;
+	if(a.S != b.S) return a.S < b.S;
+	else return a.F < b.F;
 }
-
-int ans(int n,pr *a)
-{
-    int sum=0;
-    int last=L,next=L;
-    if(a[0].first>L) return INT_MAX;
-    if(L==R)
-    {
-        fr(i,0,n+1)
-        {
-            if(i==n) return INT_MAX;
-            if(a[i].first<=L && a[i].second >=R) return 1;
-        }
-    }
-
-    fr(i,0,n+1)
-    {
-        if(i==n)
-        {
-            if(next<R && (L!=R)) return INT_MAX;
-        }
-        if(a[i].first>last)
-        {
-            last=next;
-            sum++;
-        }
-        next=max(next,a[i].second);
-    }
-    if(next>=R) return sum;
-    else return INT_MAX;
-}
-
 void sol()
 {
-    int a,b;
-    while(cin>>a>>b)
-    {
-        pr x[a],y[b];
-        fr(i,0,a) 
-        {
-            cin>>x[i].first>>x[i].second;
-        }
-        sort(x,x+a,cmp);
-        fr(i,0,b) 
-        {
-            int aa,bb;
-            cin>>aa>>bb;
-            y[i].first=aa,y[i].second=bb;
-        }
-        sort(y,y+b,cmp);
-        cin>>L>>R;
-        int aa=ans(a,x);
-        int bb=ans(b,y);
-        if(aa<=bb && aa!=INT_MAX) cout<<"A WIN"<<endl;
-        else if(aa>bb) cout<<"B WIN"<<endl; 
-        else cout<<"TIE"<<endl;
-    }
+	int X, Y;
+	while(cin >> n >> m)
+	{
+		for(int i = 0; i < n; i++)
+			cin >> x[i].F >> x[i].S;
+		for(int i = 0; i < m; i++)
+			cin >> y[i].F >> y[i].S;
+		sort(x, x + n, cmp);
+		sort(y, y + m, cmp);
+		cin >> X >> Y;
+		
+		int cnta = 1, cntb = 1;
+		int tmpa = X, tmpb = X;
+		int nowa = X, nowb = X;
+		for(int i = 0; i < n && nowa < Y; i++)
+		{
+			if(x[i].F <= tmpa)
+				cmax(nowa, x[i].S);
+			if(x[i].F > tmpa && x[i].S <= nowa)
+			{
+				cnta++;
+				tmpa = nowa;
+				nowa = x[i].S;
+			}
+		}
+		
+		for(int i = 0; i < m && nowb < Y; i++)
+		{
+			if(y[i].F <= tmpb)
+				cmax(nowb, y[i].S);
+			if(y[i].F > tmpb && y[i].S <= nowb)
+			{
+				cntb++;
+				tmpb = nowb;
+				nowb = y[i].S;
+			}
+		}
+		cout << nowa << " " << nowb << endl;
+		if(nowa >= Y && nowb >= Y)
+			cout << (cnta <= cntb ? "A WIN" : "B WIN") << endl;
+		else if(nowa >= Y || nowb >= Y)
+			cout << (nowa >= Y ? "A WIN" : "B WIN") << endl;
+		else
+			cout << "TIE" << endl;
+	}
 }
-
 
 signed main()
 {
-    Koying 
-    sol();
+    Weakoying;
+    int t = 1;
+    //while (cin >> t)
+    {
+    	while (t--)
+        {
+            sol();
+        }
+    }
+        
     return 0;
 }

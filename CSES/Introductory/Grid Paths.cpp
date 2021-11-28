@@ -31,7 +31,7 @@ void dfs(int x, int y, int dep, string ans)
 {
     if (vis[x][y])
         return;
-    cout << ans << endl;
+    //cout << ans << endl;
     if (x == 0 && y == 0 && dep == 48)
     {
         sum++;
@@ -45,8 +45,9 @@ void dfs(int x, int y, int dep, string ans)
 
     if (s[dep] == 'L')
     {
-        if (check(x - 1, y) == 0 &&)
+        if (check(x - 1, y) == 0 && !vis[x - 1][y - 1] && !vis[x + 1][y - 1])
         {
+        	return;
         }
         dfs(x - 1, y, dep + 1, ans + 'L');
     }

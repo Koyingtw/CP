@@ -1,58 +1,82 @@
-/*
-.-..-.             _             
-: :' ;            :_;            
-:   '  .--. .-..-..-.,-.,-. .--. 
-: :.`.' .; :: :; :: :: ,. :' .; :
-:_;:_;`.__.'`._. ;:_;:_;:_;`._. ;
-             .-. :          .-. :
-             `._.'          `._.'
-*/
+// Problem: Concert Tickets
+// Contest: CSES - CSES Problem Set
+// URL: https://cses.fi/problemset/task/1091
+// Memory Limit: 512 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
 
+#pragma region
+#pragma optimize("O3")
 #include <bits/stdc++.h>
-//#define int long long
-#define pr pair<int, int>
-#define fr(i, a, b) for (int i = a; i < b; i++)
-#define rf(i, a, b) for (int i = a; i >= b; i--)
-#define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+#define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+#define int long long
+#define pii pair<int, int>
+#define vi vector<int>
+#define vii vector<pair<int, int>>
+#define pqueue priority_queue
+#define pb push_back
+#define F first
+#define S second
+#define max(a, b) (a > b ? a : b)
+#define min(a, b) (a < b ? a : b)
+#define cmax(a, b) a = (a > b ? a : b)
+#define cmin(a, b) a = (a < b ? a : b)
+#define put(x) cout << x << endl;
+#define putarr(x) for(int i = 0; i < sizeof(x); i++) cout << x[i] << (" \n")[i == sizeof(x) - 1]; 
+#define stop system("pause");
+#define MEM(x, n) memset(x, n, sizeof(x));
+#define lowbit(x) x &(-x)
+#if !LOCAL
+#define endl "\n"
+#endif
+const int INF = 0x3f3f3f3f;
+const int P = 1e9+7;
 
 using namespace std;
-
-bool cmp(pr a, pr b)
-{
-    return a.first > b.first;
-}
-
+#pragma endregion
+/******************************************************************************/
+#define MAXN 200005
+#define MAXM 1000005 
+int n, m;
+int x[MAXN];
 void sol()
 {
-    int n, m;
-    while (cin >> n >> m)
-    {
-        int h[n];
-        int t[m];
-        multiset<int> s;
-        fr(i, 0, n)
-        {
-            cin >> h[i];
-            s.insert(h[i]);
-        }
-        fr(i, 0, m)
-        {
-            cin >> t[i];
-            auto find = s.upper_bound(t[i]);
-            if (find == s.begin())
-                cout << -1 << endl;
-            else
-            {
-                cout << *(--find) << endl;
-                s.erase(find);
-            }
-        }
-    }
+	cin >> n >> m;
+	for(int i = 0; i < n; i++) cin >> x[i];
+	multiset<int> s;
+	for(int i = 0; i < n; i++) s.insert(x[i]);
+	int a;
+	while(m--)
+	{
+		cin >> a;
+		auto it = s.upper_bound(a);
+		//cout << *prev(it) << endl;
+		if(it == s.begin())
+			cout << -1 << endl;
+		else if(*prev(it) > a)
+			cout << -1 << endl;
+		else
+		{
+			it--;
+			cout << *it << endl;
+			s.erase(it);
+			s.insert(INF);
+		}
+	}
 }
 
 signed main()
 {
-    Koying
-    sol();
+    Weakoying;
+    int t = 1;
+    //while (cin >> t)
+    {
+    	while (t--)
+        {
+            sol();
+        }
+    }
+        
     return 0;
 }

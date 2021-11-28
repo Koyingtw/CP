@@ -1,44 +1,74 @@
-#include<bits/stdc++.h>
+// Problem: Minimizing Coins
+// Contest: CSES - CSES Problem Set
+// URL: https://cses.fi/problemset/task/1634
+// Memory Limit: 512 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#pragma region
+#pragma optimize("O3")
+#include <bits/stdc++.h>
+#define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
-#define pr pair<int,int>
-#define fr(i,a,b) for(int i=a;i<b;i++)
-#define rf(i,a,b) for(int i=a;i>=b;i--)
-#define Koying ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+#define pii pair<int, int>
+#define vi vector<int>
+#define vii vector<pair<int, int>>
+#define pqueue priority_queue
+#define pb push_back
+#define F first
+#define S second
+#define max(a, b) (a > b ? a : b)
+#define min(a, b) (a < b ? a : b)
+#define cmax(a, b) a = (a > b ? a : b)
+#define cmin(a, b) a = (a < b ? a : b)
+#define put(x) cout << x << endl
+#define putarr(x) for(int i = 0; i < sizeof(x); i++) cout << x[i] << (" \n")[i == sizeof(x) - 1]; 
+#define stop system("pause");
+#define MEM(x, n) memset(x, n, sizeof(x));
+#define lowbit(x) x &(-x)
+#if !LOCAL
+#define endl "\n"
+#endif
+const int INF = 0x3f3f3f3f;
+const int P = 1e9+7;
 
 using namespace std;
-int dp[1000005];
-int p=1e9+7;
+#pragma endregion
+/******************************************************************************/
+#define MAXN 1000005
+#define MAXM 1000005 
+int n, m;
+int dp[MAXN];
+int x[105];
 void sol()
 {
-    int n,x;
-    while(cin>>n>>x)
-    {
-        int c[n];
-        fr(i,0,n) cin>>c[i];
-        sort(c,c+n);
-        dp[0]=0;
-        fr(i,1,x+1)
-        {
-            dp[i]=INT_MAX;
-            fr(j,0,n)
-            {
-                if(i<c[j]) 
-                {
-                    //dp[i]=0;
-                    break;
-                }
-                dp[i]=min(dp[i],dp[i-c[j]]+1)%p;
-            }
-            //cout<<dp[i]<<" ";
-        }
-        if(dp[x]==INT_MAX) cout<<-1<<endl;
-        else cout<<dp[x]<<endl;
-    }
+	cin >> n >> m;
+	MEM(dp, 63);
+	dp[0] = 0;
+	for(int i = 0; i < n; i++) cin >> x[i];
+	for(int i = 0; i < n; i++)
+	{
+		for(int j = x[i]; j <= m; j++)
+		{
+			cmin(dp[j], dp[j - x[i]] + 1);
+		}
+	}
+	if(dp[m] > INF) put(-1);
+	else put(dp[m]);
 }
 
 signed main()
 {
-    Koying 
-    sol();
+    Weakoying;
+    int t = 1;
+    //while (cin >> t)
+    {
+    	while (t--)
+        {
+            sol();
+        }
+    }
+        
     return 0;
 }

@@ -27,14 +27,11 @@ void sol()
         for (int i = 0; i < n; i++)
             cin >> x[i].F >> x[i].S;
         sort(x, x + n);
-        int ans = 1, tmp = x[0].F;
-        for (int i = 1; i < n; i++)
+        int ans = 0, tmp = 0;
+        for (int i = 0; i < n; i++)
         {
-            if (x[i].F + tmp <= x[i].S)
-            {
-                ans++;
-                tmp += x[i].F;
-            }
+            tmp += x[i].F;
+            ans += x[i].S - tmp;
         }
         cout << ans << endl;
     }
