@@ -71,8 +71,6 @@ void sol()
             v[b].push_back(a);
         }
         dfs(1, 1);
-        // for (int i = 1; i <= n; i++)
-        //     cout << D[i] << " " << L[i] << endl;
         sort(nodeAP.begin(), nodeAP.end());
         bool yes = true;
         cout << nodeAP.size() << endl;
