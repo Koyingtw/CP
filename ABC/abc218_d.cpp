@@ -1,3 +1,11 @@
+// Problem: D - Rectangles
+// Contest: AtCoder - AtCoder Beginner Contest 218
+// URL: https://atcoder.jp/contests/abc218/tasks/abc218_d
+// Memory Limit: 1024 MB
+// Time Limit: 4000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
 #pragma region
 #pragma optimize("O3")
 #include <bits/stdc++.h>
@@ -28,45 +36,49 @@ const int P = 1e9+7;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-#define MAXN 100005
+#define MAXN 20005
 #define MAXM 1000005 
-int n, m, K;
-
+int n, m;
+pii x[MAXN];
+set<int> s[2 * MAXN];
 void sol()
 {
-	cin >> K >> n >> m;
-	int x[n + 1][m + 1], pre[n + 1][m + 1];
-	MEM(pre, 0);
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			cin >> x[i][j];
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + x[i][j];
-	int ans = 0;
-	for(int i = 1; i <= n; i++)
+	cin >> n;
+	vector<int> v;
+	for(int i = 0; i < n; i++)
 	{
-		for(int k = i; k <= n; k++)
+		cin >> x[i].F >> x[i].S;
+		v.pb(x[i].F);
+		v.pb(x[i].S);
+	}
+	sort(v.begin(), v.end());
+	v.erase(unique(v.begin(), v.end()), v.end());
+	for(int i = 0; i < n; i++)
+	{
+		x[i].F = lower_bound(v.begin(), v.end(), x[i].F) - v.begin();
+		x[i].S = lower_bound(v.begin(), v.end(), x[i].S) - v.begin();
+		s[x[i].F].insert(x[i].S);
+	}
+	sort(x, x + n);
+	int ans = 0;
+	for(int i = 0; i < n - 1; i++)
+	{
+		for(int j = i + 1; j < n; j++)	
 		{
-			set<int> st;
-			for(int j = 1; j <= m; j++)
+			if(x[i].F != x[j].F)
 			{
-				int tmp = pre[k][j] - pre[i - 1][j];
-				if(tmp <= K) cmax(ans, tmp);
-				if(st.size())
-				{
-					if(st.lower_bound(tmp - K) != st.end())
-					{
-						int F = *(st.lower_bound(tmp - K));
-						if(tmp - F <= K)
-							cmax(ans, tmp - F);
-					}
-				}
-				st.insert(tmp);
+				//i = j;
+				break;
+			}
+			for(int k = x[i].F + 1; k < MAXN; k++)
+			{
+				if(s[k].count(x[i].S) && s[k].count(x[j].S))
+					ans++;
 			}
 		}
 	}
-	cout << ans << endl;
+	put(ans);
+	
 }
 
 signed main()

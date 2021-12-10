@@ -2,7 +2,7 @@
 #pragma optimize("O3")
 #include <bits/stdc++.h>
 #define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-#define int long long
+// #define int long long
 #define pii pair<int, int>
 #define vi vector<int>
 #define vii vector<pair<int, int>>
@@ -28,52 +28,68 @@ const int P = 1e9+7;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-#define MAXN 100005
-#define MAXM 1000005 
-int n, m, K;
-
-void sol()
+#define MAXX 100005
+#define MAXY 100005
+#define MAXM 230005 
+int n, p, q, k;
+vector<int> G[MAXX];
+bitset<MAXY> vis;
+int mx[MAXX], my[MAXY];
+bool dfs(int x)
 {
-	cin >> K >> n >> m;
-	int x[n + 1][m + 1], pre[n + 1][m + 1];
-	MEM(pre, 0);
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			cin >> x[i][j];
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + x[i][j];
-	int ans = 0;
-	for(int i = 1; i <= n; i++)
+	for(int y: G[x])
 	{
-		for(int k = i; k <= n; k++)
+		if(!vis[y])
 		{
-			set<int> st;
-			for(int j = 1; j <= m; j++)
+			vis[y] = true;
+			
+			if(my[y] < 0 || dfs(my[y]))
 			{
-				int tmp = pre[k][j] - pre[i - 1][j];
-				if(tmp <= K) cmax(ans, tmp);
-				if(st.size())
-				{
-					if(st.lower_bound(tmp - K) != st.end())
-					{
-						int F = *(st.lower_bound(tmp - K));
-						if(tmp - F <= K)
-							cmax(ans, tmp - F);
-					}
-				}
-				st.insert(tmp);
+				mx[x] = y;
+				my[y] = x;
+				return true;
 			}
 		}
 	}
-	cout << ans << endl;
+	return false;
+}
+
+
+int match()
+{
+	MEM(mx, -1);
+	MEM(my, -1);
+	int cnt = 0;
+	for(int x = 1; x <= p; x++)
+	{
+		if(mx[x] < 0)
+		{
+			vis.reset();
+			if(dfs(x)) cnt++;
+		}
+	}
+	return cnt;
+}
+
+void sol()
+{
+	cin >> p >> q >> k;
+	for(int i = 0; i < MAXX; i++)
+		G[i].clear();
+	for(int i = 0, a, b; i < k; i++)	
+	{
+		cin >> a >> b;
+		G[a].pb(b);
+	}
+	cout << match() << endl;
+	
 }
 
 signed main()
 {
     Weakoying;
     int t = 1;
-    //while (cin >> t)
+    while (cin >> t)
     {
     	while (t--)
         {

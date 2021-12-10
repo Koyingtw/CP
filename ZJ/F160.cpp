@@ -28,45 +28,34 @@ const int P = 1e9+7;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-#define MAXN 100005
+#define MAXN 10005
 #define MAXM 1000005 
-int n, m, K;
-
+int n, t;
+int x[MAXN], dp[MAXN];
 void sol()
 {
-	cin >> K >> n >> m;
-	int x[n + 1][m + 1], pre[n + 1][m + 1];
-	MEM(pre, 0);
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			cin >> x[i][j];
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + x[i][j];
-	int ans = 0;
+	cin >> t >> n;
 	for(int i = 1; i <= n; i++)
 	{
-		for(int k = i; k <= n; k++)
+		cin >> x[i];
+	}
+	x[0] = 0;
+	MEM(dp, 63);
+	dp[0] = 0;
+	int l = 0;
+	for(int i = 1; i <= n; i++)
+	{
+		for(int j = i - 1; j >= l; j--)
 		{
-			set<int> st;
-			for(int j = 1; j <= m; j++)
+			if(x[i] - x[j] > t)
 			{
-				int tmp = pre[k][j] - pre[i - 1][j];
-				if(tmp <= K) cmax(ans, tmp);
-				if(st.size())
-				{
-					if(st.lower_bound(tmp - K) != st.end())
-					{
-						int F = *(st.lower_bound(tmp - K));
-						if(tmp - F <= K)
-							cmax(ans, tmp - F);
-					}
-				}
-				st.insert(tmp);
+				l = j;
+				break;
 			}
+			cmin(dp[i], dp[j] + 1);
 		}
 	}
-	cout << ans << endl;
+	cout << dp[n] << endl;
 }
 
 signed main()

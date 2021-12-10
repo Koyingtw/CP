@@ -30,43 +30,11 @@ using namespace std;
 /******************************************************************************/
 #define MAXN 100005
 #define MAXM 1000005 
-int n, m, K;
+int n, m;
 
 void sol()
 {
-	cin >> K >> n >> m;
-	int x[n + 1][m + 1], pre[n + 1][m + 1];
-	MEM(pre, 0);
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			cin >> x[i][j];
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + x[i][j];
-	int ans = 0;
-	for(int i = 1; i <= n; i++)
-	{
-		for(int k = i; k <= n; k++)
-		{
-			set<int> st;
-			for(int j = 1; j <= m; j++)
-			{
-				int tmp = pre[k][j] - pre[i - 1][j];
-				if(tmp <= K) cmax(ans, tmp);
-				if(st.size())
-				{
-					if(st.lower_bound(tmp - K) != st.end())
-					{
-						int F = *(st.lower_bound(tmp - K));
-						if(tmp - F <= K)
-							cmax(ans, tmp - F);
-					}
-				}
-				st.insert(tmp);
-			}
-		}
-	}
-	cout << ans << endl;
+	
 }
 
 signed main()

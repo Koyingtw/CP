@@ -30,43 +30,40 @@ using namespace std;
 /******************************************************************************/
 #define MAXN 100005
 #define MAXM 1000005 
-int n, m, K;
+int n, m;
 
-void sol()
-{
-	cin >> K >> n >> m;
-	int x[n + 1][m + 1], pre[n + 1][m + 1];
-	MEM(pre, 0);
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			cin >> x[i][j];
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + x[i][j];
-	int ans = 0;
-	for(int i = 1; i <= n; i++)
-	{
-		for(int k = i; k <= n; k++)
-		{
-			set<int> st;
-			for(int j = 1; j <= m; j++)
-			{
-				int tmp = pre[k][j] - pre[i - 1][j];
-				if(tmp <= K) cmax(ans, tmp);
-				if(st.size())
-				{
-					if(st.lower_bound(tmp - K) != st.end())
-					{
-						int F = *(st.lower_bound(tmp - K));
-						if(tmp - F <= K)
-							cmax(ans, tmp - F);
-					}
-				}
-				st.insert(tmp);
-			}
+bool check(string s) {
+	while(s.size() > 1) {
+		int tmp = 0;
+		for(int i = 0; i < s.size(); i++)
+			tmp += s[i] - '0';
+		s = to_string(tmp);
+	}
+	return (s[0] - '0' == m);
+}
+
+void sol() {
+	cin >> n >> m;
+	cin.ignore();
+	string s;
+	cin >> s;
+	vector<string> v;
+	for(char k = '0'; k <= '9'; k++) {
+		for(int i = 0; i < n; i++) {
+			string tmp;
+			for(int j = 0; j < i; j++)
+				tmp += s[j];
+			tmp += k;
+			for(int j = i; j < s.size(); j++)
+				tmp += s[j];
+			if(check(tmp))
+				v.pb(tmp);
 		}
 	}
-	cout << ans << endl;
+	sort(v.begin(), v.end());
+	v.erase(unique(v.begin(), v.end()), v.end());
+	for(int i = 1; i < v.size() - 1; i++)
+		cout << v[i] << endl;
 }
 
 signed main()

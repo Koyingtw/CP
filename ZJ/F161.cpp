@@ -28,45 +28,57 @@ const int P = 1e9+7;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-#define MAXN 100005
+#define MAXN 200005
 #define MAXM 1000005 
-int n, m, K;
+int n, m;
+vector<int> G[MAXN];
+vector<int> v;
+bitset<MAXN> vis;
+int in[MAXN];
+int col[MAXN];
+int ans = 0;
+void dfs(int i, map<int, int> mp, int dep)
+{
+	vis[i] = true;
+	mp[col[i]]++;
+	cmax(ans, mp[col[i]]);
+	for(int e: G[i])
+	{
+		if(!vis[e])
+		{
+			dfs(e, mp, dep);
+		}
+	}
+	vis[i] = false;
+}
 
 void sol()
 {
-	cin >> K >> n >> m;
-	int x[n + 1][m + 1], pre[n + 1][m + 1];
-	MEM(pre, 0);
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			cin >> x[i][j];
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + x[i][j];
-	int ans = 0;
+	cin >> n;
+	for(int i = 0; i < n; i++)
+	{
+		cin >> col[i];
+		v.pb(col[i]);
+	}
+	sort(v.begin(), v.end());
+	v.erase(unique(v.begin(), v.end()), v.end());
+	// cout << v.size() << endl;
 	for(int i = 1; i <= n; i++)
 	{
-		for(int k = i; k <= n; k++)
-		{
-			set<int> st;
-			for(int j = 1; j <= m; j++)
-			{
-				int tmp = pre[k][j] - pre[i - 1][j];
-				if(tmp <= K) cmax(ans, tmp);
-				if(st.size())
-				{
-					if(st.lower_bound(tmp - K) != st.end())
-					{
-						int F = *(st.lower_bound(tmp - K));
-						if(tmp - F <= K)
-							cmax(ans, tmp - F);
-					}
-				}
-				st.insert(tmp);
-			}
-		}
+		col[i] = lower_bound(v.begin(), v.end(), col[i]) - v.begin();
+		// cout << col[i] << endl;	
 	}
-	cout << ans << endl;
+		
+	for(int i = 1, a, b; i < n; i++)
+	{
+		cin >> a >> b;
+		G[a].pb(b);
+		in[b]++;
+	}
+	queue<int> q;
+	map<int, int> mp;
+	dfs(0, mp, 1);
+	put(ans);
 }
 
 signed main()

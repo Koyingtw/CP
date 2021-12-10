@@ -1,8 +1,8 @@
 #pragma region
-#pragma optimize("O3")
+#pragma GCC optimize("O3")
 #include <bits/stdc++.h>
 #define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-#define int long long
+// #define int long long
 #define pii pair<int, int>
 #define vi vector<int>
 #define vii vector<pair<int, int>>
@@ -28,45 +28,34 @@ const int P = 1e9+7;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-#define MAXN 100005
+#define MAXN 2505
 #define MAXM 1000005 
-int n, m, K;
-
+int n, m;
+bitset<MAXN> G[MAXN];
+bitset<MAXN> zero;
 void sol()
 {
-	cin >> K >> n >> m;
-	int x[n + 1][m + 1], pre[n + 1][m + 1];
-	MEM(pre, 0);
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			cin >> x[i][j];
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + x[i][j];
+	cin >> n;
 	int ans = 0;
-	for(int i = 1; i <= n; i++)
+	for(int i = 1, a; i <= n; i++)	
 	{
-		for(int k = i; k <= n; k++)
+		cin >> a;
+		for(int j = 0, b; j < a; j++)
 		{
-			set<int> st;
-			for(int j = 1; j <= m; j++)
-			{
-				int tmp = pre[k][j] - pre[i - 1][j];
-				if(tmp <= K) cmax(ans, tmp);
-				if(st.size())
-				{
-					if(st.lower_bound(tmp - K) != st.end())
-					{
-						int F = *(st.lower_bound(tmp - K));
-						if(tmp - F <= K)
-							cmax(ans, tmp - F);
-					}
-				}
-				st.insert(tmp);
-			}
+			cin >> b;
+			G[i][b] = 1;
+		}
+	}
+	for(int i = 1; i < n; i++)
+	{
+		for(int j = i + 1; j <= n; j++)
+		{
+			bitset<MAXN> tmp = G[i] & G[j];
+			ans += (tmp != zero);
 		}
 	}
 	cout << ans << endl;
+	
 }
 
 signed main()

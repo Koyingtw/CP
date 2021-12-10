@@ -1,3 +1,11 @@
+// Problem: List Removals
+// Contest: CSES - CSES Problem Set
+// URL: https://cses.fi/problemset/task/1749
+// Memory Limit: 512 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
 #pragma region
 #pragma optimize("O3")
 #include <bits/stdc++.h>
@@ -18,7 +26,7 @@
 #define putarr(x) for(int i = 0; i < sizeof(x); i++) cout << x[i] << (" \n")[i == sizeof(x) - 1]; 
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
-#define lowbit(x) x &(-x)
+#define lowBIT(x) x &(-x)
 #if !LOCAL
 #define endl "\n"
 #endif
@@ -28,45 +36,50 @@ const int P = 1e9+7;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-#define MAXN 100005
+#define MAXN 200005
 #define MAXM 1000005 
-int n, m, K;
+int n, m;
+int x[MAXN];
+int BIT[MAXN];
+
+void update(int i, int val)
+{
+	while(i < MAXN)
+	{
+		BIT[i] += val;
+		i += lowBIT(i);
+	}
+}
+int query(int q)
+{
+	int cnt = 0;
+	for(int i = 17; i >= 0; i--)
+	{
+		if(cnt + (1 << i) <= n && BIT[cnt + (1 << i)] < q)	
+		{
+			cnt += (1 << i);
+			q -= BIT[cnt];
+		}
+	}
+	return cnt + 1;
+}
 
 void sol()
 {
-	cin >> K >> n >> m;
-	int x[n + 1][m + 1], pre[n + 1][m + 1];
-	MEM(pre, 0);
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			cin >> x[i][j];
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + x[i][j];
-	int ans = 0;
+	cin >> n;
 	for(int i = 1; i <= n; i++)
 	{
-		for(int k = i; k <= n; k++)
-		{
-			set<int> st;
-			for(int j = 1; j <= m; j++)
-			{
-				int tmp = pre[k][j] - pre[i - 1][j];
-				if(tmp <= K) cmax(ans, tmp);
-				if(st.size())
-				{
-					if(st.lower_bound(tmp - K) != st.end())
-					{
-						int F = *(st.lower_bound(tmp - K));
-						if(tmp - F <= K)
-							cmax(ans, tmp - F);
-					}
-				}
-				st.insert(tmp);
-			}
-		}
+		cin >> x[i];
+		update(i, 1);
 	}
-	cout << ans << endl;
+	for(int i = 1, a; i <= n; i++)
+	{
+		cin >> a;
+		int ans = query(a);
+		cout << x[ans] << " ";
+		update(ans, -1);
+	}
+	cout << endl;
 }
 
 signed main()

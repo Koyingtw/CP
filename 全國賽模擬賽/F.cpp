@@ -28,45 +28,53 @@ const int P = 1e9+7;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-#define MAXN 100005
+#define MAXN 300005
 #define MAXM 1000005 
-int n, m, K;
+int n, m;
+int go[MAXN];
+int u[MAXN];
+vector<int> G[MAXN];
+bitset<MAXN> vis;
+int sum = 0;
+int under(int i)
+{
+	vis[i] = 1;
+	// put(i);
+	int cnt = 0;
+	for(int e: G[i])	
+	{
+		if(!vis[e]) cnt += under(e);
+	}
+	u[i] = cnt;
+	return cnt + (go[i] > 0);
+}
 
 void sol()
 {
-	cin >> K >> n >> m;
-	int x[n + 1][m + 1], pre[n + 1][m + 1];
-	MEM(pre, 0);
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			cin >> x[i][j];
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + x[i][j];
-	int ans = 0;
-	for(int i = 1; i <= n; i++)
+	cin >> n >> m;
+	for(int i = 1, a, b, c; i <= n; i++)
 	{
-		for(int k = i; k <= n; k++)
+		cin >> a;
+		while(a--)
 		{
-			set<int> st;
-			for(int j = 1; j <= m; j++)
-			{
-				int tmp = pre[k][j] - pre[i - 1][j];
-				if(tmp <= K) cmax(ans, tmp);
-				if(st.size())
-				{
-					if(st.lower_bound(tmp - K) != st.end())
-					{
-						int F = *(st.lower_bound(tmp - K));
-						if(tmp - F <= K)
-							cmax(ans, tmp - F);
-					}
-				}
-				st.insert(tmp);
-			}
+			cin >> b;
+			G[i].pb(b);
+			G[b].pb(i);
 		}
 	}
-	cout << ans << endl;
+	vector<int> v;
+	for(int i = 1; i <= n; i++)
+	{
+		cin >> go[i];
+		sum += (go[i] > 0);
+		if(g[i] > 0) v.pb(i);
+	}
+	vis.reset();
+	under(1);
+	for(int i = 1; i <= n; i++)
+		cout << u[i] << " ";
+	cout << endl;
+	
 }
 
 signed main()

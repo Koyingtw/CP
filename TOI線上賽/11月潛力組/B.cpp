@@ -1,8 +1,9 @@
 #pragma region
 #pragma optimize("O3")
-#include <bits/stdc++.h>
+#include <iostream>
+#include <algorithm>
 #define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-#define int long long
+#define int short
 #define pii pair<int, int>
 #define vi vector<int>
 #define vii vector<pair<int, int>>
@@ -22,50 +23,41 @@
 #if !LOCAL
 #define endl "\n"
 #endif
-const int INF = 0x3f3f3f3f;
-const int P = 1e9+7;
 
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-#define MAXN 100005
+#define MAXN 4005
 #define MAXM 1000005 
-int n, m, K;
+int n, m;
+struct in
+{
+	int F, S, id;
+}x[MAXN];
+
+bool cmp(in a, in b)
+{
+	if(a.S - a.F != b.S - b.F)
+		return a.S - a.F < b.S - b.F;
+	else return a.id < b.id;
+}
 
 void sol()
 {
-	cin >> K >> n >> m;
-	int x[n + 1][m + 1], pre[n + 1][m + 1];
-	MEM(pre, 0);
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			cin >> x[i][j];
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + x[i][j];
-	int ans = 0;
-	for(int i = 1; i <= n; i++)
+	cin >> n >> m;
+	for(int i = 0; i < n + m; i++)
 	{
-		for(int k = i; k <= n; k++)
-		{
-			set<int> st;
-			for(int j = 1; j <= m; j++)
-			{
-				int tmp = pre[k][j] - pre[i - 1][j];
-				if(tmp <= K) cmax(ans, tmp);
-				if(st.size())
-				{
-					if(st.lower_bound(tmp - K) != st.end())
-					{
-						int F = *(st.lower_bound(tmp - K));
-						if(tmp - F <= K)
-							cmax(ans, tmp - F);
-					}
-				}
-				st.insert(tmp);
-			}
-		}
+		cin >> x[i].F >> x[i].S;
+		x[i].id = i;
 	}
+	signed ans = 0;	
+	sort(x, x + n + m, cmp);
+	for(int i = 0; i < m; i++)
+	{
+		ans += x[i].S;
+	}
+	for(int i = m; i < n + m; i++)
+		ans += x[i].F;
 	cout << ans << endl;
 }
 

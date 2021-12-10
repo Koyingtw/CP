@@ -1,8 +1,9 @@
 #pragma region
-#pragma optimize("O3")
+#pragma GCC optimize("O3")
+#pragma GCC target("avx")
 #include <bits/stdc++.h>
 #define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-#define int long long
+// #define int long long
 #define pii pair<int, int>
 #define vi vector<int>
 #define vii vector<pair<int, int>>
@@ -23,49 +24,41 @@
 #define endl "\n"
 #endif
 const int INF = 0x3f3f3f3f;
-const int P = 1e9+7;
-
+const int P = 1e9;
+const int PP = 2e9;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-#define MAXN 100005
+#define MAXN 1000005
 #define MAXM 1000005 
-int n, m, K;
+int n, m;
 
+// unordered_set<int> sx, sy, s1, s2;
+bitset<3000000010> bx, by;
+bitset<5000000010> b1, b2;
+// map<int, int> cntx, cnty, cnt1, cnt2;
 void sol()
 {
-	cin >> K >> n >> m;
-	int x[n + 1][m + 1], pre[n + 1][m + 1];
-	MEM(pre, 0);
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			cin >> x[i][j];
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + x[i][j];
+	cin >> n;
 	int ans = 0;
-	for(int i = 1; i <= n; i++)
+	for(int i = 0, a, b; i < n; i++)
 	{
-		for(int k = i; k <= n; k++)
-		{
-			set<int> st;
-			for(int j = 1; j <= m; j++)
-			{
-				int tmp = pre[k][j] - pre[i - 1][j];
-				if(tmp <= K) cmax(ans, tmp);
-				if(st.size())
-				{
-					if(st.lower_bound(tmp - K) != st.end())
-					{
-						int F = *(st.lower_bound(tmp - K));
-						if(tmp - F <= K)
-							cmax(ans, tmp - F);
-					}
-				}
-				st.insert(tmp);
-			}
-		}
+		cin >> a >> b;
+		ans += bx[a + P];
+		ans += by[b + P];
+		ans += b1[a + b + PP];
+		ans += b2[a - b + PP];
+		bx[a + P] = 1;
+		by[b + P] = 1;
+		b1[a + b + PP] = 1;
+		b2[a - b + PP] = 1;
+		// ans += !sx.insert(a).S;
+		// ans += !sy.insert(b).S;
+		// ans += !s1.insert(a + b).S;
+		// ans += !s2.insert(a - b).S;
 	}
+
+	
 	cout << ans << endl;
 }
 

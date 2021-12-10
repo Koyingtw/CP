@@ -30,43 +30,48 @@ using namespace std;
 /******************************************************************************/
 #define MAXN 100005
 #define MAXM 1000005 
-int n, m, K;
+int n, m;
+int x[MAXN], pre[MAXN];
+
 
 void sol()
 {
-	cin >> K >> n >> m;
-	int x[n + 1][m + 1], pre[n + 1][m + 1];
-	MEM(pre, 0);
+	cin >> n >> m;
 	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			cin >> x[i][j];
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= m; j++)
-			pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + x[i][j];
-	int ans = 0;
+		cin >> x[i];
 	for(int i = 1; i <= n; i++)
 	{
-		for(int k = i; k <= n; k++)
+		pre[i] = pre[i - 1] + x[i];
+		// cout << pre[i - 1] << " ";
+	}
+	// cout << endl;
+	int t, k;
+	int goin = 0;
+	int l = 1;
+	vector<int> v;
+	while(m--)
+	{
+		cin >> t >> k;
+		if(t == 1)
 		{
-			set<int> st;
-			for(int j = 1; j <= m; j++)
-			{
-				int tmp = pre[k][j] - pre[i - 1][j];
-				if(tmp <= K) cmax(ans, tmp);
-				if(st.size())
-				{
-					if(st.lower_bound(tmp - K) != st.end())
-					{
-						int F = *(st.lower_bound(tmp - K));
-						if(tmp - F <= K)
-							cmax(ans, tmp - F);
-					}
-				}
-				st.insert(tmp);
-			}
+			int id = lower_bound(pre + l, pre + n + 1, pre[l - 1] + k) - pre;
+			k -= (pre[id - 1] - pre[l - 1]);
+			int cnt = 0;
+			k--;
+			for(int it: v)
+				if(it < x[id])
+					cnt += it;
+			cnt %= x[id];
+			cout << (k + x[id] - cnt) % x[id] + pre[id - 1] + 1 << endl;
+			goin = 0;
+		}
+		else
+		{
+			goin += pre[l + k - 1] - pre[l - 1];
+			v.pb(pre[l + k - 1] - pre[l - 1]);
+			l += k;
 		}
 	}
-	cout << ans << endl;
 }
 
 signed main()
