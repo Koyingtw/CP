@@ -1,6 +1,6 @@
-// Problem: D. Yet Another Sorting Problem
-// Contest: Codeforces - Codeforces Round #759 (Div. 2, based on Technocup 2022 Elimination Round 3)
-// URL: https://codeforces.com/contest/1591/problem/D
+// Problem: B. Missing Bigram
+// Contest: Codeforces - Codeforces Round #760 (Div. 3)
+// URL: https://codeforces.com/contest/1618/problem/B
 // Memory Limit: 256 MB
 // Time Limit: 2000 ms
 // 
@@ -36,57 +36,35 @@ const int P = 1e9+7;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-#define MAXN 500005
+#define MAXN 105
 #define MAXM 1000005 
 int n, m;
-int Bit[MAXN];
-void update(int i, int val)
-{
-	while(i < MAXN)
-	{
-		Bit[i] += val;
-		i += lowbit(i);
-	}
-}
-
-int query(int i)
-{
-	int cnt = 0;
-	while(i)
-	{
-		cnt += Bit[i];
-		i -= lowbit(i);
-	}
-	return cnt;
-}
-
-int x[MAXN];
+string s[MAXN];
 void sol()
 {
-	bitset<MAXN> cnt;
 	cin >> n;
-	int sum = 0;
-	for(int i = 0; i <= n; i++)
-		Bit[i] = 0;
-	// cnt.reset();
-	bool yes = 0;
+	n -= 2;
+	cin.ignore();
 	for(int i = 0; i < n; i++)
 	{
-		cin >> x[i];
-		if(cnt[x[i]] && !yes)
-		{
-			cout << "YES" << endl;
-			yes = 1;
-		}
-		sum += query(n) - query(x[i]);
-		update(x[i], 1);
-		cnt[x[i]] = 1;
+		cin >> s[i];
 	}
-	if(yes) return;
-	// cout << sum << endl;
-	if(sum & 1) cout << "NO" << endl;
-	else cout << "YES" << endl;
+	bool b = 1;
+	string ans = s[0];
+	for(int i = 1; i < n; i++)
+	{
+		if(s[i][0] != ans[ans.size() - 1])
+		{
+			ans += s[i][0];
+			b = 0;
+		}
+		ans += s[i][1];
+	}
+	if(b)
+		ans += ans[ans.size() - 1];
+	cout << ans << endl;
 }
+
 
 signed main()
 {

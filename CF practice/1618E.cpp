@@ -1,6 +1,6 @@
-// Problem: D. Yet Another Sorting Problem
-// Contest: Codeforces - Codeforces Round #759 (Div. 2, based on Technocup 2022 Elimination Round 3)
-// URL: https://codeforces.com/contest/1591/problem/D
+// Problem: E. Singers' Tour
+// Contest: Codeforces - Codeforces Round #760 (Div. 3)
+// URL: https://codeforces.com/contest/1618/problem/E
 // Memory Limit: 256 MB
 // Time Limit: 2000 ms
 // 
@@ -36,56 +36,52 @@ const int P = 1e9+7;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-#define MAXN 500005
+#define MAXN 100005
 #define MAXM 1000005 
 int n, m;
-int Bit[MAXN];
-void update(int i, int val)
-{
-	while(i < MAXN)
-	{
-		Bit[i] += val;
-		i += lowbit(i);
-	}
-}
-
-int query(int i)
-{
-	int cnt = 0;
-	while(i)
-	{
-		cnt += Bit[i];
-		i -= lowbit(i);
-	}
-	return cnt;
-}
-
 int x[MAXN];
+int ans[MAXN];
+int f(int a)
+{
+	return a * (a + 1) / 2;
+}
 void sol()
 {
-	bitset<MAXN> cnt;
 	cin >> n;
 	int sum = 0;
-	for(int i = 0; i <= n; i++)
-		Bit[i] = 0;
-	// cnt.reset();
-	bool yes = 0;
 	for(int i = 0; i < n; i++)
 	{
 		cin >> x[i];
-		if(cnt[x[i]] && !yes)
-		{
-			cout << "YES" << endl;
-			yes = 1;
-		}
-		sum += query(n) - query(x[i]);
-		update(x[i], 1);
-		cnt[x[i]] = 1;
+		sum += x[i];
 	}
-	if(yes) return;
-	// cout << sum << endl;
-	if(sum & 1) cout << "NO" << endl;
-	else cout << "YES" << endl;
+	if(sum % f(n))
+	{
+		cout << "NO" << endl;
+		return;
+	}
+	sum /= f(n);
+	int cnt = 0;
+	for(int i = 1; i < n; i++)
+	{
+		int tmp = sum - (x[i] - x[i - 1]);
+		if(tmp % n || tmp <= 0)
+		{
+			cout << "NO" << endl;
+			return;
+		}
+		ans[i] = tmp / n;
+		cnt += ans[i];
+	}
+	ans[0] = sum - cnt;
+	if(ans[0] <= 0)
+		cout << "NO" << endl;
+	else
+	{
+		cout << "YES" << endl;
+		for(int i = 0; i < n; i++)
+			cout << ans[i] << " ";
+		cout << endl;
+	}
 }
 
 signed main()

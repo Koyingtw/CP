@@ -1,7 +1,7 @@
-// Problem: D. Yet Another Sorting Problem
-// Contest: Codeforces - Codeforces Round #759 (Div. 2, based on Technocup 2022 Elimination Round 3)
-// URL: https://codeforces.com/contest/1591/problem/D
-// Memory Limit: 256 MB
+// Problem: C - Bowls and Dishes
+// Contest: AtCoder - AtCoder Beginner Contest 190
+// URL: https://atcoder.jp/contests/abc190/tasks/abc190_c
+// Memory Limit: 1024 MB
 // Time Limit: 2000 ms
 // 
 // Powered by CP Editor (https://cpeditor.org)
@@ -36,63 +36,41 @@ const int P = 1e9+7;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-#define MAXN 500005
-#define MAXM 1000005 
-int n, m;
-int Bit[MAXN];
-void update(int i, int val)
-{
-	while(i < MAXN)
-	{
-		Bit[i] += val;
-		i += lowbit(i);
-	}
-}
-
-int query(int i)
-{
-	int cnt = 0;
-	while(i)
-	{
-		cnt += Bit[i];
-		i -= lowbit(i);
-	}
-	return cnt;
-}
-
-int x[MAXN];
+#define MAXN 105
+#define MAXM 20 
+int n, m, k;
+pii x[MAXN], y[MAXM];
 void sol()
 {
-	bitset<MAXN> cnt;
-	cin >> n;
-	int sum = 0;
-	for(int i = 0; i <= n; i++)
-		Bit[i] = 0;
-	// cnt.reset();
-	bool yes = 0;
+	cin >> k >> n;
+	int ans = 0;
 	for(int i = 0; i < n; i++)
+		cin >> x[i].F >> x[i].S;
+	cin >> m;
+	for(int i = 0; i < m; i++)
+		cin >> y[i].F >> y[i].S;
+	for(int mask = 0; mask < (1 << m); mask++)
 	{
-		cin >> x[i];
-		if(cnt[x[i]] && !yes)
+		bitset<MAXN> bis;
+		for(int i = 0; i < m; i++)
 		{
-			cout << "YES" << endl;
-			yes = 1;
+			if(mask & (1 << i))
+				bis[y[i].S] = true;
+			else bis[y[i].F] = true;
 		}
-		sum += query(n) - query(x[i]);
-		update(x[i], 1);
-		cnt[x[i]] = 1;
+		int cnt = 0;
+		for(int i = 0; i < n; i++)
+			cnt += bis[x[i].F] & bis[x[i].S];
+		cmax(ans, cnt);
 	}
-	if(yes) return;
-	// cout << sum << endl;
-	if(sum & 1) cout << "NO" << endl;
-	else cout << "YES" << endl;
+	cout << ans << endl;
 }
 
 signed main()
 {
     Weakoying;
     int t = 1;
-    while (cin >> t)
+    //while (cin >> t)
     {
     	while (t--)
         {

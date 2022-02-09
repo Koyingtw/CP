@@ -1,7 +1,7 @@
-// Problem: D. Yet Another Sorting Problem
-// Contest: Codeforces - Codeforces Round #759 (Div. 2, based on Technocup 2022 Elimination Round 3)
-// URL: https://codeforces.com/contest/1591/problem/D
-// Memory Limit: 256 MB
+// Problem: C - ORXOR
+// Contest: AtCoder - AtCoder Beginner Contest 197（Sponsored by Panasonic）
+// URL: https://atcoder.jp/contests/abc197/tasks/abc197_c
+// Memory Limit: 1024 MB
 // Time Limit: 2000 ms
 // 
 // Powered by CP Editor (https://cpeditor.org)
@@ -30,69 +30,48 @@
 #if !LOCAL
 #define endl "\n"
 #endif
-const int INF = 0x3f3f3f3f;
+const int INF = 0x3f3f3f3f3f;
 const int P = 1e9+7;
 
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-#define MAXN 500005
+#define MAXN 25
 #define MAXM 1000005 
 int n, m;
-int Bit[MAXN];
-void update(int i, int val)
-{
-	while(i < MAXN)
-	{
-		Bit[i] += val;
-		i += lowbit(i);
-	}
-}
-
-int query(int i)
-{
-	int cnt = 0;
-	while(i)
-	{
-		cnt += Bit[i];
-		i -= lowbit(i);
-	}
-	return cnt;
-}
-
 int x[MAXN];
 void sol()
 {
-	bitset<MAXN> cnt;
 	cin >> n;
-	int sum = 0;
-	for(int i = 0; i <= n; i++)
-		Bit[i] = 0;
-	// cnt.reset();
-	bool yes = 0;
 	for(int i = 0; i < n; i++)
-	{
 		cin >> x[i];
-		if(cnt[x[i]] && !yes)
+	int ans = INF;
+	for(int mask = 0; mask <= (1 << n); mask++)
+	{
+		vector<int> v{x[0]};
+		for(int i = 1; i < n; i++)
 		{
-			cout << "YES" << endl;
-			yes = 1;
+			if(mask & (1 << i))
+			{
+				v.pb(x[i]);
+			}
+			else v[v.size() - 1] |= x[i];
 		}
-		sum += query(n) - query(x[i]);
-		update(x[i], 1);
-		cnt[x[i]] = 1;
+		int tmp = v[0];
+		for(int i = 1; i < v.size(); i++)
+		{
+			tmp ^= v[i];
+		}
+		cmin(ans, tmp);
 	}
-	if(yes) return;
-	// cout << sum << endl;
-	if(sum & 1) cout << "NO" << endl;
-	else cout << "YES" << endl;
+	cout << ans << endl;
 }
 
 signed main()
 {
     Weakoying;
     int t = 1;
-    while (cin >> t)
+    //while (cin >> t)
     {
     	while (t--)
         {

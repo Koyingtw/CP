@@ -104,41 +104,45 @@ void sol()
 			cnt.F += *(prev(sum.end()));
 			cnt.S += *sum.begin();
 		}
-		pii r = *(s.upper_bound({a, 0}));
-		pii l = *prev(s.upper_bound({a, 0}));
-		if(l.S == a - 1 && r.F == a + 1)
+		else
 		{
-			tmp = {l.F, r.S};
-			s.erase(s.find(l));
-			sum.erase(sum.find(f(l)));
-			s.erase(s.find(r));
-			sum.erase(sum.find(f(r)));
-			s.insert(tmp);
-			sum.insert(f(tmp));
+			pii r = *(s.upper_bound({a, 0}));
+			pii l = *prev(s.upper_bound({a, 0}));
+			if(l.S == a - 1 && r.F == a + 1)
+			{
+				tmp = {l.F, r.S};
+				s.erase(s.find(l));
+				sum.erase(sum.find(f(l)));
+				s.erase(s.find(r));
+				sum.erase(sum.find(f(r)));
+				s.insert(tmp);
+				sum.insert(f(tmp));
+			}
+			else if(l.S == a - 1)
+			{
+				tmp = {l.F, a};
+				s.erase(s.find(l));
+				sum.erase(sum.find(f(l)));
+				s.insert(tmp);
+				sum.insert(f(tmp));
+			}
+			else if(r.F == a + 1)
+			{
+				tmp = {a, r.S};
+				s.erase(s.find(r));
+				sum.erase(sum.find(f(r)));
+				s.insert(tmp);
+				sum.insert(f(tmp));
+			}
+			else 
+			{
+				s.insert({a, a});
+				sum.insert(1);
+			}
+			cnt.F += *(prev(sum.end()));
+			cnt.S += *sum.begin();
+			
 		}
-		else if(l.S == a - 1)
-		{
-			tmp = {l.F, a};
-			s.erase(s.find(l));
-			sum.erase(sum.find(f(l)));
-			s.insert(tmp);
-			sum.insert(f(tmp));
-		}
-		else if(r.F == a + 1)
-		{
-			tmp = {a, r.S};
-			s.erase(s.find(r));
-			sum.erase(sum.find(f(r)));
-			s.insert(tmp);
-			sum.insert(f(tmp));
-		}
-		else 
-		{
-			s.insert({a, a});
-			sum.insert(1);
-		}
-		cnt.F += *(prev(sum.end()));
-		cnt.S += *sum.begin();
 	}
 	cout << cnt.F << endl << cnt.S << endl;
 	

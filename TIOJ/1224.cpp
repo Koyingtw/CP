@@ -78,6 +78,7 @@ struct in
 {
 	int l, d, u, val;
 };
+
 vector<in> x;
 bool cmp(in a, in b)
 {

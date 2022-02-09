@@ -1,16 +1,8 @@
-// Problem: D. Yet Another Sorting Problem
-// Contest: Codeforces - Codeforces Round #759 (Div. 2, based on Technocup 2022 Elimination Round 3)
-// URL: https://codeforces.com/contest/1591/problem/D
-// Memory Limit: 256 MB
-// Time Limit: 2000 ms
-// 
-// Powered by CP Editor (https://cpeditor.org)
-
 #pragma region
 #pragma optimize("O3")
 #include <bits/stdc++.h>
 #define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-#define int long long
+// #define int long long
 #define pii pair<int, int>
 #define vi vector<int>
 #define vii vector<pair<int, int>>
@@ -36,63 +28,56 @@ const int P = 1e9+7;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-#define MAXN 500005
+#define MAXN 100005
 #define MAXM 1000005 
-int n, m;
-int Bit[MAXN];
-void update(int i, int val)
-{
-	while(i < MAXN)
-	{
-		Bit[i] += val;
-		i += lowbit(i);
-	}
-}
+int n, m, K;
 
-int query(int i)
-{
-	int cnt = 0;
-	while(i)
-	{
-		cnt += Bit[i];
-		i -= lowbit(i);
-	}
-	return cnt;
-}
-
-int x[MAXN];
 void sol()
 {
-	bitset<MAXN> cnt;
-	cin >> n;
-	int sum = 0;
-	for(int i = 0; i <= n; i++)
-		Bit[i] = 0;
-	// cnt.reset();
-	bool yes = 0;
-	for(int i = 0; i < n; i++)
+	cin >> K >> n >> m;
+	int x[n + 1][m + 1], pre[n + 1][m + 1];
+	MEM(pre, 0);
+	for(int i = 1; i <= n; i++)
+		for(int j = 1; j <= m; j++)
+			cin >> x[i][j];
+	for(int i = 1; i <= n; i++)
+		for(int j = 1; j <= m; j++)
+			pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + x[i][j];
+	int ans = 0;
+	for(int i = 1; i <= n; i++)
 	{
-		cin >> x[i];
-		if(cnt[x[i]] && !yes)
+		for(int k = i; k <= n; k++)
 		{
-			cout << "YES" << endl;
-			yes = 1;
+			set<int> st;
+			for(int j = 1; j <= m; j++)
+			{
+				int tmp = pre[k][j] - pre[i - 1][j];
+				// cout << tmp << endl;
+				if(tmp <= K) cmax(ans, tmp);
+				if(st.size())
+				{
+					if(st.lower_bound(tmp - K) != st.end())
+					{
+						int F = *(st.lower_bound(tmp - K));
+						if(tmp - F <= K)
+						{
+							cmax(ans, tmp - F);
+						}
+						
+					}
+				}
+				st.insert(tmp);
+			}
 		}
-		sum += query(n) - query(x[i]);
-		update(x[i], 1);
-		cnt[x[i]] = 1;
 	}
-	if(yes) return;
-	// cout << sum << endl;
-	if(sum & 1) cout << "NO" << endl;
-	else cout << "YES" << endl;
+	cout << ans << endl;
 }
 
 signed main()
 {
     Weakoying;
     int t = 1;
-    while (cin >> t)
+    //while (cin >> t)
     {
     	while (t--)
         {
