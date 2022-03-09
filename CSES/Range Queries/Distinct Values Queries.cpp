@@ -33,21 +33,24 @@ int n, m;
 int x[MAXN];
 
 struct Node {
-	int l, r, sum, pre, suf, mx;
+	int l, r;
+	set<int> s;
 } seg[MAXN << 2];
 
 void pull(int id) {
-	seg[id].sum = seg[id * 2].sum + seg[id * 2 + 1].sum;
-	seg[id].pre = max(seg[id * 2].pre, seg[id * 2].sum + seg[id * 2 + 1].pre);
-	seg[id].suf = max(seg[id * 2 + 1].suf, seg[id * 2 + 1].sum + seg[id * 2].suf);
-	seg[id].mx = max(seg[id * 2].suf + seg[id * 2 + 1].pre, max(seg[id * 2].mx, seg[id * 2 + 1].mx));
+	set<int> ls = seg[id * 2].s, rs = seg[id * 2 + 1].s;
+	set<int> tmp;
+	for (int it: ls) 
+		seg[id].s.insert(it);
+	for (int it: rs) 
+		seg[id].s.insert(it);
 	return;
 }
 
 void build(int id, int l, int r) {
 	seg[id].l = l, seg[id].r = r;
 	if (l == r) {
-		seg[id] = {l, r, x[l], max(0, x[l]), max(0, x[l]), max(0, x[l])};
+		seg[id].s.insert(x[l]);
 		return;
 	}
 	int mid = (l + r) / 2;
@@ -56,46 +59,31 @@ void build(int id, int l, int r) {
 	pull(id);
 }
 
-void update(int id, int pos, int val) {
+set<int> query(int id, int ql, int qr) {
 	int l = seg[id].l, r = seg[id].r;
-	if (l > pos || r < pos) return;
-	if (l == r) {
-		x[l] = val;
-		seg[id] = {l, r, x[l], max(0, x[l]), max(0, x[l]), max(0, x[l])};
-		return;
-	}
-	update(id * 2, pos, val);
-	update(id * 2 + 1, pos, val);
-	pull(id);
-}
-
-Node query(int id, int ql, int qr) {
-	int l = seg[id].l, r = seg[id].r;
-	if (l > qr || r < ql) return {l, r, -INF, -INF, -INF, -INF};
-	if (ql <= l && r <= qr) {
-		return seg[id];
-	}
-	Node q1 = query(id * 2, ql, qr);
-	Node q2 = query(id * 2 + 1, ql, qr);
-	Node tmp = {q1.l, q2.r, q1.sum + q2.sum, max(q1.pre, q1.sum + q2.pre), max(q2.suf, q2.sum + q1.suf), max(q1.suf + q2.pre, max(q1.mx, q2.mx))};
+	set<int> tmp;
+	if (l > qr || r < ql) return tmp;
+	if (ql <= l && r <= qr)
+		return seg[id].s;
+	set<int> ls = query(id * 2, ql, qr), rs = query(id * 2 + 1, ql, qr);
+	for (int it: ls) 
+		tmp.insert(it);
+	for (int it: rs) 
+		tmp.insert(it);
 	return tmp;
 }
 
 void sol()
 {
 	cin >> n >> m;
-	vector<int> v(n);
-	for (int i = 1; i <= n; i++) {
+	for (int i = 1; i <= n; i++)
 		cin >> x[i];
-		v[i - 1] = x[i];
-	}
-
 	build(1, 1, n);
-	int k, x;
+	int a, b;
 	while (m--) {
-		cin >> k >> x;
-		update(1, k, x);
-		cout << query(1, 1, n).mx << endl;
+		cin >> a >> b;
+		set<int> ans = query(1, a, b);
+		cout << ans.size() << endl;
 	}
 }
 

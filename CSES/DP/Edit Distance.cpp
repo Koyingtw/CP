@@ -9,7 +9,7 @@
 */
 
 #include <bits/stdc++.h>
-#define int long long
+// #define int long long
 #define pr pair<int, int>
 #define fr(i, a, b) for (int i = a; i < b; i++)
 #define rf(i, a, b) for (int i = a; i >= b; i--)
@@ -27,15 +27,18 @@ void OUT(string s)
     return;
 }
 
+
+int dp[3000][3000];
+
 void sol()
 {
     int n, m;
     string a, b;
-    while (cin >> a >> b)
+    while(cin >> a >> b)
     {
         n = a.size();
         m = b.size();
-        int dp[n + 1][m + 1];
+        cout << n << " " << m << endl;
         fr(i, 0, n + 1) MEM(dp[i], 0);
         fr(i, 0, n + 1)
             dp[i][0] = i;
@@ -52,6 +55,8 @@ void sol()
             }
         }
         DB(dp[n][m]);
+        double ans = 1.0 - 1.0 / ((n + m) / 2.0) * dp[n][m];
+        cout << fixed << setprecision(6) << ans * 100 << "%" << endl;
     }
 }
 

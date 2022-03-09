@@ -1,7 +1,8 @@
 #pragma GCC optimize("O3")
 #include <bits/stdc++.h>
+#include <bits/extc++.h>
 #define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-#define int long long
+// #define int long long
 #define pii pair<int, int>
 #define vi vector<int>
 #define vii vector<pair<int, int>>
@@ -27,27 +28,26 @@ const int P = 1e9+7;
 
 using namespace std;
 /******************************************************************************/
-#define MAXN 200005
+#define MAXN 20005
 #define MAXM 1000005 
 int n, m;
 int x[MAXN];
 
 struct Node {
-	int l, r, sum, pre, suf, mx;
+	int l, r;
+	bitset<MAXN> s;
 } seg[MAXN << 2];
 
 void pull(int id) {
-	seg[id].sum = seg[id * 2].sum + seg[id * 2 + 1].sum;
-	seg[id].pre = max(seg[id * 2].pre, seg[id * 2].sum + seg[id * 2 + 1].pre);
-	seg[id].suf = max(seg[id * 2 + 1].suf, seg[id * 2 + 1].sum + seg[id * 2].suf);
-	seg[id].mx = max(seg[id * 2].suf + seg[id * 2 + 1].pre, max(seg[id * 2].mx, seg[id * 2 + 1].mx));
+	seg[id].s |= seg[id * 2].s;
+	seg[id].s |= seg[id * 2 + 1].s;
 	return;
 }
 
 void build(int id, int l, int r) {
 	seg[id].l = l, seg[id].r = r;
 	if (l == r) {
-		seg[id] = {l, r, x[l], max(0, x[l]), max(0, x[l]), max(0, x[l])};
+		seg[id].s[x[l]] = true;
 		return;
 	}
 	int mid = (l + r) / 2;
@@ -56,28 +56,15 @@ void build(int id, int l, int r) {
 	pull(id);
 }
 
-void update(int id, int pos, int val) {
+bitset<MAXN> query(int id, int ql, int qr) {
 	int l = seg[id].l, r = seg[id].r;
-	if (l > pos || r < pos) return;
-	if (l == r) {
-		x[l] = val;
-		seg[id] = {l, r, x[l], max(0, x[l]), max(0, x[l]), max(0, x[l])};
-		return;
-	}
-	update(id * 2, pos, val);
-	update(id * 2 + 1, pos, val);
-	pull(id);
-}
-
-Node query(int id, int ql, int qr) {
-	int l = seg[id].l, r = seg[id].r;
-	if (l > qr || r < ql) return {l, r, -INF, -INF, -INF, -INF};
-	if (ql <= l && r <= qr) {
-		return seg[id];
-	}
-	Node q1 = query(id * 2, ql, qr);
-	Node q2 = query(id * 2 + 1, ql, qr);
-	Node tmp = {q1.l, q2.r, q1.sum + q2.sum, max(q1.pre, q1.sum + q2.pre), max(q2.suf, q2.sum + q1.suf), max(q1.suf + q2.pre, max(q1.mx, q2.mx))};
+	bitset<MAXN> tmp;
+	if (l > qr || r < ql) return tmp;
+	if (ql <= l && r <= qr)
+		return seg[id].s;
+	bitset<MAXN> ls = query(id * 2, ql, qr), rs = query(id * 2 + 1, ql, qr);
+	tmp |= ls;
+	tmp |= rs;
 	return tmp;
 }
 
@@ -89,13 +76,17 @@ void sol()
 		cin >> x[i];
 		v[i - 1] = x[i];
 	}
-
+	sort(all(v));
+	v.erase(unique(all(v)), v.end());
+	for (int i = 1; i <= n; i++) {
+		x[i] = lower_bound(all(v), x[i]) - v.begin();
+	}
 	build(1, 1, n);
-	int k, x;
+	int a, b;
 	while (m--) {
-		cin >> k >> x;
-		update(1, k, x);
-		cout << query(1, 1, n).mx << endl;
+		cin >> a >> b;
+		// set<int> ans = query(1, a, b);
+		cout << query(1, a, b).count() << endl;
 	}
 }
 
