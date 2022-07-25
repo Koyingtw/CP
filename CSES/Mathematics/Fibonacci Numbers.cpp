@@ -1,13 +1,4 @@
-// Problem: Fibonacci Numbers
-// Contest: CSES - CSES Problem Set
-// URL: https://cses.fi/problemset/task/1722
-// Memory Limit: 512 MB
-// Time Limit: 1000 ms
-// 
-// Powered by CP Editor (https://cpeditor.org)
-
-#pragma region
-#pragma optimize("O3")
+#pragma GCC optimize("Ofast")
 #include <bits/stdc++.h>
 #define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
@@ -23,76 +14,86 @@
 #define cmax(a, b) a = (a > b ? a : b)
 #define cmin(a, b) a = (a < b ? a : b)
 #define put(x) cout << x << endl;
-#define putarr(x) for(int i = 0; i < sizeof(x); i++) cout << x[i] << (" \n")[i == sizeof(x) - 1]; 
+#define DB(x) cerr << #x << " " << x << endl
+#define all(v) v.begin(), v.end()
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
 #define lowbit(x) x &(-x)
 #if !LOCAL
 #define endl "\n"
 #endif
-const int INF = 0x3f3f3f3f;
+const int INF = 0x3f3f3f3f3f3f3f3f;
 const int P = 1e9+7;
 
 using namespace std;
-#pragma endregion
 /******************************************************************************/
-#define MAXN 100005
+#define MAXN 200005
 #define MAXM 1000005 
 int n, m;
-vector<int> A{1, 1, 1, 0}, B{1, 1, 1, 0};
 
-vector<int> multi(vector<int> a, vector<int> b)
-{
-	vector<int> tmp{0, 0, 0, 0};
-	tmp[0] = a[0] * b[0] + a[1] * b[2];
-	tmp[1] = a[0] * b[1] + a[1] * b[3];
-	tmp[2] = a[2] * b[0] + a[3] * b[2];
-	tmp[3] = a[2] * b[1] + a[3] * b[3];
-	return tmp;
+vector<vector<int>> operator %(vector<vector<int>> a, int P) {
+	for (int i = 0; i < a.size(); i++) {
+		for (int j = 0; j < a[i].size(); j++)
+			a[i][j] %= P;
+	}
+	return a;
 }
 
-void mod()
-{
-	for(int i = 0; i < 4; i++)
-		A[i] %= P;
+vector<vector<int>> operator *(vector<vector<int>> a, vector<vector<int>> b) {
+	vector<vector<int>> res;
+	for (int i = 0; i < a.size(); i++) {
+		res.pb(vector<int>{});
+		for (int j = 0; j < b[0].size(); j++) {
+			res[i].pb(0);
+			for (int k = 0; k < a[0].size(); k++) {
+				res[i][j] += a[i][k] * b[k][j];
+			}
+		}
+	}
+	return res % P;
 }
 
-void sol()
-{
+
+
+vector<vector<int>> matrixpow(vector<vector<int>> a, int x) {
+	if (x == 1)
+		return a;
+	if (x % 2) {
+		return (matrixpow(a, x - 1) * a);
+	}
+	else {
+		vector<vector<int>> tmp = matrixpow(a, x / 2);
+		tmp = (tmp * tmp);
+		return tmp;
+	}
+}
+
+void sol() {
 	cin >> n;
-	stack<int> st;
-	n--;
-	if(n <= 0)
-	{
-		cout << (n == 0) << endl;
+	
+	if (n == 0) {
+		cout << 0 << endl;
 		return;
 	}
-	// cout << multi(A, A)[0] << endl;
-	while(n)
-	{
-		st.push(n & 1);
-		n >>= 1;
-	}
-	st.pop();
-	while(st.size())
-	{
-		A = multi(A, A);
-		if(st.top())
-			A = multi(A, B);
-		st.pop();
-		mod();
-	}
-	cout << A[0]<< endl;
+	
+	vector<vector<int>> A{
+		{0},
+		{1}
+	};
+	vector<vector<int>> T{
+		{0, 1},
+		{1, 1}
+	};
+	A = matrixpow(T, n) * A;
+	cout << A[0][0] << endl;
 }
 
-signed main()
-{
+signed main() {
     Weakoying;
     int t = 1;
     //while (cin >> t)
-    {
-    	while (t--)
-        {
+	{
+    	while (t--) {
             sol();
         }
     }

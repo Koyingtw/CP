@@ -1,104 +1,105 @@
-#pragma region
+// Problem: Round Trip
+// Contest: CSES - CSES Problem Set
+// URL: https://cses.fi/problemset/task/1669
+// Memory Limit: 512 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#pragma GCC optimize("Ofast")
 #include <bits/stdc++.h>
-#define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+#define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
-#define pr pair<int, int>
+#define pii pair<int, int>
+#define vi vector<int>
+#define vii vector<pair<int, int>>
+#define pqueue priority_queue
+#define pb push_back
 #define F first
 #define S second
 #define max(a, b) (a > b ? a : b)
 #define min(a, b) (a < b ? a : b)
-#define DB(a) cout << a << endl;
+#define cmax(a, b) a = (a > b ? a : b)
+#define cmin(a, b) a = (a < b ? a : b)
+#define put(x) cout << x << endl;
+#define DB(x) cerr << #x << " " << x << endl
+#define all(v) v.begin(), v.end()
 #define stop system("pause");
-#define MEM(x, n) memse t(x, n, sizeof(x));
-
-#if ONLINE_JUDGE
+#define MEM(x, n) memset(x, n, sizeof(x));
+#define lowbit(x) x &(-x)
+#if !LOCAL
 #define endl "\n"
 #endif
-const int INF = 0x3f3f3f3f;
+const int INF = 0x3f3f3f3f3f3f3f3f;
+const int P = 1e9+7;
+
 using namespace std;
-#pragma endregion
 /******************************************************************************/
-vector<int> v[100005];
-bool vis[100005];
-bool yes = 0;
-vector<int> ans;
-deque<int> path;
-void dfs(int i, int pre)
-{
-    vis[i] = 1;
-    path.push_back(i);
-    if (yes)
-        return;
-    for (int e : v[i])
-    {
-        if (yes)
-            return;
-        if (!vis[e])
-            dfs(e, i);
-        else if (e != pre)
-        {
-            vis[e] = 1;
-            path.push_back(e);
-            bool b = 0;
-            while (path.size())
-            {
-                if (b)
-                    ans.push_back(path.front());
-                else if (path.front() == e)
-                {
-                    ans.push_back(path.front());
-                    b = 1;
-                }
-                path.pop_front();
-            }
-            cout << ans.size() << endl;
-            for (int it : ans)
-                cout << it << " ";
-            cout << endl;
-            yes = 1;
-            return;
-        }
-    }
-    if (path.size())
-        path.pop_back();
+#define MAXN 200005
+#define MAXM 1000005 
+int n, m;
+int vis[MAXN];
+vector<int> G[MAXN], ans;
+stack<int> path;
+
+void dfs(int i, int pre) {
+	vis[i] = 2;
+	path.push(i);
+	
+	for (int e: G[i]) {
+		if (!vis[e])
+			dfs(e, i);
+			
+		if (vis[e] == 2 && e != pre && ans.empty()) {
+			ans.push_back(e);
+			while (path.size()) {
+				ans.push_back(path.top());
+				if (path.top() == e)
+					break;
+				path.pop();
+			}
+			reverse(ans.begin(), ans.end());
+			return;
+		}
+	}
+	
+	vis[i] = 1;
+	
+	if (path.size())
+		path.pop();
 }
 
-void sol()
-{
-    int n, m;
-    while (cin >> n >> m)
-    {
-        for (int i = 0; i < m; i++)
-        {
-            int a, b;
-            cin >> a >> b;
-            v[a].push_back(b);
-            v[b].push_back(a);
-        }
-        for (int i = 1; i <= n; i++)
-        {
-            if (!vis[i])
-            {
-
-                dfs(i, 0);
-                //path.clear();
-            }
-            if (yes)
-                break;
-        }
-        if (!yes)
-            cout << "IMPOSSIBLE" << endl;
-    }
+void sol() {
+	cin >> n >> m;
+	for (int i = 0, a, b; i < m; i++) {
+		cin >> a >> b;
+		G[a].push_back(b);
+		G[b].push_back(a);
+	}
+	
+	for (int i = 1; i <= n; i++)
+		if (!vis[i])
+			dfs(i, i);
+	
+	if (ans.size()) {
+		cout << ans.size() << endl;
+		for (int it: ans)
+			cout << it << " ";
+		cout << endl;
+	}
+	else
+		cout << "IMPOSSIBLE" << endl;
 }
 
-signed main()
-{
-    Koying;
+signed main() {
+    Weakoying;
     int t = 1;
     //while (cin >> t)
-    while (t--)
-    {
-        sol();
+	{
+    	while (t--) {
+            sol();
+        }
     }
+        
     return 0;
 }

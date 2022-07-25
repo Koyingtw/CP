@@ -36,55 +36,50 @@ const int P = 1e9+7;
 using namespace std;
 #pragma endregion
 /******************************************************************************/
-#define MAXN 100005
+#define MAXN 200005
 #define MAXM 1000005 
 int n, m;
-struct BIT{
-	#define MAXN 200005
+struct BIT {
 	int arr[MAXN];
-	int query(int x)
-	{
+	int query(int x) {
 		int sum = 0;
-		while(x)
-		{
+		while (x) {
 			sum += arr[x];
 			x -= lowbit(x);
 		}
 		return sum;
 	}
-	void update(int x, int val)
-	{
-		while(x < MAXN)
-		{
+	void update(int x, int val) {
+		while (x < MAXN) {
 			arr[x] += val;
 			x += lowbit(x);
 		}
 	}
-}B;
-void sol()
-{
+} B;
+void sol() {
 	cin >> n >> m;
 	m++;
 	MEM(B.arr, 0);
-	for(int i = 1; i <= n; i++) B.update(i, 1);
+	for (int i = 1; i <= n; i++) 
+		B.update(i, 1);
 	int now = 0, tar = m;
-	for(int i = 0; i < n; i++)
-	{
+	for (int i = 0; i < n; i++) {
 		tar = m;
-		if(B.query(n) - B.query(now) < tar)
-		{
+		if (B.query(n) - B.query(now) < tar) {
 			tar -= (B.query(n) - B.query(now));
 			now = 0;
 		}
 		tar %= B.query(n);
-		if(tar == 0) tar = B.query(n);
+		if(tar == 0) 
+			tar = B.query(n);
+			
 		int l = now, r = n, mid = (l + r) / 2;
-		while(l < r)
-		{
+		while (l < r) {
 			mid = (l + r) / 2;
-			if(B.query(mid) - B.query(now) >= tar)
+			if (B.query(mid) - B.query(now) >= tar)
 				r = mid;
-			else l = mid + 1;
+			else 
+				l = mid + 1;
 		}
 		cout << l << " ";
 		now = l ;
