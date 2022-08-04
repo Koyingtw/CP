@@ -1,112 +1,137 @@
-#pragma GCC optimize("Ofast")
-#include <bits/stdc++.h>
-#define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-#define int long long
-#define pii pair<int, int>
-#define vi vector<int>
-#define vii vector<pair<int, int>>
-#define pqueue priority_queue
-#define pb push_back
-#define F first
-#define S second
-#define max(a, b) (a > b ? a : b)
-#define min(a, b) (a < b ? a : b)
-#define cmax(a, b) a = (a > b ? a : b)
-#define cmin(a, b) a = (a < b ? a : b)
-#define put(x) cout << x << endl;
-#define DB(x) cerr << #x << " " << x << endl
-#define all(v) v.begin(), v.end()
-#define stop system("pause");
-#define MEM(x, n) memset(x, n, sizeof(x));
-#define lowbit(x) x &(-x)
-#if !LOCAL
-#define endl "\n"
-#endif
-const int INF = 0x3f3f3f3f3f3f3f3f;
-const int P = 1e9+7;
-
+#include<bits/stdc++.h>
 using namespace std;
-/******************************************************************************/
-#define MAXN 25
-#define MAXM 1000005 
-int n, m;
-bitset<MAXN> b[MAXN];
-string s[MAXN];
-
-void sol() {
-	cin >> n;
-	for (int i = 0; i < n; i++) {
-		cin >> s[i];
-		for (int j = 0; j < n; j++)
-			b[i][j] = (s[i][j] == '+');
-	}
-	pii ans(0, 0);
-	
-	for (int mask = 1; mask < (1 << n); mask++) {
-		int len = __builtin_popcount(mask);
-		int cnt = INF;
-		int pre[MAXN]{0};
-		bitset<MAXN> tmp;
-		tmp.set();
-		
-		for (int j = 0; j < n; j++) {
-			if (mask & (1 << j)) {
-				tmp &= b[j];
-				pre[j + 1] = pre[j] + 1;
-			}
-			else {
-				pre[j + 1] = pre[j];
-			}
+#define int long long
+const int inf = 1e9+7;
+template<class T>struct segment_tree{
+	int n;
+	struct node{
+		int l,r;
+		T sum,mx,mn;
+		T lz;
+		node(){
+			l = r = sum = 0,mx = 0,mn = 0;
+			lz = 0;
 		}
-		
-		for (int i = len; i <= n; i++)
-			cmin(cnt, len - (pre[i] - pre[i - len]));
-		
-		if (tmp.count() < len)
-			continue;
-			
-			
-
-		
-		// pre[0] = tmp[0];
-		
-		for (int i = 1; i <= n; i++)
-			pre[i] = pre[i - 1] + tmp[i - 1];
-		
-		for (int i = len; i <= n; i++) {
-			cmax(ans, make_pair(len, -(cnt + len - (pre[i] - pre[i - len]))));
+		friend bool operator ==(node a,node b){
+			return (a.l==b.l and a.r==b.r);
 		}
-		
-		// int concnt = 0;
-		// for (int l = 0, r = 0; l < n; l++) {
-			// while (concnt < len && r < n) {
-				// concnt += tmp[r];
-				// r++;
-			// }
-// 			
-// 			
-			// if (concnt == len) {
-				// // cout << l << " " << r << endl;
-			// }
-			// concnt -= tmp[l];
-		// }
-		
-		
-		// if (len >= 4)
-			// cout << mask << " " << (cnt + len - mxcon) << endl;
+	};
+	vector<node>arr;
+	void init(int _n){
+		n = _n;
+		arr.assign(n<<2,node());
 	}
-	cout << ans.F << "," << -ans.S << endl;
-}
-
-signed main() {
-    Weakoying;
-    int t = 1;
-    //while (cin >> t)
-	{
-    	while (t--) {
-            sol();
-        }
-    }
-        
-    return 0;
+	void pull(node &ans,node left,node right){
+		if(left==node()){
+			ans = right;
+			return;
+		}
+		if(right==node()){
+			ans = left;
+			return;
+		}
+		ans.mn = min(left.mn,right.mn);
+		ans.mx = max(left.mx,right.mx);
+		ans.sum = left.sum+right.sum;
+		ans.l = left.l,ans.r = right.r;
+	}void pull(int idx){
+		pull(arr[idx],arr[idx<<1],arr[idx<<1|1]);
+	}
+	void push(int idx){
+		if(arr[idx].lz==0)return;
+		arr[idx<<1].mn = arr[idx].lz;
+		arr[idx<<1].mx = arr[idx].lz;
+		arr[idx<<1].sum = arr[idx].lz*(arr[idx<<1].r-arr[idx<<1].l+1);
+		arr[idx<<1].lz = arr[idx].lz;
+		arr[idx<<1|1].mn = arr[idx].lz;
+		arr[idx<<1|1].mx = arr[idx].lz;
+		arr[idx<<1|1].sum = arr[idx].lz*(arr[idx<<1|1].r-arr[idx<<1|1].l+1);
+		arr[idx<<1|1].lz = arr[idx].lz;
+		arr[idx].lz = 0;
+	}
+	void build(const vector<T>&v,int l,int r,int idx){
+		if(l==r){
+			arr[idx].sum = arr[idx].mx = arr[idx].mn = v[l];
+			arr[idx].l = arr[idx].r = l;
+			arr[idx].lz = 0;
+			return;
+		}
+		int m = (l+r)>>1;
+		build(v,l,m,idx<<1);
+		build(v,m+1,r,idx<<1|1);
+		pull(idx);
+	}void build(const vector<T>&v,int r){
+		build(v,0,r,1);
+	}
+	void update(int l,int r,T y,int idx = 1){
+		if(l<=arr[idx].l and arr[idx].r<=r){
+			arr[idx].mn = y;
+			arr[idx].mx = y;
+			arr[idx].sum = y*(arr[idx].r-arr[idx].l+1);
+			arr[idx].lz = y;
+			return;
+		}
+		push(idx);
+		int m = (arr[idx].l+arr[idx].r)>>1;
+		if(l<=m)update(l,r,y,idx<<1);
+		if(r>m)update(l,r,y,idx<<1|1);
+		pull(idx);
+	}
+	node query(int l,int r,int idx = 1){
+		if(l<=arr[idx].l and arr[idx].r<=r){
+			return arr[idx];
+		}
+		push(idx);
+		int m = (arr[idx].l+arr[idx].r)>>1;
+		node ans,left = node(),right = node();
+		if(l<=m)left = query(l,r,idx<<1);
+		if(r>m)right = query(l,r,idx<<1|1);
+		pull(ans,left,right);
+		return ans;
+	}
+	node search(int val,int idx = 1){
+		if(arr[idx].l==arr[idx].r)return arr[idx];
+		if(arr[idx<<1].mx>val){
+			return search(val,idx<<1);
+		}
+		return search(val,idx<<1|1);
+	}
+};
+signed main(){
+	int n,m;
+	cin>>n>>m;
+	segment_tree<int>seg;
+	seg.init(200010);
+	vector<int>v(n+5),ans(n+5),tmp(200010,-inf);
+	vector<tuple<int,int,int>>q;
+	int mx = 0;
+	for(int i = 1;i<=n;i++){
+		cin>>v[i];
+		v[i]++;
+		mx = max(mx,v[i]);
+	}
+	seg.build(tmp,200005);
+	for(int i = 0;i<m;i++){
+		int l,r;
+		cin>>l>>r;
+		q.emplace_back(l,r,i);
+	}
+	sort(q.begin(),q.end());
+	reverse(q.begin(),q.end());
+	int now = n;
+	for(auto [l,r,id]:q){
+		while(now>=l){
+			seg.update(v[now],v[now],now);
+			now--;
+		}
+		ans[id] = seg.search(r).mx;
+	}
+	for(int i = 0;i<m;i++){
+		if(ans[i]==-inf){
+			cout<<mx<<endl;
+		}
+		else{
+			cout<<v[ans[i]]<<endl;
+		}
+	}
 }
