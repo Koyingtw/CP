@@ -6,4 +6,5 @@ Contest
 *.out
 *.ans
 *.cph
-.out
+*.out
+tempCodeRunnerFile.cpp

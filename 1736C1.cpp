@@ -30,21 +30,47 @@ using namespace std;
 #define MAXN 200005
 #define MAXM 1000005 
 int n, m;
-int a[MAXN], b[MAXN];
+int x[MAXN];
+
+struct Sparse_Table {
+    int arr[20][MAXN];
+    void build() {
+        for (int i = 1; i <= n; i++)
+            arr[0][i] = x[i];
+        for (int i = 1; i < 20; i++) {
+            for (int j = 1; j <= n; j++)
+                arr[i][j] = min(arr[i - 1][j], arr[i - 1][j + (1 << (i - 1))]);
+        }
+    }
+
+    int query(int l, int r) {
+        int idx = __lg(r - l + 1);
+        int rng = (1 << idx);
+        return min(arr[idx][l], arr[idx][r - rng + 1]);
+    }
+} ST;
 
 void sol() {
     cin >> n;
-    int neq = 0, asum = 0, bsum = 0;
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-        asum += a[i];
+    for (int i = 1; i <= n; i++) {
+        cin >> x[i];
+        x[i] -= i;
     }
-    for (int i = 0; i < n; i++) {
-        cin >> b[i];
-        bsum += b[i];
-        neq += (a[i] != b[i]);
+    ST.build();
+
+    int ans = 0;
+    for (int i = 1; i <= n; i++) {
+        int l = i, r = n;
+        while (l < r) {
+            int mid = (l + r + 1) / 2;
+            if (ST.query(i, mid) >= 1 - i)
+                l = mid;
+            else
+                r = mid - 1;
+        }
+        ans += (x[i] >= (1 - i)) * (l - i + 1);
     }
-    cout << min(abs(asum - bsum) + 1, neq) << endl;
+    cout << ans << endl;
 }
 
 signed main() {

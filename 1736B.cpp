@@ -30,21 +30,19 @@ using namespace std;
 #define MAXN 200005
 #define MAXM 1000005 
 int n, m;
-int a[MAXN], b[MAXN];
+int x[MAXN];
 
 void sol() {
     cin >> n;
-    int neq = 0, asum = 0, bsum = 0;
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-        asum += a[i];
+    for (int i = 0; i < n; i++) 
+        cin >> x[i];
+    bool legal = true;
+    for (int i = 1; i < n - 1; i++) {
+        int a = x[i] * x[i - 1] / __gcd(x[i], x[i - 1]);
+        int b = x[i] * x[i + 1] / __gcd(x[i], x[i + 1]);
+        legal &= (__gcd(a, b) == x[i] || __gcd(a, b) % x[i] != 0);
     }
-    for (int i = 0; i < n; i++) {
-        cin >> b[i];
-        bsum += b[i];
-        neq += (a[i] != b[i]);
-    }
-    cout << min(abs(asum - bsum) + 1, neq) << endl;
+    cout << (legal == true ? "YES" : "NO") << endl;
 }
 
 signed main() {
