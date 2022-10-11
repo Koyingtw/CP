@@ -27,40 +27,47 @@ const int P = 1e9+7;
 
 using namespace std;
 /******************************************************************************/
-#define MAXN 200005
+#define MAXN 2005
 #define MAXM 1000005 
 int n, m;
-string s;
+int x[MAXN];
 
 void sol() {
     cin >> n;
-    cin >> s;
+    for (int i = 0; i < n; i++)
+        cin >> x[i];
 
-    int cnt = 0;
-    int need = 0;
-    vector<int> ans;
-    
-    for (int i = 0; i < 2 * n; i += 2) {
-        if (s[i] != s[i + 1]) {
+    int ans = INF, sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += x[i];
+        int mx = i + 1, cnt = 0, tmp = 0;
+        bool legal = true;
+        for (int j = i + 1; j < n; j++) {
+            tmp += x[j];
+            // cout << tmp << ' ';
             cnt++;
-            ans.pb(i + 1 + (s[i] - '0' != need));
-            need ^= 1;
+            if (tmp == sum) {
+                cmax(mx, cnt);
+                tmp = 0;
+                cnt = 0;
+            }
+            else if (tmp > sum) {
+                legal = false;
+                mx = INF;
+                break;
+            }
         }
+
+        legal &= (tmp == 0);
+        cmax(mx, cnt);
+
+        if (legal) {
+            cmin(ans, mx);
+            // cout << mx << ' ';
+        }
+        // cout << endl;
     }
-
-    if (cnt & 1) {
-        cout << -1 << endl;
-        return;
-    }
-
-    cout << ans.size() << ' ';
-    for (int it: ans)
-        cout << it << ' ';
-    cout << endl;
-
-    for (int i = 1; i <= 2 * n; i += 2)
-        cout << i << ' ';
-    cout << endl;
+    cout << ans << endl;
 }
 
 signed main() {

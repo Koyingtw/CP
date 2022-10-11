@@ -27,40 +27,32 @@ const int P = 1e9+7;
 
 using namespace std;
 /******************************************************************************/
-#define MAXN 200005
+#define MAXN 300000
 #define MAXM 1000005 
 int n, m;
-string s;
+int x[MAXN], ans;
+bool legal = true;
+
+int f(int l, int r) {
+    if (l == r)
+        return x[l];
+    int mid = (l + r) / 2;
+    int ql = f(l, mid), qr = f(mid + 1, r);
+    if (abs(ql - qr) != 1 || min(ql, qr) % 2 == 0) 
+        legal = false;
+    if (ql > qr)
+        ans++;
+    return max(ql, qr) / 2;
+}
 
 void sol() {
     cin >> n;
-    cin >> s;
-
-    int cnt = 0;
-    int need = 0;
-    vector<int> ans;
-    
-    for (int i = 0; i < 2 * n; i += 2) {
-        if (s[i] != s[i + 1]) {
-            cnt++;
-            ans.pb(i + 1 + (s[i] - '0' != need));
-            need ^= 1;
-        }
-    }
-
-    if (cnt & 1) {
-        cout << -1 << endl;
-        return;
-    }
-
-    cout << ans.size() << ' ';
-    for (int it: ans)
-        cout << it << ' ';
-    cout << endl;
-
-    for (int i = 1; i <= 2 * n; i += 2)
-        cout << i << ' ';
-    cout << endl;
+    for (int i = 1; i <= n; i++)
+        cin >> x[i];
+    ans = 0;
+    legal = true;
+    f(1, n);
+    cout << (legal == true ? ans : -1) << endl;
 }
 
 signed main() {

@@ -30,35 +30,16 @@ using namespace std;
 #define MAXN 200005
 #define MAXM 1000005 
 int n, m;
-string s;
 
 void sol() {
     cin >> n;
-    cin >> s;
-
-    int cnt = 0;
-    int need = 0;
-    vector<int> ans;
-    
-    for (int i = 0; i < 2 * n; i += 2) {
-        if (s[i] != s[i + 1]) {
-            cnt++;
-            ans.pb(i + 1 + (s[i] - '0' != need));
-            need ^= 1;
-        }
-    }
-
-    if (cnt & 1) {
+    if (n == 1 || n == 3) {
         cout << -1 << endl;
         return;
     }
-
-    cout << ans.size() << ' ';
-    for (int it: ans)
-        cout << it << ' ';
-    cout << endl;
-
-    for (int i = 1; i <= 2 * n; i += 2)
+    for (int i = n / 2 + 1; i <= n; i++)
+        cout << i << ' ';
+    for (int i = 1; i <= n / 2; i++)
         cout << i << ' ';
     cout << endl;
 }

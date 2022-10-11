@@ -30,37 +30,34 @@ using namespace std;
 #define MAXN 200005
 #define MAXM 1000005 
 int n, m;
-string s;
+
+char SZ[] = {'S', 'M', 'L'};
 
 void sol() {
-    cin >> n;
-    cin >> s;
-
-    int cnt = 0;
-    int need = 0;
-    vector<int> ans;
-    
-    for (int i = 0; i < 2 * n; i += 2) {
-        if (s[i] != s[i + 1]) {
-            cnt++;
-            ans.pb(i + 1 + (s[i] - '0' != need));
-            need ^= 1;
-        }
+    string a, b;
+    cin >> a >> b;
+    int aa, bb;
+    for (int i = 0; i < 3; i++)
+        if (SZ[i] == a.back())
+            aa = i;
+    for (int i = 0; i < 3; i++)
+        if (SZ[i] == b.back())
+            bb = i;
+    if (aa < bb) {
+        cout << '<' << endl;
     }
-
-    if (cnt & 1) {
-        cout << -1 << endl;
-        return;
+    else if (aa > bb) {
+        cout << '>' << endl;
     }
-
-    cout << ans.size() << ' ';
-    for (int it: ans)
-        cout << it << ' ';
-    cout << endl;
-
-    for (int i = 1; i <= 2 * n; i += 2)
-        cout << i << ' ';
-    cout << endl;
+    else if (a.back() == 'S' && a.size() != b.size()) {
+        cout << (a.size() > b.size() ? '<' : '>') << endl;
+    }
+    else if (a.back() == 'L' && a.size() != b.size()) {
+        cout << (a.size() > b.size() ? '>' : '<') << endl;
+    }
+    else {
+        cout << '=' << endl;
+    }
 }
 
 signed main() {
