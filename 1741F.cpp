@@ -34,17 +34,15 @@ int ans[MAXN];
 array<int, 4> seg[MAXN];
 
 struct Segment_Tree {
-    struct Node
-    {
+    struct Node {
         int tag, sum;
         void update(int val, int l, int r) {sum += val * (r - l + 1), tag += val;}
     } seg[4 * MAXN];
-    void pull(int id)
-    {
+
+    void pull(int id) {
         seg[id].sum = seg[id * 2].sum + seg[id * 2 + 1].sum;
     }
-    void push(int id, int l, int r)
-    {
+    void push(int id, int l, int r) {
         if (id * 2 >= 4 * MAXN) return;
         int tag = seg[id].tag;
         int mid = (l + r) / 2;
@@ -52,10 +50,8 @@ struct Segment_Tree {
         seg[id * 2 + 1].update(tag, mid + 1, r);
         seg[id].tag = 0;
     }
-    void build(int id, int l, int r)
-    {
-        if(l == r)
-        {
+    void build(int id, int l, int r) {
+        if (l == r) {
             seg[id].sum = seg[id].tag = 0;
             return;
         }
@@ -66,16 +62,13 @@ struct Segment_Tree {
         seg[id].sum = seg[id].tag = 0;
     }
 
-    void update(int id, int l, int r, int ql, int qr, int val)
-    {
-        if(ql <= l && r <= qr)
-        {
+    void update(int id, int l, int r, int ql, int qr, int val) {
+        if (ql <= l && r <= qr) {
             seg[id].update(val, l, r);
             return;
         }
-        if(ql > r || qr < l) return;
-        else
-        {
+        if (ql > r || qr < l) return;
+        else {
             int mid = (l + r) / 2;
             push(id, l, r);
             update(id * 2, l, mid, ql, qr, val);
@@ -83,8 +76,8 @@ struct Segment_Tree {
             pull(id);
         }
     }
-    int query(int id, int l, int r, int ql, int qr)
-    {
+
+    int query(int id, int l, int r, int ql, int qr) {
         if (ql > r || qr < l) return 0;
         if (ql <= l && r <= qr)
             return seg[id].sum;
@@ -189,17 +182,14 @@ void sol() {
 
 
             int l = 1, r = seg[i][1];
-            bool success = ST.query(1, 0, v.size() - 1, 1, seg[i][1]) != 0;
-            if (success) {
-                l = ST.maxposquery(1, 0, v.size() - 1, l, r).F;
-                cmin(ans[seg[i][3]], v[seg[i][1]] - v[l]);
+            auto q1 = ST.maxposquery(1, 0, v.size() - 1, l, r);
+            if (q1.S) {
+                cmin(ans[seg[i][3]], v[seg[i][1]] - v[q1.F]);
             }
 
-            l = seg[i][2], r = v.size() - 1;
-            success = ST.query(1, 0, v.size() - 1, seg[i][2], v.size() - 1) != 0;
-            if (success) {
-                r = ST.minposquery(1, 0, v.size() - 1, seg[i][2], v.size() - 1).F;
-                cmin(ans[seg[i][3]], v[r] - v[seg[i][2]]);
+            auto q2 = ST.minposquery(1, 0, v.size() - 1, seg[i][2], v.size() - 1);
+            if (q2.S) {
+                cmin(ans[seg[i][3]], v[q2.F] - v[seg[i][2]]);
             }
             q.push(seg[i]);
         }
