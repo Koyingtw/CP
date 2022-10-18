@@ -138,8 +138,6 @@ struct Segment_Tree {
     }
 } ST;
 
-
-
 void sol() {
     cin >> n;
     vector<int> v;
@@ -161,8 +159,6 @@ void sol() {
     }
 
     sort(seg, seg + n);
-
-
 
     for (int t = 0; t < 2; t++) {
         ST.build(1, 0, v.size() - 1);
