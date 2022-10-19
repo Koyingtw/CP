@@ -30,58 +30,24 @@ using namespace std;
 #define MAXN 200005
 #define MAXM 1000005 
 int n, m;
-int arr[MAXN];
-
-multiset<int> operator &(multiset<int> _a, multiset<int> _b) {
-    multiset<int> res;
-    if (_a.size() > _b.size())
-        swap(_a, _b);
-    for (int it: _a) {
-        auto iter = _b.find(it);
-        if (iter != _b.end()) {
-            res.insert(it);
-            _b.erase(iter);
-        }
-    }
-    return res;
-}
+int x[MAXN];
 
 void sol() {
     cin >> n;
-    
-    for (int i = 1, a; i <= n; i++) {
-        cin >> a;
-        arr[i] = a;
-    }
+    for (int i = 0; i < n; i++)
+        cin >> x[i];
+    vector<int> ans{x[0]};
 
-    int now = 0;
-    for (int i = 0; i < n; i++) {
-        int add = 0;
-        int tmp = 0;
-        for (int j = 29; j >= 0; j--) {
-            if (now & (1 << j))
-                continue;
-            for (int k = 1; k <= n; k++) {
-                if ((arr[k] & (tmp | (1 << j))) == (tmp | (1 << j))) {
-                    add = k;
-                    tmp |= (1 << j);
-                    break;
-                }
-            }
-        }
-        if (!add) {
-            for (int j = 1; j <= n; j++)
-                if (arr[j])
-                    cout << arr[j] << ' ';
-            cout << endl;
+    for (int i = 1; i < n; i++) {
+        if (ans.back() - x[i] >= 0 && ans.back() - x[i] != ans.back() + x[i]) {
+            cout << -1 << endl;
             return;
         }
-        else {
-            now |= arr[add];
-            cout << arr[add] << ' ';
-            arr[add] = 0;
-        }
+        else
+            ans.pb(ans.back() + x[i]);
     }
+    for (int it: ans)
+        cout << it << ' ';
     cout << endl;
 }
 
