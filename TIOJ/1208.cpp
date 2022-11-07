@@ -78,8 +78,6 @@ void sol() {
         y[i] = y[i - 1] + y[i];
     }
 
-    // cout << msort(0, n, 15) << endl;
-
     int l = -INF, r = INF;
     while (l < r) {
         for (int i = 0; i <= n; i++)

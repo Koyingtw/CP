@@ -23,36 +23,47 @@
 #pragma optimize("Ofast", "unroll-all-loops")
 #endif
 const int INF = 0x3f3f3f3f3f3f3f3f;
-const int P = 1e9+9;
+const int P = 1e9+7;
 
 using namespace std;
 /******************************************************************************/
-#define MAXN 105
+#define MAXN 300005
 #define MAXM 1000005 
 int n, m;
-int dp[MAXN][2];
+vector<int> G[MAXN];
+int sz[MAXN], dp[MAXN], ans;
 
+void dfs1(int i, int pa) {
+    int sum = 0;
+    for (int e: G[i]) if (e != pa) {
+        
+        dfs1(e, i);
+        sum += dp[e];
+        sz[i] += sz[e] + 1;
+    }
+
+
+    for (int e: G[i]) if (e != pa) {
+        cmax(dp[i], sum - dp[e] + sz[e]);
+    }
+}
 
 void sol() {
     cin >> n;
-    dp[1][1] = 1;
-    int tmp = 0, sum = 1;
-    for (int i = 2; i <= n; i++) {
-        dp[i][0] = dp[i - 1][0] + dp[i - 1][1];
-        dp[i][0] %= P;
-        dp[i][1] = 1;
-
-        tmp += sum * 2;
-        dp[i][1] += tmp;
-
-        sum += dp[i][1];
-        tmp %= P;
-        sum %= P;
-        dp[i][1] %= P;
+    for (int i = 1; i <= n; i++) {
+        G[i].clear();
+        sz[i] = 0;
+        dp[i] = 0;
     }
-    cout << (dp[n][0] + dp[n][1]) % P << endl;
 
+    for (int i = 1, a, b; i < n; i++) {
+        cin >> a >> b;
+        G[a].pb(b);
+        G[b].pb(a);
+    }
 
+    dfs1(1, 0);
+    cout << dp[1] << endl;
 }
 
 signed main() {
