@@ -32,27 +32,22 @@ using namespace std;
 #define MAXM 1000005 
 int n, m;
 int a[MAXN];
-struct Node
-{
+struct Node {
 	int l, r, tag, sum;
 	void update(int val){sum += val * (r - l + 1), tag += val;}
-}seg[4 * MAXN];
-void pull(int id)
-{
+} seg[4 * MAXN];
+void pull(int id) {
 	seg[id].sum = seg[id * 2].sum + seg[id * 2 + 1].sum;
 }
-void push(int id)
-{
+void push(int id) {
 	int tag = seg[id].tag;
 	seg[id * 2].update(tag);
 	seg[id * 2 + 1].update(tag);
 	seg[id].tag = 0;
 }
-void build(int id, int l, int r)
-{
+void build(int id, int l, int r) {
 	seg[id].l = l, seg[id].r = r;
-	if(l == r)
-	{
+	if (l == r) {
 		seg[id].sum = a[l];
 		return;
 	}
@@ -62,34 +57,30 @@ void build(int id, int l, int r)
 	pull(id);
 }
 
-void update(int id, int ql, int qr, int val)
-{
+void update(int id, int ql, int qr, int val) {
 	int l = seg[id].l, r = seg[id].r;
-	if(ql <= l && r <= qr)
-	{
+	if (ql <= l && r <= qr) {
 		seg[id].update(val);
 		return;
 	}
-	if(ql > r || qr < l) return;
-	else
-	{
+
+	if (ql > r || qr < l) return;
+	else {
 		push(id);
 		update(id * 2, ql, qr, val);
 		update(id * 2 + 1, ql, qr, val);
 		pull(id);
 	}
 }
-int query(int id, int ql, int qr)
-{
+int query(int id, int ql, int qr) {
 	int l = seg[id].l, r = seg[id].r;
-	if(ql <= l && r <= qr)
+	if (ql <= l && r <= qr)
 		return seg[id].sum;
-	if(ql > r || qr < l) return 0;
+	if (ql > r || qr < l) return 0;
 	push(id);
 	return query(id * 2, ql, qr) + query(id * 2 + 1, ql, qr);
 }
-void sol()
-{
+void sol() {
 	cin >> n;
 	for(int i = 1; i <= n; i++)
 		cin >> a[i];
