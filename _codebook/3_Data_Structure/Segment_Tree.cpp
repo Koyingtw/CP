@@ -1,56 +1,67 @@
 struct Segment_Tree {
-  struct node {
-    int data, lazy;
-    node *l, *r;
-    node() : data(0), lazy(0), l(0), r(0) {}
-    void up() {
-      if (l) data = max(l->data, r->data);
+    struct Node {
+        int mx, tag;
+
+        void update(int val) {
+            tag += val;
+            mx += val;
+        }
+
+        Node operator +(Node _a) {
+            cmax(_a.mx, mx);
+            return _a;
+        }
+
+        Node() {
+            mx = 0;
+            tag = 0;
+        }
+    };
+    Node arr[MAXN << 2];
+
+    void push(int i, int l, int r) {
+        int tag = arr[i].tag;
+        arr[i].tag = 0;
+        if (l == r)
+            return;
+
+        arr[i * 2].update(tag);
+        arr[i * 2 + 1].update(tag);
     }
-    void down() {
-      if (l) {
-        l->data += lazy, l->lazy += lazy;
-        r->data += lazy, r->lazy += lazy;
-      }
-      lazy = 0;
+
+    void build(int i, int l, int r) {
+        arr[i] = Node();
+        if (l == r)
+            return;
+        int mid = (l + r) / 2;
+        build(i * 2, l, mid);
+        build(i * 2 + 1, mid + 1, r);
     }
-  } * root;
-  int l, r;
-  node *build(int l, int r, int *data) {
-    node *p = new node();
-    if (l == r) return p->data = data[l], p;
-    int m = (l + r) / 2;
-    p->l = build(l, m, data),
-    p->r = build(m + 1, r, data);
-    return p->up(), p;
-  }
-  void s_modify(
-    int L, int R, int l, int r, node *p, int x) {
-    if (r < L || l > R) return;
-    p->down();
-    if (L <= l && R >= r)
-      return p->data += x, p->lazy += x, void();
-    int m = (l + r) / 2;
-    s_modify(L, R, l, m, p->l, x);
-    s_modify(L, R, m + 1, r, p->r, x);
-    p->up();
-  }
-  int s_query(int L, int R, int l, int r, node *p) {
-    p->down();
-    if (L <= l && R >= r) return p->data;
-    int m = (l + r) / 2;
-    if (R <= m) return s_query(L, R, l, m, p->l);
-    if (L > m) return s_query(L, R, m + 1, r, p->r);
-    return max(s_query(L, R, l, m, p->l),
-      s_query(L, R, m + 1, r, p->r));
-  }
-  void init(int L, int R, int *data) {
-    l = L, r = R;
-    root = build(l, r, data);
-  }
-  void modify(int L, int R, int x) {
-    s_modify(L, R, l, r, root, x);
-  }
-  int query(int L, int R) {
-    return s_query(L, R, l, r, root);
-  }
-};
+
+    void update(int i, int l, int r, int ql, int qr, int val) { 
+        if (ql > r || qr < l)
+            return;
+        if (ql <= l && r <= qr) {
+            arr[i].update(val);
+            return;
+        }
+
+        int mid = (l + r) / 2;
+        push(i, l, r);
+        update(i * 2, l, mid, ql, qr, val);
+        update(i * 2 + 1, mid + 1, r, ql, qr, val);
+        arr[i].mx = (arr[i * 2] + arr[i * 2 + 1]).mx;
+    }
+
+    Node query(int i, int l, int r, int ql, int qr) {
+        push(i, l, r);
+        if (ql > r || qr < l) 
+            return Node();
+        if (ql <= l && r <= qr)
+            return arr[i];
+        
+        int mid = (l + r) / 2;
+        push(i, l, r);
+        return query(i * 2, l, mid, ql, qr) + query(i * 2 + 1, mid + 1, r, ql, qr);
+    }
+} seg;

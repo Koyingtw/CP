@@ -18,9 +18,10 @@
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
 #define lowbit(x) x &(-x)
+#define SZ(v) ((int)v.size())
 #if !LOCAL
 #define endl "\n"
-#pragma optimize("Ofast", "unroll-all-loops")
+#pragma GCC optimize("Ofast", "unroll-all-loops")
 #endif
 const int INF = 0x3f3f3f3f3f3f3f3f;
 const int P = 1e9+7;
