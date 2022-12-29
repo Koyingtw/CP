@@ -1,0 +1,350 @@
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.7.30) (preloaded format=xelatex 2022.8.3)  27 SEP 2022 22:08
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**"./Erdos–Gallai theorem.tex"
+(Erdos–Gallai theorem.tex
+LaTeX2e <2022-06-01> patch level 5
+L3 programming layer <2022-07-15>
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 \begin{itemize}
+                   
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 1--1
+[] 
+ []
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no q in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no v in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no s in font nullfont!
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 2.
+! Extra }, or forgotten $.
+l.2 ...$\displaystyle d_{1}\geq \cdots \geq d_{n}}
+                                                  d_1\geq\cdots\geq d_n$ can...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no c in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no q in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no v in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no f in font nullfont!
+! Extra }, or forgotten $.
+l.2 ...nly if {$\displaystyle d_{1}+\cdots +d_{n}}
+                                                  d_1+\cdots+d_n$ is even an...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no i in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no v in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no v in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+! Extra }, or forgotten $.
+l.3 ...r every k in {$\displaystyle 1\leq k\leq n}
+                                                  1\leq k\leq n$.
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no . in font nullfont!
+
+Overfull \hbox (20.2465pt too wide) in paragraph at lines 2--4
+\OML/cmm/m/it/10 d[] \OMS/cmsy/m/n/10 ^^U
+ []
+
+
+Overfull \hbox (22.22212pt too wide) in paragraph at lines 2--4
+[] \OMS/cmsy/m/n/10 ^^U
+ []
+
+
+Overfull \hbox (30.8947pt too wide) in paragraph at lines 2--4
+\OML/cmm/m/it/10 d[]d[] \OMS/cmsy/m/n/10 ^^U
+ []
+
+
+Overfull \hbox (22.22212pt too wide) in paragraph at lines 2--4
+[] \OMS/cmsy/m/n/10 ^^U
+ []
+
+
+Overfull \hbox (10.6482pt too wide) in paragraph at lines 2--4
+\OML/cmm/m/it/10 d[]$
+ []
+
+
+Overfull \hbox (17.4688pt too wide) in paragraph at lines 2--4
+\OML/cmm/m/it/10 d[] \OT1/cmr/m/n/10 +
+ []
+
+
+Overfull \hbox (19.44441pt too wide) in paragraph at lines 2--4
+[] \OT1/cmr/m/n/10 +
+ []
+
+
+Overfull \hbox (28.11699pt too wide) in paragraph at lines 2--4
+\OML/cmm/m/it/10 d[]d[] \OT1/cmr/m/n/10 +
+ []
+
+
+Overfull \hbox (19.44441pt too wide) in paragraph at lines 2--4
+[] \OT1/cmr/m/n/10 +
+ []
+
+
+Overfull \hbox (10.6482pt too wide) in paragraph at lines 2--4
+\OML/cmm/m/it/10 d[]$
+ []
+
+
+Overfull \hbox (35.20076pt too wide) in paragraph at lines 2--4
+[] \OML/cmm/m/it/10 d[] \OMS/cmsy/m/n/10 ^^T
+ []
+
+
+Overfull \hbox (22.70839pt too wide) in paragraph at lines 2--4
+\OML/cmm/m/it/10 k\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 k \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (16.66672pt too wide) in paragraph at lines 2--4
+\OT1/cmr/m/n/10 1) +
+ []
+
+
+Overfull \hbox (103.32472pt too wide) in paragraph at lines 2--4
+[] []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 d[]; k\OT1/cmr/m/n/10 )$$[] \OML/cmm/m/i
+t/10 d[] \OMS/cmsy/m/n/10 ^^T
+ []
+
+
+Overfull \hbox (22.70839pt too wide) in paragraph at lines 2--4
+\OML/cmm/m/it/10 k\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 k \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (16.66672pt too wide) in paragraph at lines 2--4
+\OT1/cmr/m/n/10 1) +
+ []
+
+
+Overfull \hbox (68.12396pt too wide) in paragraph at lines 2--4
+[] []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 d[]; k\OT1/cmr/m/n/10 )$
+ []
+
+
+Overfull \hbox (15.55553pt too wide) in paragraph at lines 2--4
+\OT1/cmr/m/n/10 1 \OMS/cmsy/m/n/10 ^^T
+ []
+
+
+Overfull \hbox (16.07635pt too wide) in paragraph at lines 2--4
+\OML/cmm/m/it/10 k \OMS/cmsy/m/n/10 ^^T
+ []
+
+
+Overfull \hbox (21.55788pt too wide) in paragraph at lines 2--4
+\OML/cmm/m/it/10 n\OT1/cmr/m/n/10 1 \OMS/cmsy/m/n/10 ^^T
+ []
+
+
+Overfull \hbox (16.07635pt too wide) in paragraph at lines 2--4
+\OML/cmm/m/it/10 k \OMS/cmsy/m/n/10 ^^T
+ []
+
+
+Overfull \hbox (6.00235pt too wide) in paragraph at lines 2--4
+\OML/cmm/m/it/10 n$ 
+ []
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.5 \end{itemize}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.5 \end{itemize}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.5 \end{itemize}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+)
+! Emergency stop.
+<*> "./Erdos–Gallai theorem.tex"
+                                
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 20 strings out of 410653
+ 413 string characters out of 2823371
+ 307838 words of memory out of 3000000
+ 21167 multiletter control sequences out of 15000+600000
+ 469259 words of font info for 28 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 18i,2n,12p,489b,105s stack positions out of 10000i,1000n,20000p,200000b,80000s
+No pages of output.
