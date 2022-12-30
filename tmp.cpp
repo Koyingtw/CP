@@ -1,12 +1,13 @@
 #include <bits/stdc++.h>
 #define endl "\n"
 using namespace std;
+#pragma GCC optimize("Ofast")
+#pragma GCC optimize("unroll-all-loops")
+
 int main(void)
 {
-    // ios::sync_with_stdio(0);
-    // cin.tie(0);
-    multiset<int> s = {7,7,9, 5, 7, 8, 2, 3, 45, 60};
-    cout<<*s.begin()<<endl;
-    cout<<*s.end()<<endl;
+    int n;
+    for (int i = 0; i < 1e8; i++)
+        n = rand();
     return 0;
 }
