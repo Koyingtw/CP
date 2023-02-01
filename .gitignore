@@ -1,10 +1,10 @@
 .vscode
+.cph/
 Contest
 *.exe
 0模板
 *.in
 *.out
 *.ans
-./cph/
 *.out
 tempCodeRunnerFile.cpp
