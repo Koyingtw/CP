@@ -1,0 +1,1 @@
+{"name":"Local: f582","url":"/home/koying/Project/CP/f582.cpp","tests":[{"id":1666677883209,"input":"2 3\n1 1 AAC\n2 1 A@@","output":"0"},{"id":1666677894267,"input":"6 1\n1 1 @\n2 1 @\n3 1 C\n4 1 C\n5 2 A\n6 2 A","output":"1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/koying/Project/CP/f582.cpp","group":"local","local":true}

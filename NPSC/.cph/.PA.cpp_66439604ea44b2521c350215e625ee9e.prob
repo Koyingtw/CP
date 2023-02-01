@@ -1,0 +1,1 @@
+{"name":"Local: PA","url":"/home/koying/Project/CP/NPSC/PA.cpp","tests":[{"id":1668219272173,"input":"5\nX..P.\n.....\nP....\n.....\n....P","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/koying/Project/CP/NPSC/PA.cpp","group":"local","local":true}

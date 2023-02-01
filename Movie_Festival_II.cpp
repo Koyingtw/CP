@@ -28,23 +28,28 @@ const int P = 1e9+7;
 
 using namespace std;
 /******************************************************************************/
-#define MAXN 105
-#define MAXW 100005 
+#define MAXN 200005
+#define MAXM 1000005 
 int n, m;
-int w[MAXN], v[MAXN];
-int dp[MAXW];
+pii x[MAXN];
 
-void sol() {    
+void sol() {
     cin >> n >> m;
-    for (int i = 1; i <= n; i++) {
-        cin >> w[i] >> v[i];
-    }
-    for (int i = 1; i <= n; i++) {
-        for (int j = m; j >= w[i]; j--) {
-            dp[j] = max(dp[j], dp[j - w[i]] + v[i]);
+    for (int i = 0; i < n; i++)
+        cin >> x[i].S >> x[i].F;
+    sort(x, x + n);
+    queue<int> q;
+    for (int i = 0; i < m; i++)
+        q.push(0);
+    int ans = 0;
+    for (int i = 0; i < n; i++) {
+        if (q.front() <= x[i].S) {
+            ans++;
+            q.pop();
+            q.push(x[i].F);
         }
     }
-    cout << dp[m] << endl;
+    cout << ans << endl;
 }
 
 signed main() {

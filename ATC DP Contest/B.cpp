@@ -1,4 +1,3 @@
-#pragma region
 #include <bits/stdc++.h>
 #define Koying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
@@ -13,27 +12,27 @@
 #define END cout.flush();
 const int INF = 0x3f3f3f3f;
 using namespace std;
-#pragma endregion
 /******************************************************************************/
+
+#define MAXN 100005
+
+int x[MAXN], dp[MAXN];
 
 void sol()
 {
     int n, k;
-    while (cin >> n >> k)
-    {
-        int x[n], dp[n];
-        for (int i = 0; i < n; i++)
-            cin >> x[i];
-        dp[0] = 0;
-        for (int i = 1; i < n; i++)
-        {
-            int mn = INF;
-            for (int j = i - 1; j >= max(1 - 1, i - k); j--)
-                mn = min(mn, dp[j] + abs(x[i] - x[j]));
-            dp[i] = mn;
+    cin >> n >> k;
+    for (int i = 0; i < n; i++)
+        cin >> x[i];
+    dp[0] = 0;
+    dp[1] = abs(x[1] - x[0]);
+    for (int i = 2; i < n; i++) {
+        dp[i] = INF;
+        for (int j = i - 1; j >= max(0LL, i - k); j--) {
+            dp[i] = min(dp[i], dp[j] + abs(x[i] - x[j]));
         }
-        cout << dp[n - 1] << endl;
     }
+    cout << dp[n - 1] << endl;
 }
 
 signed main()

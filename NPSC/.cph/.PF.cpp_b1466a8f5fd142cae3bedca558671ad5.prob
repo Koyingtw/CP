@@ -1,0 +1,1 @@
+{"name":"Local: PF","url":"/home/koying/Project/CP/NPSC/PF.cpp","tests":[{"id":1668226619525,"input":"3\n4\n1 1 1 1\n3\n9 2 8\n1\n56562","output":"0\n499122177\n1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/koying/Project/CP/NPSC/PF.cpp","group":"local","local":true}
