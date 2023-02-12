@@ -35,13 +35,19 @@ using namespace std;
 int n, m;
 
 void sol() {
-
+    cin >> n >> m;
+    cout << 2 * (n - m) << endl;
+    for (int i = n; i > m; i--)
+        cout << i << ' ';
+    for (int j = m; j < n; j++)
+        cout << j << ' ';
+    cout << endl;
 }
 
 signed main() {
     Weakoying;
     int t = 1;
-    //while (cin >> t)
+    while (cin >> t)
 	{
     	while (t--) {
             sol();

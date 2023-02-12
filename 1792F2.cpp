@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
-#define ll long long
 #define pii pair<int, int>
 #define vi vector<int>
 #define vii vector<pair<int, int>>
@@ -24,8 +23,7 @@
 #define endl "\n"
 #pragma GCC optimize("Ofast", "unroll-all-loops")
 #endif
-const int INF = 0x3f3f3f3f;
-const ll INFLL = 0x3f3f3f3f3f3f3f3f;
+const int INF = 0x3f3f3f3f3f3f3f3f;
 const int P = 1e9+7;
 
 using namespace std;

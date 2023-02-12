@@ -32,16 +32,24 @@ using namespace std;
 /******************************************************************************/
 #define MAXN 200005
 #define MAXM 1000005 
-int n, m;
+int a, b, n, m;
 
 void sol() {
+    cin >> a >> b >> n >> m;
+    ll ans = INFLL;
+    cmin(ans, b * n);
+    // cout << ans << ' ';
+    cmin(ans, a * (n / (m + 1) * m + n % (m + 1)));
+    // cout << ans << ' ';
+    cmin(ans, a * (n / (m + 1) * m) + b * (n % (m + 1)));
 
+    cout << ans << endl;
 }
 
 signed main() {
     Weakoying;
     int t = 1;
-    //while (cin >> t)
+    while (cin >> t)
 	{
     	while (t--) {
             sol();
