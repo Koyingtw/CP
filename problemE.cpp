@@ -18,9 +18,10 @@
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
 #define lowbit(x) x &(-x)
+#define SZ(v) ((int)v.size())
 #if !LOCAL
 #define endl "\n"
-#pragma optimize("Ofast", "unroll-all-loops")
+#pragma GCC optimize("Ofast", "unroll-all-loops")
 #endif
 const int INF = 0x3f3f3f3f3f3f3f3f;
 const int P = 1e9+7;
@@ -32,7 +33,36 @@ using namespace std;
 int n, m;
 
 void sol() {
+    int a, b;
+    cin >> a >> b;
 
+    if (a < b) {
+        cout << 0 << endl;
+        return;
+    }
+
+    int l = 1, r = 1e18, ans = 0;
+    while (l < r) {
+        int mid = l + (r - l + 1) / 2;
+        if (a / mid >= b)
+            l = mid;
+        else
+            r = mid - 1;
+    }
+    // cout << l << endl;
+    ans += l;
+
+    l = 1, r = 1e18;
+    while (l < r) {
+        int mid = l + (r - l) / 2;
+        if (a / mid <= b)
+            r = mid;
+        else
+            l = mid + 1;
+    }
+    // cout << r << endl;
+    ans -= r - 1;
+    cout << ans << endl;
 }
 
 signed main() {

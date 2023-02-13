@@ -16,63 +16,58 @@ using namespace std;
 #pragma endregion
 /******************************************************************************/
 
+#define MAXN 3005
+int dp[MAXN][MAXN];
+int state[MAXN][MAXN];
+
 void sol()
 {
     string a, b;
-    while (cin >> a >> b)
-    {
-        int n = a.size(), m = b.size();
-        int dp[n + 1][m + 1];
-        int state[n + 1][m + 1];
-        MEM(dp, 0);
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
-            {
-                if (a[i] == b[j])
-                {
-                    dp[i + 1][j + 1] = dp[i][j] + 1;
-                    state[i + 1][j + 1] = 0;
-                }
+	cin >> a >> b;
+    
+    int n = a.size(), m = b.size();
+    memset(dp, 0, sizeof(dp));
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (a[i] == b[j]) {
+                dp[i + 1][j + 1] = dp[i][j] + 1;
+                state[i + 1][j + 1] = 0;
+            }
+            else {
+                int ouo = max(dp[i][j + 1], dp[i + 1][j]);
+                dp[i + 1][j + 1] = ouo;
+                if (dp[i + 1][j] == ouo)
+                    state[i + 1][j + 1] = 2;
                 else
-                {
-                    int ouo = max(dp[i][j + 1], dp[i + 1][j]);
-                    dp[i + 1][j + 1] = ouo;
-                    if (dp[i + 1][j] == ouo)
-                        state[i + 1][j + 1] = 2;
-                    else
-                        state[i + 1][j + 1] = 1;
-                }
+                    state[i + 1][j + 1] = 1;
             }
         }
-        int cnt = dp[n][m];
-        stack<char> ans;
-        int x = n, y = m;
-        while (dp[x][y])
-        {
-            if (a[x - 1] == b[y - 1])
-            {
-                ans.push(a[x - 1]);
-                x--, y--;
-            }
-            else if (state[x][y] == 0)
-            {
-                x--, y--;
-            }
-            else if (state[x][y] == 1)
-            {
-                x--;
-            }
-            else
-                y--;
-        }
-        while (ans.size())
-        {
-            cout << ans.top();
-            ans.pop();
-        }
-        cout << endl;
     }
+    
+    int cnt = dp[n][m];
+    stack<char> ans;
+    
+    int x = n, y = m;
+    while (dp[x][y]) {
+        if (a[x - 1] == b[y - 1]) {
+            ans.push(a[x - 1]);
+            x--, y--;
+        }
+        else if (state[x][y] == 0) {
+            x--, y--;
+        }
+        else if (state[x][y] == 1) {
+            x--;
+        }
+        else
+            y--;
+    }
+    while (ans.size()) {
+        cout << ans.top();
+        ans.pop();
+    }
+    cout << endl;
+    
 }
 
 signed main()

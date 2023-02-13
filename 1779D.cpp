@@ -33,81 +33,59 @@ using namespace std;
 int n, m;
 int x[MAXN];
 int y[MAXN];
-int z[MAXN];
 int a[MAXN];
 map<int, int> mp;
-
-void f(int l, int r) {
-    set<int> st;
-    while (l < r && y[l] >= y[l + 1]) {
-        mp[y[l]] -= (x[l] > y[l]);
-        l++;
-    }
-    while (l < r && y[r] >= y[r - 1]) {
-        mp[y[r]] -= (x[r] > y[r]);
-        r--;
-    }
-    // cout << l << ' ' << r << endl;
-    if (l > r)
-        return;
-    if(l == r) {
-        mp[y[l]] -= (x[l] > y[l]);
-        // cout << y[l] << endl;
-        return;
-    }
-    int mx = *max_element(y + l, y + r + 1);
-    bool need = 0;
-    for (int i = l; i <= r; i++) if (y[i] == mx && x[i] > mx)
-        need = 1;
-    mp[mx] -= need;
-    if (need) {
-        // cout << mx << endl;
-    }
-    int now = l;
-    for (int i = l; i <= r; i++) {
-        if (i == now && y[i] == mx) {
-            now = i + 1;
-            continue;
-        }
-        if (y[i] == mx) {
-            f(now, i - 1);
-            now = i + 1;
-        }
-    }
-    if (y[r] != mx)
-        f(now, r);
-}
+bool good[MAXN];
+int l[MAXN];
 
 void sol() {
     cin >> n;
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++) {
         cin >> x[i];
+        l[i] = -1;
+    }
     mp.clear();
     for (int i = 0; i < n; i++) {
         cin >> y[i];
-        z[i] = x[i] - y[i];
-        // cout << z[i] << ' ';
+        good[i] = 0;
     }
-    // cout << endl;
     cin >> m;
     for (int i = 0; i < m; i++) {
         cin >> a[i];
         mp[a[i]]++;
     }
 
-    if (*min_element(z, z + n) < 0) {
-        cout << "NO" << endl;
-        return;
+    stack<int> st;
+    
+    for (int i = 0; i < n; i++) {
+        if (x[i] < y[i]) {
+            cout << "NO" << endl;
+            return;
+        }
+        while (st.size() && y[st.top()] < y[i]) {
+            st.pop();
+        }
+        if (st.size())
+            l[i] = st.top();
+
+        st.push(i);
     }
 
-    f(0, n - 1);
+    for (int i = 0; i < n; i++) {
+        if (l[i] == -1 || good[l[i]] || y[l[i]] > y[i]) {
+            good[i] = (x[i] == y[i]);
+            mp[y[i]] -= (!good[i]);
+        }
+    }
+
     for (auto it: mp) {
         if (it.S < 0) {
-            // cout << it.F << ' ' << it.S << endl;
             cout << "NO" << endl;
             return;
         }
     }
+
+
     cout << "YES" << endl;
 }
 

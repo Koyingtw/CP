@@ -33,74 +33,40 @@ using namespace std;
 int n, m;
 int x[MAXN];
 
-struct BIT {
-    int arr[MAXN];
-
-    void init() {
-        for (int i = 0; i <= n; i++)
-            arr[i] = 0;
-    }
-
-    void update(int i, int val) {
-        for (; i <= n; i += lowbit(i))
-            arr[i] += val;
-    }
-
-    int query(int i) {
-        int ans = 0;
-        for (; i; i -= lowbit(i))
-            ans += arr[i];
-        return ans;
-    }
-} BIT;
-
-bool operator < (const pii &_a, const pii &_b) {
-    if (abs(_a.F) != abs(_b.F))
-        return abs(_a.F) > abs(_b.F);
-    else
-        return _a.S < _b.S;
-}
-
-int cal1() {
-    BIT.init();
-    for (int i = 1; i <= n; i++)
-        BIT.update(i, x[i]);
-    int ans = 0;
-    for (int i = m - 1; i >= 1; i--) {
-        if (BIT.query(i) < BIT.query(m)) {
-            ans++;
-            BIT.update(i, -2 * x[i]);
-        }
-        if (BIT.query(i) < BIT.query(m))
-            return INF;
-    }
-    for (int i = m + 1; i <= n; i++) {
-        if (BIT.query(i) < BIT.query(m)) {
-            ans++;
-            BIT.update(i, -2 * x[i]);
-        }
-        if (BIT.query(i) < BIT.query(m))
-            return INF;
-    }
-    return ans;
-}
-
 void sol() {
     cin >> n >> m;
-    BIT.init();
-
-
-    for (int i = 1; i <= n; i++) {
+    for (int i = 1; i <= n; i++)
         cin >> x[i];
-        BIT.update(i, x[i]);
+    priority_queue<pii, vector<pii>, greater<pii>> pq;
+    int sum = 0;
+    int ans = 0;
+    bool change_m = false;
+    for (int i = m; i > 1; i--) {
+        pq.push(pii(-x[i], i));
+        sum -= x[i];
+        while (sum < 0) {
+            if (pq.top().S == m)
+                change_m = true;
+            x[pq.top().S] = -x[pq.top().S];
+            sum -= 2 * pq.top().F;
+            pq.pop();
+            ans++;
+        }
     }
 
-    int ans = cal1();
+    pq = priority_queue<pii, vector<pii>, greater<pii>>();
+    sum = 0;
 
-    x[m] = -x[m];
-
-    ans = min(ans, cal1() + 1);
-
+    for (int i = m + 1; i <= n; i++) {
+        pq.push(pii{x[i], i});
+        sum += x[i];
+        while (sum < 0) {
+            sum -= 2 * pq.top().F;
+            x[pq.top().S] = -x[pq.top().S];
+            pq.pop();
+            ans++;
+        }
+    }
     cout << ans << endl;
 }
 

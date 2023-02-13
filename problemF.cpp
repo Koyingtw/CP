@@ -1,13 +1,3 @@
-// Problem: Maximum Subarray Sum
-// Contest: CSES - CSES Problem Set
-// URL: https://cses.fi/problemset/task/1643
-// Memory Limit: 512 MB
-// Time Limit: 1000 ms
-// 
-// Powered by CP Editor (https://cpeditor.org)
-
-#pragma region
-#pragma optimize("O3")
 #include <bits/stdc++.h>
 #define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
@@ -23,47 +13,53 @@
 #define cmax(a, b) a = (a > b ? a : b)
 #define cmin(a, b) a = (a < b ? a : b)
 #define put(x) cout << x << endl;
-#define putarr(x) for(int i = 0; i < sizeof(x); i++) cout << x[i] << (" \n")[i == sizeof(x) - 1]; 
+#define DB(x) cerr << #x << " " << x << endl
+#define all(v) v.begin(), v.end()
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
 #define lowbit(x) x &(-x)
+#define SZ(v) ((int)v.size())
 #if !LOCAL
 #define endl "\n"
+#pragma GCC optimize("Ofast", "unroll-all-loops")
 #endif
-const int INF = 0x3f3f3f3f;
+const int INF = 0x3f3f3f3f3f3f3f3f;
 const int P = 1e9+7;
 
 using namespace std;
-#pragma endregion
 /******************************************************************************/
 #define MAXN 200005
 #define MAXM 1000005 
 int n, m;
-int x[MAXN];
-void sol()
-{
-	cin >> n;
-	for(int i = 0; i < n; i++)
-		cin >> x[i];
-	int ans = -INF;
-	int mn = 0, sum = 0;
-	for(int i = 0; i < n; i++)
-	{
-		sum += x[i];
-		cmax(ans, sum - mn);
-		cmin(mn, sum);
-	}
-	put(ans);
+int a[MAXN], dp[MAXN][2];
+
+void sol() {
+    cin >> n;
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
+    
+    dp[0][0] = 0;
+    dp[0][1] = a[0];
+    dp[1][0] = 0;
+    dp[1][1] = a[1];
+
+    for (int i = 2; i < n; i++) {
+        dp[i][0] = max(dp[i - 2][0], dp[i - 2][1]);
+        dp[i][1] = dp[i - 2][0] + a[i];
+    }
+    int ans = max(dp[n - 1][0], dp[n - 1][1]);
+    if (n > 1) {
+        ans += max(dp[n - 2][0], dp[n - 2][1]);
+    }
+    cout << ans << endl;
 }
 
-signed main()
-{
+signed main() {
     Weakoying;
     int t = 1;
     //while (cin >> t)
-    {
-    	while (t--)
-        {
+	{
+    	while (t--) {
             sol();
         }
     }
