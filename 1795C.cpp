@@ -3,7 +3,6 @@
 #define int long long
 #define ll long long
 #define pii pair<int, int>
-#define pll pair<ll, ll>
 #define vi vector<int>
 #define vii vector<pair<int, int>>
 #define pqueue priority_queue
@@ -25,7 +24,7 @@
 #define endl "\n"
 #pragma GCC optimize("Ofast", "unroll-all-loops")
 #endif
-const int INF = 0x3f3f3f3f3f3f3f3f;
+const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const int P = 1e9+7;
 
@@ -34,67 +33,50 @@ using namespace std;
 #define MAXN 200005
 #define MAXM 1000005 
 int n, m;
-array<int, 3> x[MAXN];
-int pos[MAXN];
-bitset<MAXN> used;
+int x[MAXN], y[MAXN], pre[MAXN];
+int times[MAXN], add[MAXN], ans[MAXN];
 
-struct Fenwick_Tree {
-    ll arr[MAXN];
+int getsum(int l, int r) {
+    return pre[r] - pre[l - 1];
+}
 
-    void init() {
-        for (int i = 1; i <= n; i++)
-            arr[i] = 0;
-    }
-
-    void update(int i, int val) {
-        for (; i <= n; i += lowbit(i))
-            arr[i] += val;
-    }
-
-    int query(int i) {
-        ll ret = 0;
-        for (; i > 0; i -= lowbit(i))
-            ret += arr[i];
-        return ret;
-    }
-} BIT;
 
 void sol() {
-    cin >> n >> m;
-    BIT.init();
+    cin >> n;
     for (int i = 1; i <= n; i++) {
-        cin >> x[i][1];
-        x[i][2] = i;
-        x[i][0] = min(x[i][1] + i, x[i][1] + (n - i + 1));
+        cin >> x[i];
+        times[i] = add[i] = ans[i] = 0;
     }
-
-    sort(x + 1, x + n + 1);
-
     for (int i = 1; i <= n; i++) {
-        pos[x[i][2]] = i;
-        BIT.update(i, x[i][0]);
+        cin >> y[i];
+        pre[i] = pre[i - 1] + y[i];
     }
-
-    int ans = 0;
-
     for (int i = 1; i <= n; i++) {
-        if (x[i][1] + x[i][2] > m)
+        if (x[i] <= y[i]) {
+            add[i] += x[i];
             continue;
+        }
 
-        BIT.update(i, -x[i][0]);
-        int l = 0, r = n;
+        int l = i, r = n;
         while (l < r) {
             int mid = (l + r + 1) / 2;
-            if (BIT.query(mid) + x[i][1] + x[i][2] <= m)
+            if (getsum(i, mid) <= x[i])
                 l = mid;
             else
                 r = mid - 1;
         }
-        cmax(ans, l + (i > l));
-        BIT.update(i, x[i][0]);
+        times[i]++;
+        times[l + 1]--;
+        add[l + 1] += x[i] - getsum(i, l);
     }
-    cout << ans << endl;
-}
+
+    for (int i = 1; i <= n; i++) {
+        times[i] = times[i] + times[i - 1];
+        ans[i] = times[i] * y[i] + add[i];
+        cout << ans[i] << ' ';
+    }
+    cout << endl;
+}   
 
 signed main() {
     Weakoying;

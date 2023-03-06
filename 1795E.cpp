@@ -3,7 +3,6 @@
 #define int long long
 #define ll long long
 #define pii pair<int, int>
-#define pll pair<ll, ll>
 #define vi vector<int>
 #define vii vector<pair<int, int>>
 #define pqueue priority_queue
@@ -25,75 +24,58 @@
 #define endl "\n"
 #pragma GCC optimize("Ofast", "unroll-all-loops")
 #endif
-const int INF = 0x3f3f3f3f3f3f3f3f;
+const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const int P = 1e9+7;
 
 using namespace std;
 /******************************************************************************/
-#define MAXN 200005
+#define MAXN 300005
 #define MAXM 1000005 
 int n, m;
-array<int, 3> x[MAXN];
-int pos[MAXN];
-bitset<MAXN> used;
-
-struct Fenwick_Tree {
-    ll arr[MAXN];
-
-    void init() {
-        for (int i = 1; i <= n; i++)
-            arr[i] = 0;
-    }
-
-    void update(int i, int val) {
-        for (; i <= n; i += lowbit(i))
-            arr[i] += val;
-    }
-
-    int query(int i) {
-        ll ret = 0;
-        for (; i > 0; i -= lowbit(i))
-            ret += arr[i];
-        return ret;
-    }
-} BIT;
+int h[MAXN], pre[MAXN], suf[MAXN];
 
 void sol() {
-    cin >> n >> m;
-    BIT.init();
+    cin >> n;
     for (int i = 1; i <= n; i++) {
-        cin >> x[i][1];
-        x[i][2] = i;
-        x[i][0] = min(x[i][1] + i, x[i][1] + (n - i + 1));
+        cin >> h[i];
+        pre[i] = suf[i] = 0;
     }
+    
+    stack<pii> st;
 
-    sort(x + 1, x + n + 1);
-
+    int sum = 0;
     for (int i = 1; i <= n; i++) {
-        pos[x[i][2]] = i;
-        BIT.update(i, x[i][0]);
-    }
-
-    int ans = 0;
-
-    for (int i = 1; i <= n; i++) {
-        if (x[i][1] + x[i][2] > m)
-            continue;
-
-        BIT.update(i, -x[i][0]);
-        int l = 0, r = n;
-        while (l < r) {
-            int mid = (l + r + 1) / 2;
-            if (BIT.query(mid) + x[i][1] + x[i][2] <= m)
-                l = mid;
-            else
-                r = mid - 1;
+        while (!st.empty() && st.top().F + (i - st.top().S) > h[i]) {
+            sum += min(st.top().F, st.top().F - (h[i] - (i - st.top().S)));
+            st.pop();
         }
-        cmax(ans, l + (i > l));
-        BIT.update(i, x[i][0]);
+
+        st.push({h[i], i});
+        pre[i] = sum;
     }
-    cout << ans << endl;
+
+    while (!st.empty()) {
+        st.pop();
+    }
+    sum = 0;
+
+    for (int i = n; i > 0; i--) {
+        while (!st.empty() && st.top().F + (st.top().S - i) > h[i]) {
+            sum += min(st.top().F, st.top().F - (h[i] - (st.top().S - i)));
+            st.pop();
+        }
+
+        st.push({h[i], i});
+        suf[i] = sum;
+    }
+
+    int ans = INF;
+    for (int i = 1; i <= n; i++) {
+        cmin(ans, pre[i] + suf[i] + h[i]);
+        cout << pre[i] << ' ' << suf[i] << endl;
+    }
+    put(ans);
 }
 
 signed main() {
