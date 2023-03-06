@@ -83,18 +83,6 @@ struct MO {
         for (auto it: eft[i])
             add(it);
         eft[i].clear();
-
-
-        // auto it = ele.lower_bound(x[i]);
-        // if (it != ele.end()) {
-        //     if (ans.find(abs(*it - x[i])) != ans.end())
-        //         ans.erase(ans.find(abs(*it - x[i])));
-        // }
-        // if (it != ele.begin()) {
-        //     --it;
-        //     if (ans.find(abs(*it - x[i])) != ans.end())
-        //         ans.erase(ans.find(abs(*it - x[i])));
-        // }
     }
 } Mo;
 
