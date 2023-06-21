@@ -35,7 +35,10 @@ using namespace std;
 int n, m;
 
 void sol() {
+    int a, b, c;
+    cin >> a >> b >> c;
     
+    cout << 1 << endl;
 }
 
 signed main() {

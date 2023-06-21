@@ -35,7 +35,16 @@ using namespace std;
 int n, m;
 
 void sol() {
-    
+    cin >> n;
+    priority_queue<int, vector<int>, greater<int>> pq;
+
+    int op, x;
+    while (n--) {
+        if (cin >> op && op == 1 && cin >> x)
+            pq.push(x);
+        else
+            pq.empty() ? cout << "empty!" << endl : cout << pq.top() << endl, pq.pop();
+    }
 }
 
 signed main() {

@@ -33,15 +33,42 @@ using namespace std;
 #define MAXN 200005
 #define MAXM 1000005 
 int n, m;
+int x[MAXN];
 
 void sol() {
-    
+    cin >> n;    
+    int sum = 0, ans = INFLL;
+    for (int i = 0; i < n; i++) {
+        cin >> x[i];
+        sum += abs(x[i]);
+    }
+
+    int tmp = 0, now = (-1 + (x[0] < 0));
+    for (int i = 0; i < n; i++) if (x[i] < 0) {
+        tmp++;
+        for (int j = i + 1; j < n; j++) {
+            if (x[j] > 0) {
+                i = j - 1;
+                break;
+            }
+            if (j == n - 1) {
+                i = j;
+                break;
+            }
+        }
+    }
+
+    cmin(ans, tmp);
+
+
+
+    cout << sum << ' ' << tmp << endl;
 }
 
 signed main() {
     Weakoying;
     int t = 1;
-    //while (cin >> t)
+    while (cin >> t)
 	{
     	while (t--) {
             sol();

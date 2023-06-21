@@ -33,15 +33,45 @@ using namespace std;
 #define MAXN 200005
 #define MAXM 1000005 
 int n, m;
+vector<int> G[MAXN];
+int dp[MAXN];
+
+void dfs(int i, int pa) {
+    for (int j : G[i]) {
+        if (j == pa) continue;
+        dfs(j, i);
+        dp[i] += dp[j];
+    }
+    dp[i] += dp[i] == 0;
+}
 
 void sol() {
-    
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        G[i].clear();
+        dp[i] = 0;
+    }
+    for (int i = 1, a, b; i < n; i++) {
+        cin >> a >> b;
+        G[a].pb(b);
+        G[b].pb(a);
+    }
+
+    dfs(1, 0);
+
+    cin >> m;
+    int u, v;
+    while (m--) {
+        cin >> u >> v;
+        // cout << dp[u] << ' ' << dp[v] << endl;
+        cout << dp[u] * dp[v] << endl;
+    }
 }
 
 signed main() {
     Weakoying;
     int t = 1;
-    //while (cin >> t)
+    while (cin >> t)
 	{
     	while (t--) {
             sol();

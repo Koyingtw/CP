@@ -35,13 +35,34 @@ using namespace std;
 int n, m;
 
 void sol() {
-    
+    pii mx(0, 0), mn(INFLL, 0);
+    int h;
+    cin >> n;
+    cin >> h;
+    mx = pii(h, 1);
+    for (int i = 2, h; i <= n; i++) {
+        auto tmpmx = mx, tmpmn = mn;
+        cin >> h;
+        if (h < tmpmn.F)
+            mn.F = h;
+        if (h > tmpmx.F)
+            mx.F = h;
+        if (h < tmpmx.F && tmpmx.S + 1 > tmpmn.S)
+            mn = pii(h, tmpmx.S + 1);
+        else if (h < tmpmx.F && tmpmx.S + 1 == tmpmn.S && h < tmpmn.F)
+            mn = pii(h, tmpmx.S + 1);
+        if (h > tmpmn.F && tmpmn.S + 1 > tmpmx.S)
+            mx = pii(h, tmpmn.S + 1);
+        else if (h > tmpmn.F && tmpmn.S + 1 == tmpmx.S && h > tmpmx.S)
+            mx = pii(h, tmpmn.S + 1);
+    }
+    cout << mx.S << endl;;
 }
 
 signed main() {
     Weakoying;
     int t = 1;
-    //while (cin >> t)
+    while (cin >> t)
 	{
     	while (t--) {
             sol();

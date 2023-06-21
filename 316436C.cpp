@@ -35,7 +35,32 @@ using namespace std;
 int n, m;
 
 void sol() {
-    
+    priority_queue<int, vector<int>, less<int>> L;
+    priority_queue<int, vector<int>, greater<int>> R;
+    int n;
+    while (cin >> n && n) {
+        if (L.empty())
+            L.push(n);
+        else {
+            if (n <= L.top())
+                L.push(n);
+            else
+                R.push(n);
+        }
+        if (L.size() > R.size() + 1) {
+            R.push(L.top());
+            L.pop();
+        }
+        else if (R.size() > L.size()) {
+            L.push(R.top());
+            R.pop();
+        }
+
+        if (L.size() == R.size())
+            cout << (L.top() + R.top()) / 2 << '\n';
+        else
+            cout << L.top() << '\n';
+    }
 }
 
 signed main() {

@@ -2,18 +2,11 @@
 
 using namespace std;
 
+int n, s, t;
+vector<int> G[MAXN];
+
 signed main() {
-    string s;
-    map<string, int> mp;
-    for (int i = 0; i < 14; i++) {
-        cin >> s;
-        mp[s]++;
-    }
-    for (auto [a, b]: mp) {
-        if (b != 2) {
-            cout << "Bad Luck." << endl;
-            return 0;
-        }
-    }
-    cout << "Seven Pairs!" << endl;
+    ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+
+
 }

@@ -35,13 +35,37 @@ using namespace std;
 int n, m;
 
 void sol() {
-    
+    cin >> n;
+    string a;
+    for (int i = 1; i < n && a.size() <= 30; i++) {
+        a += to_string(i);
+        string ans = a + to_string(i + 1);
+        int nxt = i + 2;
+        int now = stoll(ans) % n;
+        // cout << stoll(ans) << endl;
+        while (now != 1) {
+            if (ans.size() > 100)
+                break;
+            int ten = pow(10, (int)log10(nxt) + 1);
+            // cout << ten << endl;
+            ans += to_string(nxt);
+            now = (now * ten + nxt) % n;
+            // cout << ans << ' ' << now << endl;
+            nxt++;
+        }
+        if (now == 1) {
+            cout << "YES" << endl;
+            cout << a << ' ' << ans << endl;
+            return;
+        }
+    }
+    cout << "NO" << endl;
 }
 
 signed main() {
     Weakoying;
     int t = 1;
-    //while (cin >> t)
+    while (cin >> t)
 	{
     	while (t--) {
             sol();

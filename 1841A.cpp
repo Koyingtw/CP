@@ -33,15 +33,21 @@ using namespace std;
 #define MAXN 200005
 #define MAXM 1000005 
 int n, m;
+int x[MAXN];
 
 void sol() {
-    
+    cin >> n;
+    if (n > 4)
+        cout << "Alice" << endl;
+    else
+        cout << "Bob" << endl;
+        
 }
 
 signed main() {
     Weakoying;
     int t = 1;
-    //while (cin >> t)
+    while (cin >> t)
 	{
     	while (t--) {
             sol();

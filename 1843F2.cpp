@@ -35,7 +35,7 @@ using namespace std;
 int n, m;
 
 void sol() {
-    
+
 }
 
 signed main() {

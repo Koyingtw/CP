@@ -33,15 +33,52 @@ using namespace std;
 #define MAXN 200005
 #define MAXM 1000005 
 int n, m;
+int x[MAXN];
 
 void sol() {
-    
+    cin >> n;
+    string ans = "";
+    vector<int> v;
+    int cnt = 0;
+    int last = INFLL;
+    for (int i = 0; i < n; i++) {
+        cin >> x[i];
+        if (v.size() == 0) {
+            ans += '1';
+            v.pb(x[i]);
+        }
+        else if (cnt == 0) {
+            if (x[i] >= v.back()) {
+                ans += '1';
+                v.pb(x[i]);
+            }
+            else {
+                if (x[i] <= v[0]) {
+                    ans += '1';
+                    v.pb(x[i]);
+                    cnt++;
+                }
+                else
+                    ans += '0';
+            }
+        }
+        else {
+            if (x[i] >= v.back() && x[i] <= v[0]) {
+                ans += '1';
+                v.pb(x[i]);
+            }
+            else {
+                ans += '0';
+            }
+        }
+    }
+    cout << ans << endl;
 }
 
 signed main() {
     Weakoying;
     int t = 1;
-    //while (cin >> t)
+    while (cin >> t)
 	{
     	while (t--) {
             sol();

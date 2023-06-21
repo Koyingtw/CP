@@ -30,39 +30,52 @@ const int P = 1e9+7;
 
 using namespace std;
 /******************************************************************************/
-#define MAXN 200005
+#define MAXN 1005
 #define MAXM 1000005 
 int n, m;
-string ans;
-
-inline int f(int x) {
-    int ret = 0;
-    int five = 5;
-    while (five <= x) {
-        int mx = x / five;
-        ret += mx * (mx - 1) / 2 * five;
-        ret += mx * (x % five + 1);
-        five *= 5;
-    }
-    return ret;
-}
+char c[MAXN][MAXN];
+const int p[] = {1, 0, -1, 0, 1};
 
 void sol() {
     cin >> n >> m;
-    cout << f(m) - f(n - 1) << endl;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++)
+            cin >> c[i][j];
+    }
+
+    int ans = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) if (c[i][j] == '.') {
+            ans++;
+            queue<pii> q;
+            q.push({i, j});
+            c[i][j] = '#';
+            while (!q.empty()) {
+                pii now = q.front();
+                q.pop();
+                for (int k = 0; k < 4; k++) {
+                    int x = now.F + p[k];
+                    int y = now.S + p[k + 1];
+                    if (x < 0 || x >= n || y < 0 || y >= m || c[x][y] == '#')
+                        continue;
+                    c[x][y] = '#';
+                    q.push({x, y});
+                }
+            }
+        }
+    }
+
+    cout << ans << endl;
 }
 
 signed main() {
     Weakoying;
     int t = 1;
-    cin >> t;
-    // while (cin >> t)
+    while (cin >> t)
 	{
     	while (t--) {
             sol();
         }
-        // cout << ans << endl;
-
     }
         
     return 0;

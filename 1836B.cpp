@@ -32,16 +32,41 @@ using namespace std;
 /******************************************************************************/
 #define MAXN 200005
 #define MAXM 1000005 
-int n, m;
+int n, k, g;
 
 void sol() {
-    
+    cin >> n >> k >> g;
+    int avg = (g - 1) / 2;
+    int sum = 0;
+    int last = k * g;
+    int round;
+    if (avg)
+        round = last / avg;
+    else
+        round = INF;
+    if (round >= n - 1) {
+        sum += avg * (n - 1);
+        last -= avg * (n - 1);
+    }
+    else {
+        sum += avg * round;
+        last -= avg * round;
+        sum += last;
+        last = 0;
+    }
+    int pay;
+    if (last % g >= (g + 1) / 2)
+        pay = last + (g - last % g);
+    else
+        pay = last - last % g;
+    sum += last - pay;
+    cout << sum << endl;
 }
 
 signed main() {
     Weakoying;
     int t = 1;
-    //while (cin >> t)
+    while (cin >> t)
 	{
     	while (t--) {
             sol();

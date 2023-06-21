@@ -30,12 +30,52 @@ const int P = 1e9+7;
 
 using namespace std;
 /******************************************************************************/
-#define MAXN 200005
+#define MAXN 1000005
 #define MAXM 1000005 
 int n, m;
+int x[MAXN];
 
 void sol() {
-    
+    cin >> n;
+    for (int i = 0; i < n; i++)
+        cin >> x[i];
+    sort(x, x + n);
+    cin >> m;
+    while (m--) {
+        int k;
+        cin >> k;
+        int l = 0, r = n - 1;
+        while (l < r) {
+            int mid = (l + r + 1) / 2;
+            if (x[mid] >= k)
+                r = mid - 1;
+            else
+                l = mid;
+        }
+
+        if (l != n - 1 && x[l + 1] == k) {
+            cout << k << '\n';
+            continue;
+        }
+        else if (x[l] < k)
+            cout << x[l] << ' ';
+        else
+            cout << "no ";
+
+        r = n - 1;
+        while (l < r) {
+            int mid = (l + r) / 2;
+            if (x[mid] <= k)
+                l = mid + 1;
+            else
+                r = mid;
+        }
+
+        if (x[r] > k)
+            cout << x[r] << '\n';
+        else
+            cout << "no\n";
+    }
 }
 
 signed main() {
