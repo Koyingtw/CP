@@ -8,3 +8,4 @@ Contest
 *.ans
 *.out
 tempCodeRunnerFile.cpp
+.DS_Store
