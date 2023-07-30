@@ -44,8 +44,9 @@ struct Line {
     }
 };
 
+template<typename T>
 struct LeeChao_SegTree {
-    Line arr[MAXM << 2];
+    T arr[MAXM << 2];
 
     void init() {
         for (int i = 0; i < (MAXM << 2); i++) {
@@ -53,7 +54,7 @@ struct LeeChao_SegTree {
         }
     }
 
-    void insert(int i, int l, int r, Line x) {
+    void insert(int i, int l, int r, T x) {
         if (l == r) {
             if (x(l) < arr[i](l)) {
                 arr[i] = x;
@@ -89,7 +90,9 @@ struct LeeChao_SegTree {
         }
         return min(res, arr[i](pos));
     }
-} Seg;
+};
+
+LeeChao_SegTree<Line> Seg;
 
 void sol() {
     cin >> n >> m;

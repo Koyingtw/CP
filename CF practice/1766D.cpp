@@ -23,7 +23,7 @@
 #define endl "\n"
 #pragma GCC optimize("Ofast", "unroll-all-loops")
 #endif
-const int INF = 0x3f3f3f3f;
+const int INF = 0x3f3f3f3f3f3f3f3f;
 const int P = 1e9+7;
 
 using namespace std;
@@ -34,6 +34,7 @@ int n, m;
 
 bitset<MAXM> notPrime;
 vector<int> prime;
+int mn[MAXM];
 
 void make_prime() {
     for (int i = 2; i * i < MAXM; i++) {
@@ -41,6 +42,8 @@ void make_prime() {
             prime.emplace_back(i);
             for (int j = i * i; j < MAXM; j += i) {
                 notPrime[j] = 1;
+                if (!mn[j])
+                    mn[j] = i;
             }
         }
     }
@@ -76,14 +79,11 @@ void sol() {
     if (!notPrime[k]) 
         cmin(ans, k * ((n + k - 1) / k));
     else {
-        for (int it: prime) {
-            if (k % it == 0) {
-                cmin(ans, it * ((n + it - 1) / it));
-                while (k % it == 0)
-                    k /= it;
-            }
-            if (k == 1)
-                break;
+        while (k > 1 && mn[k]) {
+            int it = mn[k];
+            cmin(ans, it * ((n + it - 1) / it));
+            while (k % it == 0)
+                k /= it;
         }
         if (k > 1 && !notPrime[k]) 
             cmin(ans, k * ((n + k - 1) / k));

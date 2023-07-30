@@ -1,0 +1,64 @@
+ADD x b b b
+ADD x c b b
+ADD x d c c
+ADD x e d d
+ADD x f e e
+ADD x g f f
+ADD x h g g
+ADD x i h h
+ADD x j i i
+ADD x k j j
+ADD x l k k
+ADD x m l l
+ADD x n m m
+ADD x o n n
+ADD x p o o
+ADD x q p p
+MOV x w a
+ADD x a y
+LES x z a
+SUB x w w o
+SUB x a a p
+LES x z a
+SUB x w w n
+SUB x a a o
+LES x z a
+SUB x w w m
+SUB x a a n
+LES x z a
+SUB x w w l
+SUB x a a m
+LES x z a
+SUB x w w k
+SUB x a a l
+LES x z a
+SUB x w w j
+SUB x a a k
+LES x z a
+SUB x w w i
+SUB x a a j
+LES x z a
+SUB x w w h
+SUB x a a i
+LES x z a
+SUB x w w g
+SUB x a a h
+LES x z a
+SUB x w w f
+SUB x a a g
+LES x z a
+SUB x w w e
+SUB x a a f
+LES x z a
+SUB x w w d
+SUB x a a e
+LES x z a
+SUB x w w c
+SUB x a a d
+LES x z a
+SUB x w w b
+SUB x a a c
+LES x z a
+SUB x w w y
+SUB x a a b
+MOV x a w
