@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #define Weakoying ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define int long long
+#define ll long long
 #define pii pair<int, int>
 #define vi vector<int>
 #define vii vector<pair<int, int>>
@@ -18,44 +19,28 @@
 #define stop system("pause");
 #define MEM(x, n) memset(x, n, sizeof(x));
 #define lowbit(x) x &(-x)
+#define SZ(v) ((int)v.size())
 #if !LOCAL
 #define endl "\n"
-#pragma optimize("Ofast", "unroll-all-loops")
+#pragma GCC optimize("Ofast", "unroll-all-loops")
 #endif
-const int INF = 0x3f3f3f3f3f3f3f3f;
+const int INF = 0x3f3f3f3f;
+const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const int P = 1e9+7;
 
 using namespace std;
 /******************************************************************************/
-#define MAXN 200005
+#define MAXN 105
 #define MAXM 1000005 
 int n, m;
-string s, t;
+
+// 0.07, 7
+// 0.075, 3.75
+// 0.068, 4.8
 
 void sol() {
-    cin >> s;
-    cin >> n;
-    for (int j = 0; j < n; j++) {
-        cin >> t;
-        int ans = -1;
-        string tmps, tmpt;
-        for (int i = 0; i < min(s.size(), t.size()); i++) {
-            tmps = s[s.size() - i - 1] + tmps;
-            tmpt += t[i];
-            if (tmps == tmpt) {
-                
-                // cout << tmps << ' ' << tmpt << ' ' << ans << ' ' << min(i + 1, t.size() - i - 1) << endl;
-                // cout << (ans < min(i + 1, t.size() - i - 1)) << endl;
-                if (ans < min(i + 1, t.size() - i - 1)) {
-                    ans = min(i + 1, t.size() - i - 1);
-                }
-                cmax(ans, (int)min(i + 1, t.size() - i - 1));
-            }
-        }
-        cout << ans << endl;
-    }
-}
 
+}
 
 signed main() {
     Weakoying;

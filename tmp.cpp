@@ -2,15 +2,12 @@
  
 using namespace std;
 
-int main() {
-    int a[505];
-    a[1] = 1;
-    for (int i = 2; i <= 500; i++) {
-        a[i] = a[i - 1] + i - 1;
-    }
+int f(int x, int y);
 
-    int n;
-    while (cin >> n) {
-        cout << a[n] << endl;
-    }
+int main() {
+    cout << "Hello" << endl;
+}
+
+int f(int x, int y) {
+    return 2 * x + y;
 }

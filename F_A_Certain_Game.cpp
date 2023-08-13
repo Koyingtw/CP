@@ -33,9 +33,57 @@ using namespace std;
 #define MAXN 200005
 #define MAXM 1000005 
 int n, m;
+vector<pii> rec;
+pii x[MAXN];
+int num[MAXN];
+
+struct Disjoint_Set {
+    int arr[MAXN], cnt[MAXN];
+    stack<int> his[MAXN];
+    Disjoint_Set() {
+        for (int i = 1; i < MAXN * 2; i++)
+            arr[i] = i, cnt[i] = 1;
+    }
+
+    int find(int i) {
+        return (arr[i] == i ? i : arr[i] = find(arr[i]));
+    }
+
+    void unite(int i, int j, int id) {
+        i = find(i);
+        j = find(j);
+        if (i == j)
+            return;
+        rec.pb({cnt[i], cnt[j]});
+        if (cnt[j] > cnt[i])
+            swap(i, j);
+
+        his[i].push(id);
+        his[j].push(id);
+        arr[j] = i;
+        cnt[i] += cnt[j];
+    }
+} dsu;
+
+void DC(int l, int r, int i) {
+    if (l == r - 1) {
+        num[rec[i].F] = l;
+        num[rec[i].S] = r;
+        return;
+    }
+
+}
 
 void sol() {
-    
+    cin >> n;
+    for (int i = 1, a, b; i < n; i++) {
+        cin >> x[i].F >> x[i].S;
+        dsu.unite(x[i].F, x[i].S, i);
+    }
+
+    reverse(all(rec));
+
+    DC(1, n, 0);
 }
 
 signed main() {

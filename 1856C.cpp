@@ -26,79 +26,75 @@
 #endif
 const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
-const int P = 1010101333;
-const int Q = 1e6 + 99;
+const int P = 1e9+7;
 
 using namespace std;
 /******************************************************************************/
 #define MAXN 200005
 #define MAXM 1000005 
 int n, m;
+int x[MAXN];
+int y[MAXN];
 int pre[MAXN];
 
 void sol() {
     cin >> n >> m;
-    string s;
-    cin >> s;
-    set<int> st0, st1;
-
-    s = " " + s;
+    int ans = 0;
+    int mx = 0;
     for (int i = 1; i <= n; i++) {
-        pre[i] = pre[i - 1] + (s[i] == '1');
-        (s[i] == '0' ? st0.insert(i) : st1.insert(i));            
+        cin >> x[i];
+        y[i] = x[i];
+        cmax(ans, x[i]);
+        cmax(mx, x[i] + i);
     }
 
-    set<pii> ans;
-    bool same = false;
 
-    for (int i = 0, l, r; i < m; i++) {
-        cin >> l >> r;
+    for (int i = 1; i < n; i++) {
 
-        // same with no sort
-        int cnt = pre[r] - pre[l - 1];
-        if (pre[r] - pre[r - cnt] == cnt) {
-            same = true;
-            continue;
-        }
-            
+        int l = x[i] + 1, r = 1e9;
+        while (l <= r) {
+            for (int j = 1; j <= n; j++)
+                y[j] = x[j];
+            int mid = (l + r + 1) / 2;
+            int tmpm = m;
 
-        int L, R;
-        bool legal = false;
-
-        L = 1, R = l;
-        while (L < R) {
-            int mid = (L + R) / 2;
-            if (pre[l - 1] - pre[mid - 1] == 0)
-                R = mid, legal = true;
+            if (y[i] < mid) {
+                if (i == n - 1 && mid > y[n] + 1)
+                    tmpm = -INF;
+                tmpm -= mid - y[i];
+                y[i] = mid;
+            }
+            // y[i] += tmp;
+            for (int j = i + 1; j < n; j++) {
+                if (y[j] < y[j - 1] - 1) {
+                    tmpm -= y[j - 1] - y[j] - 1;
+                    y[j] = y[j - 1] - 1;
+                    if (j == n - 1 && y[n] < y[j] - 1)
+                        tmpm = -INF;
+                }
+                else
+                    break;
+            }
+            if (tmpm >= 0) {
+                cmax(ans, y[i]);
+                if (l == r)
+                    break;
+                l = mid;
+            }
             else
-                L = mid + 1;
+                r = mid - 1;
+                
         }
-        if (legal)
-            l = R;.
-
-        L = r, R = n;
-        legal = false;
-        while (L < R) {
-            int mid = (L + R + 1) / 2;
-            if (pre[mid] - pre[r] == mid - r)
-                L = mid, legal = true;
-            else
-                R = mid - 1;
-        }
-        if (legal)
-            r = L;
-        ans.insert({l, r});
-        // cout << l << ' ' << r << endl;
     }
-    
-    cout << ans.size() + same << endl;
+
+
+
+    cout << ans << endl;
 }
 
 signed main() {
     Weakoying;
     int t = 1;
-    cout << "test" << endl;
-    return 0;
     while (cin >> t)
 	{
     	while (t--) {
