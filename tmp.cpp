@@ -2,12 +2,18 @@
  
 using namespace std;
 
-int f(int x, int y);
 
 int main() {
-    cout << "Hello" << endl;
-}
+    int n, m;
+    cin >> n >> m; // n < m
+    int i = n;
+    while (1) {
+        cout << i << endl;
+        i += 2;
+        if (i > m) {
+            break;
+        }
+    }
 
-int f(int x, int y) {
-    return 2 * x + y;
+    return 0;
 }

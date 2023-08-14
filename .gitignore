@@ -7,5 +7,7 @@ Contest
 *.out
 *.ans
 *.out
+*.bin
 tempCodeRunnerFile.cpp
 .DS_Store
+tmp*
