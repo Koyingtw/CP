@@ -91,7 +91,7 @@ class Treap {
         split(a, c, d, l - 1);
         k = (k + len) % len;
         split(d, e, f, len - k);
-        root = merge(merge(c, merge(f, e)), b);
+        root = merge(merge(c, merge(f, e)), b);x
     }
     // 插入一個元素 val 使其 index = i
     // 注意 i <= size

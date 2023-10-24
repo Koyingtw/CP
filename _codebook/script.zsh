@@ -1,0 +1,1 @@
+for letter in $(eval echo {$START..$STOP}); do cp ./_codebook/templete.cpp ./1886$letter.cpp ; done
